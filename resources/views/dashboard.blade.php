@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard')
+
 @section('content')
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-<h3>Selamat Datang di Sistem Pengaduan Masyarakat</h3>
-<p>Silakan ajukan atau kelola pengaduan sesuai hak akses Anda.</p>
+    <div class="container">
+        <h1>Selamat Datang di Sistem Pengaduan Masyarakat</h1>
+        <p>Silakan ajukan atau kelola pengaduan sesuai hak akses Anda.</p>
+    </div>
 @endsection
