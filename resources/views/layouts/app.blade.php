@@ -22,13 +22,14 @@
     <div class="wrapper">
 
         {{-- Sidebar --}}
-        @include('layouts.inc.sidebar')
-
+        @include('layouts.admin.inc.sidebar')
+        @include('layouts.user.inc.sidebar')
         {{-- Main Panel --}}
         <div class="main-panel">
 
             {{-- Navbar --}}
-            @include('layouts.inc.navbar')
+            @include('layouts.admin.inc.navbar')
+            @include('layouts.user.inc.navbar')
 
             {{-- Content --}}
             <div class="content">
@@ -38,7 +39,8 @@
             </div>
 
             {{-- Footer --}}
-            @include('layouts.inc.footer')
+            @include('layouts.admin.inc.footer')
+            @include('layouts.user.inc.footer')
 
         </div>
     </div>
