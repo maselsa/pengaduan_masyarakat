@@ -13,19 +13,25 @@
                 <li class="nav-item active">
                     <a href="{{ url('/') }}">
                         <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
+                        <p>📊 Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/form-pengaduan') }}">
-                        <i class="fas fa-edit"></i>
-                        <p>Form Pengaduan</p>
+                    <a href="{{ route('form-pengaduan') }}">
+                        <i class="fas fa-database"></i>
+                        <p>🗒️ Form Pengaduan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/data-pelapor') }}">
+                        <i class="fas fa-database"></i>
+                        <p>🔔 Notifikasi</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/data-pengaduan') }}">
                         <i class="fas fa-database"></i>
-                        <p>Data Pengaduan</p>
+                        <p>📉 Tanggapan</p>
                     </a>
                 </li>
             </ul>

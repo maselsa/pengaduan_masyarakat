@@ -12,18 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengaduan', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255); 
-            $table->string('email', 100);
-            $table->string('phone')->nullable(); 
-            $table->date('date'); 
-            $table->string('category', 100); 
-            $table->text('description'); 
-            $table->string('location')->nullable();
-            $table->string('attachment')->nullable(); 
-            $table->boolean('anonymous')->default(false);
-            $table->timestamps();
-        });
+        $table->id();
+        $table->string('nama', 255);
+        $table->string('email', 100);
+        $table->string('no_hp')->nullable();
+        $table->string('judul', 255);
+        $table->text('isi');
+        $table->string('bukti')->nullable();
+        $table->timestamps();
+});
+
     }
 
     /**

@@ -3,110 +3,86 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pengaduan;
 
 class PengaduanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $pengaduan = Pengaduan::all();
         return view('pengaduan.index', compact('pengaduan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-    {
-        return view('pengaduan.create');
+{
+    // Pastikan hanya user yang bisa akses
+    if(auth()->user()->role != 'user') {
+        abort(403); // akses ditolak
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    return view('user.create'); // ini menunjuk ke resources/views/user/create.blade.php
+}
+
+
     public function store(Request $request)
     {
         try {
-        // Validasi input termasuk file upload
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:100',
-            'phone' => 'nullable|string',
-            'date' => 'required|date',
-            'category' => 'required|string|max:100',
-            'description' => 'required|string',
-            'location' => 'nullable|string',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'anonymous' => 'nullable|boolean',
-        ]);
+            // Validasi sesuai form
+            $validatedData = $request->validate([
+                'nama'   => 'required|string|max:255',
+                'email'  => 'required|email|max:100',
+                'no_hp'  => 'required|string|max:20',
+                'judul'  => 'required|string|max:255',
+                'isi'    => 'required|string',
+                'bukti'  => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            ]);
 
-        // Cek jika ada file yang di-upload
-        if ($request->hasFile('attachment')) {
-            // Generate nama file unik
-            $fileName = time() . '.' . $request->attachment->extension();
-            // Pindahkan file ke folder 'uploads'
-            $request->attachment->move(public_path('uploads'), $fileName);
-            // Simpan nama file ke dalam array $validatedData
-            $validatedData['attachment'] = $fileName;
+            // Upload file kalau ada
+            if ($request->hasFile('bukti')) {
+                $fileName = time() . '.' . $request->bukti->extension();
+                $request->bukti->move(public_path('uploads'), $fileName);
+                $validatedData['bukti'] = $fileName;
+            }
+
+            // Simpan ke database
+            Pengaduan::create($validatedData);
+
+            return redirect()->route('dashboard')->with('success', 'Pengaduan berhasil dikirim!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->validator)->withInput();
         }
-
-        // Simpan data ke database
-        Pengaduan::create($validatedData);
-
-        return redirect()->route('dashboard')->with('success', 'Pengaduan berhasil dikirim!');
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return back()->withErrors($e->validator)->withInput();
     }
 
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-         $pengaduan = Pengaduan::findOrFail($id);
-    return view('pengaduan.show', [
-        'pengaduan' => $pengaduan,
-        'attachmentUrl' => $pengaduan->attachment_url,
-    ]);
+        $pengaduan = Pengaduan::findOrFail($id);
+        return view('pengaduan.show', compact('pengaduan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-         $pengaduan = Pengaduan::findOrFail($id);
+        $pengaduan = Pengaduan::findOrFail($id);
         return view('pengaduan.edit', compact('pengaduan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:100',
-            'phone' => 'nullable|string',
-            'date' => 'required|date',
-            'category' => 'required|string|max:100',
-            'description' => 'required|string',
-            'location' => 'nullable|string',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4048',
-            'anonymous' => 'nullable|boolean',
+        $request->validate([
+            'nama'   => 'required|string|max:255',
+            'email'  => 'required|email|max:100',
+            'no_hp'  => 'required|string|max:20',
+            'judul'  => 'required|string|max:255',
+            'isi'    => 'required|string',
+            'bukti'  => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4048',
         ]);
 
         $pengaduan = Pengaduan::findOrFail($id);
-        $pengaduan->fill($request->except('attachment'));
+        $pengaduan->fill($request->except('bukti'));
 
-        if ($request->hasFile('attachment')) {
-            $file = $request->file('attachment');
-            $path = $file->store('attachments', 'public');
-            $pengaduan->attachment = $path;
+        if ($request->hasFile('bukti')) {
+            $file = $request->file('bukti');
+            $path = $file->store('uploads', 'public');
+            $pengaduan->bukti = $path;
         }
 
         $pengaduan->save();
@@ -114,9 +90,6 @@ class PengaduanController extends Controller
         return redirect()->route('pengaduan.index')->with('success', 'Pengaduan telah diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $pengaduan = Pengaduan::findOrFail($id);

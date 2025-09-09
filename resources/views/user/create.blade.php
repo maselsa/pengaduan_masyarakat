@@ -9,7 +9,7 @@
         <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-                <label>Nama</label>
+                <label>Name</label>
                 <input type="text" name="nama" class="form-control" value="{{ old('nama') }}" required>
             </div>
             <div class="mb-3">

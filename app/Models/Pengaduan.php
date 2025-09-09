@@ -1,24 +1,22 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pengaduan extends Model
-    
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'date',
-        'category',
-        'description',
-        'location',
-        'attachment',
-        'anonymous',
-    ];
+    protected $table = 'pengaduan';
 
+    protected $fillable = [
+        'nama',
+        'email',
+        'no_hp',
+        'judul',
+        'isi',
+        'bukti',
+    ];
 }
