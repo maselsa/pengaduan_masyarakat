@@ -37,11 +37,13 @@ use App\Http\Controllers\HomeController;
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 
     // CRUD pengaduan user
+    Route::prefix('user')->name('user.')->group(function () {
     Route::resource('pengaduan', UserPengaduanController::class);
+});
 
     // Form pengaduan (langsung create)
     Route::get('/form-pengaduan', function () {
-    return view('user.pengaduan');
+    return view('user.pengaduan.index');
     })->name('form-pengaduan');
 
     // Dashboard admin

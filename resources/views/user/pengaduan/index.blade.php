@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3>Daftar Pengaduan Saya</h3>
+        <h3>Daftar Pengaduan</h3>
 
         <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary mb-3">Buat Pengaduan</a>
 
@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($pengaduans as $key => $p)
+                @forelse($pengaduan as $key => $p)
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $p->tanggal }}</td>
