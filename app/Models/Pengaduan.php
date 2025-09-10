@@ -12,11 +12,20 @@ class Pengaduan extends Model
     protected $table = 'pengaduan';
 
     protected $fillable = [
-        'nama',
-        'email',
-        'no_hp',
-        'judul',
-        'isi',
-        'bukti',
-    ];
+    'nama',
+    'email',
+    'no_hp',
+    'tanggal',
+    'lokasi',
+    'category_id',
+    'deskripsi',
+    'bukti',
+];
+
+public function category()
+{
+    return $this->belongsTo(Category::class, 'category_id');
+    $table->foreignId('category_id')->constrained()->onDelete('cascade');
+
+}
 }

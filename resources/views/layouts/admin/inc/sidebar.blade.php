@@ -23,21 +23,27 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/data-pelapor') }}">
+                    <a href="{{ url('/data-masyarakat') }}">
                         <i class="fas fa-database"></i>
-                        <p>🗒️ Data Pelapor</p>
+                        <p>🗒️ Data Masyarakat</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/data-pelapor') }}">
+                    <a href="{{ url('/data-petugas') }}">
                         <i class="fas fa-database"></i>
-                        <p>🔔 Notifikasi</p>
+                        <p>🗒️ Data Petugas</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/data-kategori') }}">
+                        <i class="fas fa-database"></i>
+                        <p>Data Kategori</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/data-pengaduan') }}">
                         <i class="fas fa-database"></i>
-                        <p>📉 Tanggapan</p>
+                        <p>📉 feedBack</p>
                     </a>
                 </li>
             </ul>

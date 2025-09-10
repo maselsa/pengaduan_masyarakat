@@ -2,39 +2,67 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserPengaduanController;
+use App\Http\Controllers\AdminPengaduanController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
+
+    // Route halaman utama
+    Route::get('/', function () {
+    return view('home');
+    });
+
+    // Route home (bisa kamu sesuaikan)
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    // Route data pengaduan (kalau ini untuk tampil data pengaduan)
+    Route::get('/data-pengaduan', [PengaduanController::class, 'index'])->name('data.pengaduan');
+
+
+    // Auth bawaan Laravel (login, register, logout, dll.)
+    Auth::routes();
+
+    // Logout khusus (karena defaultnya GET → error)
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+    // Semua route yang butuh login
+    Route::group(['middleware' => ['auth']], function () {
+
+    // Dashboard user
+    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+
+    // CRUD pengaduan user
+    Route::resource('pengaduan', UserPengaduanController::class);
+
+    // Form pengaduan (langsung create)
+    Route::get('/form-pengaduan', function () {
+    return view('user.pengaduan');
+    })->name('form-pengaduan');
+
+    // Dashboard admin
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // Data pengaduan (read & delete saja)
+    Route::resource('pengaduan', AdminPengaduanController::class)->only(['index', 'show', 'destroy']);
+
+    // CRUD kategori
+    Route::resource('categories', CategoryController::class);
+    
+    //Dashboard diarahkan sesuai role -> user dan admin
+    // (kalo login sebagai admin ya di arahkan ke admin/dashboard)
+    Route::get('/dashboard', function () {
+    if (Auth::check()) {
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('user.dashboard');
+        }
+    }
+    return redirect()->route('login');
 });
-
-// Route bawaan auth (login, register, logout, dll.)
-Auth::routes();
-
-Route::group(['middleware' => ['auth']], function () {
-
-
-    // Resource CRUD untuk Pengaduan
-    Route::resource('pengaduan', PengaduanController::class);
-
-    // Admin
-    Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'index'])
-         ->name('admin.dashboard')->middleware('auth');;
-
-    // Pelapor
-    Route::get('/user/dashboard', [App\Http\Controllers\UserController::class, 'index'])
-         ->name('user.dashboard')->middleware('auth');;
-
-    Route::get('/form-pengaduan', [PengaduanController::class, 'create'])
-     ->name('form-pengaduan');
-
-     
-
-     
-
-
-
-
-
 });
