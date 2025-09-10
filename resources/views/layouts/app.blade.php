@@ -16,34 +16,60 @@
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <style>
+        body.auth {
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
-<body>
-    <div class="wrapper">
+<body class="{{ Request::is('login') || Request::is('register') ? 'auth' : '' }}">
 
-        {{-- Sidebar --}}
-        @include('layouts.admin.inc.sidebar')
-        @include('layouts.user.inc.sidebar')
-        {{-- Main Panel --}}
-        <div class="main-panel">
+    @if (Request::is('login') || Request::is('register'))
+        {{-- Khusus login & register, cuma content aja --}}
+        <main style="width:100%;">
+            @yield('content')
+        </main>
+    @else
+        <div class="wrapper">
+            <div class="main-panel">
+                {{-- Sidebar --}}
+                @auth
+                    @if (Auth::user()->role == 'admin')
+                        @include('layouts.admin.inc.sidebar')
+                    @elseif(Auth::user()->role == 'user')
+                        @include('layouts.user.inc.sidebar')
+                    @endif
+                @endauth
 
-            {{-- Navbar --}}
-            @include('layouts.admin.inc.navbar')
-            @include('layouts.user.inc.navbar')
+                {{-- Navbar --}}
+                @auth
+                    @if (Auth::user()->role == 'admin')
+                        @include('layouts.admin.inc.navbar')
+                    @elseif(Auth::user()->role == 'user')
+                        @include('layouts.user.inc.navbar')
+                    @endif
+                @endauth
 
-            {{-- Content --}}
-            <div class="content">
-                <div class="page-inner">
-                    @yield('content')
+                {{-- Content --}}
+                <div class="content">
+                    <div class="page-inner">
+                        @yield('content')
+                    </div>
                 </div>
+
+                {{-- Footer --}}
+                @include('layouts.admin.inc.footer')
+                @include('layouts.user.inc.footer')
             </div>
-
-            {{-- Footer --}}
-            @include('layouts.admin.inc.footer')
-            @include('layouts.user.inc.footer')
-
         </div>
-    </div>
+    @endif
 
     <!-- Core JS -->
     <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>

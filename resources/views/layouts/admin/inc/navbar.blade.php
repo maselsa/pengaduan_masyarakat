@@ -19,7 +19,8 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                onclick="event.preventDefault();if(confirm('Apakah anda yakin ingin logout?'))
+                                 document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </li>

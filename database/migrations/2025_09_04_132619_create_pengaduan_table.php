@@ -16,8 +16,10 @@ return new class extends Migration
         $table->string('nama', 255);
         $table->string('email', 100);
         $table->string('no_hp')->nullable();
-        $table->string('judul', 255);
-        $table->text('isi');
+        $table->string('tanggal')->nullable();
+        $table->string('categori', 100); 
+        $table->string('lokasi')->nullable();
+        $table->text('deskripsi');
         $table->string('bukti')->nullable();
         $table->timestamps();
 });

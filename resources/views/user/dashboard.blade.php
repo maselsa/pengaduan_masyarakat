@@ -10,7 +10,7 @@
 
         {{-- Link Form Pengaduan hanya untuk user --}}
         @if (auth()->user()->role == 'user')
-            <a href="{{ route('pengaduan.create') }}" class="btn btn-success mt-3">Buat Pengaduan</a>
+            <a href="{{ route('user.pengaduan.create') }}" class="btn btn-success mt-3">Buat Pengaduan</a>
         @endif
     </div>
 @endsection
