@@ -17,33 +17,33 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/data-pengaduan') }}">
-                        <i class="fas fa-database"></i>
-                        <p>📉 Data Pengaduan</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ url('/data-masyarakat') }}">
                         <i class="fas fa-database"></i>
-                        <p>🗒️ Data Masyarakat</p>
+                        <p>🧑‍🤝‍🧑 Data Masyarakat</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/data-petugas') }}">
                         <i class="fas fa-database"></i>
-                        <p>🗒️ Data Petugas</p>
+                        <p>👮 Data Petugas</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/data-kategori') }}">
                         <i class="fas fa-database"></i>
-                        <p>Data Kategori</p>
+                        <p>🗂️ Data Kategori</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('/data-pengaduan') }}">
                         <i class="fas fa-database"></i>
-                        <p>📉 feedBack</p>
+                        <p>📢 Pengaduan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/feedback') }}">
+                        <i class="fas fa-database"></i>
+                        <p>💬 Feedback</p>
                     </a>
                 </li>
             </ul>

@@ -17,16 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    <style>
-        body.auth {
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
+
 </head>
 
 <body class="{{ Request::is('login') || Request::is('register') ? 'auth' : '' }}">
