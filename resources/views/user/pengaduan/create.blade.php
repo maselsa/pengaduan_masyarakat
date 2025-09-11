@@ -3,7 +3,8 @@
 @section('content')
 <div class="container">
     <h3 class="mb-4">Buat Pengaduan Baru</h3>
-
+    <a href="{{ url('/user/form-pengaduan') }}"
+    class="nav-link">Form Pengaduan</a>
     <form action="{{ route('user.pengaduan.create') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -69,7 +70,7 @@
                     class="form-control @error('category_id') is-invalid @enderror" required>
                 <option value="">-- Pilih Kategori --</option>
                 @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                    <option value="{{ $cat->id }}" {{ old('category') == $cat->id ? 'selected' : '' }}>
                         {{ $cat->nama }}
                     </option>
                 @endforeach

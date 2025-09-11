@@ -9,9 +9,9 @@ class CategorySeeder extends Seeder
 {
     public function run()
     {
-        Category::create(['nama' => 'Kriminal', 'deskripsi' => 'Kasus kriminal']);
-        Category::create(['nama' => 'Infrastruktur', 'deskripsi' => 'Jalan, jembatan, dll']);
-        Category::create(['nama' => 'Kesehatan', 'deskripsi' => 'Layanan kesehatan']);
+        Category::create(['name' => 'Kriminal', 'deskripsi' => 'Kasus kriminal']);
+        Category::create(['name' => 'Infrastruktur', 'deskripsi' => 'Jalan, jembatan, dll']);
+        Category::create(['name' => 'Kesehatan', 'deskripsi' => 'Layanan kesehatan']);
     }
 }
 

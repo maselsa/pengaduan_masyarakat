@@ -34,7 +34,7 @@ class UserPengaduanController extends Controller
             'no_hp'       => 'required|string|max:20',
             'tanggal'     => 'required|date',
             'lokasi'      => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
+            'category' => 'required|exists:categories,id',
             'deskripsi'   => 'required|string',
             'bukti'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
@@ -62,7 +62,7 @@ class UserPengaduanController extends Controller
     public function edit($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-        $categories = Category::all();
+        $categorie = Category::all();
         return view('user.pengaduan.edit', compact('pengaduan', 'categories'));
     }
 
