@@ -3,18 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Pengaduan;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        // arahkan ke view admin/dashboard.blade.php
-        return view('admin.dashboard');
-    }
+    $totalKategori = Category::count();
+    $totalPengaduan = Pengaduan::count();
+    $pengaduanPending = Pengaduan::where('status', 'pending')->count();
+    $pengaduanProses = Pengaduan::where('status', 'proses')->count();
+    $pengaduanSelesai = Pengaduan::where('status', 'selesai')->count();
 
+    $categories = Category::withCount('pengaduan')->get();
+    $categoryNames = $categories->pluck('name');
+    $pengaduanCounts = $categories->pluck('pengaduan_count');
+
+    return view('admin.dashboard', compact(
+        'totalKategori',
+        'totalPengaduan',
+        'pengaduanPending',
+        'pengaduanProses',
+        'pengaduanSelesai',
+        'categoryNames',
+        'pengaduanCounts'
+    ));
+    }
     /**
      * Show the form for creating a new resource.
      */

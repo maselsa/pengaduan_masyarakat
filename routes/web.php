@@ -35,7 +35,6 @@ use App\Http\Controllers\HomeController;
 
     // Dashboard user
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-
     // CRUD pengaduan user
     Route::prefix('user')->name('user.')->group(function () {
     Route::resource('pengaduan', UserPengaduanController::class);
