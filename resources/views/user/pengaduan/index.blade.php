@@ -25,19 +25,27 @@
                 @forelse($pengaduan as $key => $p)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $p->tanggal }}</td>
+                        <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $p->lokasi }}</td>
                         <td>{{ $p->category->nama ?? '-' }}</td>
                         <td>
-                            <span
-                                class="badge bg-{{ $p->status == 'pending' ? 'warning' : ($p->status == 'proses' ? 'info' : 'success') }}">
+                            <span class="badge bg-{{ 
+                                $p->status == 'pending' ? 'warning' : 
+                                ($p->status == 'proses' ? 'info' : 'success') }}">
                                 {{ ucfirst($p->status) }}
                             </span>
                         </td>
                         <td>
                             <a href="{{ route('user.pengaduan.show', $p->id) }}" class="btn btn-sm btn-info">Detail</a>
+
                             @if ($p->status == 'pending')
                                 <a href="{{ route('user.pengaduan.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
+
+                                <form action="{{ route('user.pengaduan.destroy', $p->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus pengaduan ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">Hapus</button>
+                                </form>
                             @endif
                         </td>
                     </tr>

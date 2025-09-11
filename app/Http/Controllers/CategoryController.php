@@ -11,13 +11,13 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     // form tambah kategori
     public function create()
     {
-        return view('categories.create');
+        return view('admin.categories.create');
     }
 
     // simpan kategori
@@ -28,9 +28,10 @@ class CategoryController extends Controller
         ]);
 
         Category::create([
-            'name' => $request->name
-        ]);
+       'name' => $request->name,
+       'categories' => $request->input('categories', null) // jika ada input-nya
+    ]);
 
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan');
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 }

@@ -17,15 +17,14 @@ class Pengaduan extends Model
     'no_hp',
     'tanggal',
     'lokasi',
-    'category_id',
+    'category',
     'deskripsi',
     'bukti',
 ];
 
 public function category()
 {
-    return $this->belongsTo(Category::class, 'category_id');
-    $table->foreignId('category_id')->constrained()->onDelete('cascade');
+    return $this->belongsTo(Category::class, 'category');
 
 }
 }

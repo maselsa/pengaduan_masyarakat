@@ -17,12 +17,12 @@ use App\Http\Controllers\HomeController;
     return view('home');
     });
 
-    // Route home (bisa kamu sesuaikan)
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     // Route data pengaduan (kalau ini untuk tampil data pengaduan)
-    Route::get('/data-pengaduan', [PengaduanController::class, 'index'])->name('data.pengaduan');
-
+    Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
+    Route::get('/user/form-pengaduan', [UserPengaduanController::class, 'index'])->name('form.pengaduan');
+    Route::get('/data-kategori', [CategoryController::class, 'index'])->name('data.kategori');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // Auth bawaan Laravel (login, register, logout, dll.)
     Auth::routes();
@@ -42,18 +42,16 @@ use App\Http\Controllers\HomeController;
 });
 
     // Form pengaduan (langsung create)
-    Route::get('/form-pengaduan', function () {
-    return view('user.pengaduan.index');
-    })->name('form-pengaduan');
-
+    Route::get('/form-pengaduan', [PengaduanController::class, 'create'])->name('form-pengaduan'); 
     // Dashboard admin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // Data pengaduan (read & delete saja)
     Route::resource('pengaduan', AdminPengaduanController::class)->only(['index', 'show', 'destroy']);
-
-    // CRUD kategori
+    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::resource('categories', CategoryController::class);
+    });
+    // CRUD kategori
     
     //Dashboard diarahkan sesuai role -> user dan admin
     // (kalo login sebagai admin ya di arahkan ke admin/dashboard)
