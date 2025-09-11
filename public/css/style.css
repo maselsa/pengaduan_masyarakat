@@ -182,3 +182,9 @@ select:focus {
     border-color: #ff77b6 !important;
 }
 
+select,
+option {
+    color: black;
+    /* biar tulisannya keliatan */
+    background-color: white;
+}

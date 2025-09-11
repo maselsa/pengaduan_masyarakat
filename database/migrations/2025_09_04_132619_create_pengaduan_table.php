@@ -21,9 +21,8 @@ return new class extends Migration
         $table->string('lokasi')->nullable();
         $table->text('deskripsi');
         $table->string('bukti')->nullable();
-
-        $table->foreignId('category')->constrained('categories')->onDelete('cascade');
         $table->timestamps();
+
 });
 
     }
