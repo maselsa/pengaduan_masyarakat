@@ -27,4 +27,12 @@ public function category()
     return $this->belongsTo(Category::class, 'category', 'id');
 
 }
+public function tanggapan()
+{
+    return $this->hasOne(Tanggapan::class, 'pengaduan_id');
+}
+public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 }

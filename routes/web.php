@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserTanggapanController;
 
 
     // Route halaman utama
@@ -20,10 +21,14 @@ use App\Http\Controllers\HomeController;
 
     // Route data pengaduan (kalau ini untuk tampil data pengaduan)
     Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
+      Route::get('/admin/pengaduan', [AdminPengaduanController::class, 'index'])
+        ->name('admin.pengaduan.index');
+    Route::get('/admin/pengaduan/{id}', [AdminPengaduanController::class, 'show'])
+        ->name('admin.pengaduan.show');
+     Route::delete('/admin/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])
+        ->name('admin.pengaduan.destroy');
     Route::get('/user/form-pengaduan', [UserPengaduanController::class, 'index'])->name('form.pengaduan');
     Route::get('/data-kategori', [CategoryController::class, 'index'])->name('data.kategori');
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
     // Auth bawaan Laravel (login, register, logout, dll.)
     Auth::routes();
 
@@ -36,17 +41,19 @@ use App\Http\Controllers\HomeController;
     // Dashboard user
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
     // CRUD pengaduan user
-    Route::prefix('user')->name('user.')->group(function () {
+    Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
     Route::resource('pengaduan', UserPengaduanController::class);
+
+
 });
 
     // Form pengaduan (langsung create)
-    Route::get('/form-pengaduan', [PengaduanController::class, 'create'])->name('form-pengaduan'); 
+    Route::get('/user/form-pengaduan', [UserPengaduanController::class, 'create'])->name('form-pengaduan'); 
     // Dashboard admin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/user/tanggapan', [UserTanggapanController::class, 'index'])->name('user.tanggapan.index'); 
 
     // Data pengaduan (read & delete saja)
-    Route::resource('pengaduan', AdminPengaduanController::class)->only(['index', 'show', 'destroy']);
     Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::resource('categories', CategoryController::class);
     });
