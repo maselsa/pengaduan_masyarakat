@@ -14,10 +14,12 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Nama</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
                     <th>Kategori</th>
                     <th>Status</th>
+                    <th>Bukti</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -25,9 +27,14 @@
                 @forelse($pengaduan as $key => $p)
                     <tr>
                         <td>{{ $key + 1 }}</td>
+                        <td>{{ $p->nama }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $p->lokasi }}</td>
-                        <td>{{ $p->category->nama ?? '-' }}</td>
+
+                        {{-- Kategori --}}
+                        <td>{{ optional($p->category)->nama ?? '-' }}</td>
+
+                        {{-- Status --}}
                         <td>
                             <span class="badge bg-{{ 
                                 $p->status == 'pending' ? 'warning' : 
@@ -35,6 +42,19 @@
                                 {{ ucfirst($p->status) }}
                             </span>
                         </td>
+
+                        {{-- Bukti --}}
+                        <td>
+                            @if($p->bukti)
+                                <a href="{{ asset('storage/' . $p->bukti) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $p->bukti) }}" alt="Bukti" style="width: 80px; height: auto;">
+                                </a>
+                            @else
+                                <span class="text-muted">Tidak ada</span>
+                            @endif
+                        </td>
+
+                        {{-- Aksi --}}
                         <td>
                             <a href="{{ route('user.pengaduan.show', $p->id) }}" class="btn btn-sm btn-info">Detail</a>
 
@@ -51,7 +71,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">Belum ada pengaduan</td>
+                        <td colspan="8" class="text-center">Belum ada pengaduan</td>
                     </tr>
                 @endforelse
             </tbody>
