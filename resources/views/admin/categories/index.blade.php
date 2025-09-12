@@ -15,6 +15,7 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Kategori</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,10 +23,18 @@
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $category->name }}</td>
+                        <td>
+                            <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
+                                style="display:inline-block" onsubmit="return confirm('Yakin mau hapus kategori ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="2" class="text-center">Belum ada kategori</td>
+                        <td colspan="3" class="text-center">Belum ada kategori</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -25,7 +25,7 @@
                 </li>
 
                 <li class="nav-item {{ request()->is('data-petugas*') ? 'active' : '' }}">
-                    <a href="{{ url('/data-petugas') }}">
+                    <a href="{{ route('admin.petugas.index') }}">
                         <i class="fas fa-database"></i>
                         <p>👮 Data Petugas</p>
                     </a>

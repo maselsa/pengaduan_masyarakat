@@ -34,4 +34,12 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan');
     }
+    public function destroy($id)
+{
+    $category = Category::findOrFail($id);
+    $category->delete();
+
+    return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus!');
+}
+
 }

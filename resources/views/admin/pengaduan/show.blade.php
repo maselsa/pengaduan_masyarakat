@@ -14,7 +14,7 @@
         <p><strong>Deskripsi:</strong> {{ $pengaduan->deskripsi }}</p>
         <p><strong>Bukti:</strong> 
             @if($pengaduan->bukti)
-                <a href="{{ asset('storage/' . $pengaduan->bukti) }}" target="_blank">Lihat</a>
+                <a href="{{ asset('storage/bukti/' . $pengaduan->bukti) }}" target="_blank">Lihat</a>
             @else
                 Tidak ada
             @endif
