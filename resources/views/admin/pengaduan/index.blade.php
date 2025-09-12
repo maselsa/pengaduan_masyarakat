@@ -32,15 +32,16 @@
                         <td>{{ $p->no_hp }}</td>
                         <td>{{ $p->tanggal }}</td>
                         <td>{{ $p->lokasi }}</td>
-                        <td>{{ $p->category->nama ?? '-' }}</td>
+                        <td>{{ $p->category?->name ?? '-' }}</td>
                         <td>{{ Str::limit($p->deskripsi, 30) }}</td>
                         <td>
                             @if ($p->bukti)
-                                <a href="{{ asset('storage/' . $p->bukti) }}" target="_blank">Lihat</a>
+                                <img src="{{ asset('storage/bukti/' . $p->bukti) }}" alt="Bukti" width="100">
                             @else
                                 Tidak ada
                             @endif
                         </td>
+
                         <td>
                             <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">Detail</a>
 

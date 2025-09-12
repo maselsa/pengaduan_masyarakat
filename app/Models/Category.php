@@ -20,6 +20,6 @@ class Category extends Model
 
     public function pengaduan()
     {
-        return $this->hasMany(Pengaduan::class, 'category');
+        return $this->hasMany(Pengaduan::class, 'category_id');
     }
 }

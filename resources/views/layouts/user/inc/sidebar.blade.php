@@ -22,7 +22,7 @@
                 <li class="nav-item {{ request()->routeIs('user.pengaduan.*') ? 'active' : '' }}">
                     <a href="{{ route('user.pengaduan.index') }}">
                         <i class="fas fa-clipboard-list"></i>
-                        <p>🧑‍🤝‍🧑 Form Pengaduan</p>
+                        <p>📢 Form Pengaduan</p>
                     </a>
                 </li>
 
@@ -30,7 +30,7 @@
                 <li class="nav-item {{ request()->is('notifikasi') ? 'active' : '' }}">
                     <a href="{{ url('notifikasi') }}">
                         <i class="fas fa-bell"></i>
-                        <p>👮 Notifikasi</p>
+                        <p>🔔 Notifikasi</p>
                     </a>
                 </li>
 
@@ -38,7 +38,7 @@
                 <li class="nav-item {{ request()->routeIs('user.tanggapan.index') ? 'active' : '' }}">
                     <a href="{{ route('user.tanggapan.index') }}">
                         <i class="fas fa-comments"></i>
-                        <p>🗂️ Tanggapan</p>
+                        <p>💬 Tanggapan</p>
                     </a>
                 </li>
             </ul>
