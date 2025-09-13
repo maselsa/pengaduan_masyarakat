@@ -17,11 +17,6 @@
             </div>
 
             <div class="mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
                 <label>Role</label>
                 <select name="role" class="form-control" required>
                     <option value="petugas">Petugas</option>

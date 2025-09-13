@@ -37,17 +37,20 @@ class UserPengaduanController extends Controller
             'tanggal'    => 'required|date',
             'lokasi'     => 'nullable|string',
             // kamu pakai column 'category' (bukan category_id), jadi validasi pake 'category'
-            'category'   => 'required|exists:categories,id',
+            'category_id'   => 'required|exists:categories,id',
             'deskripsi'  => 'required|string',
             'bukti'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         if ($request->hasFile('bukti')) {
-            $fileName = time() . '.' . $request->bukti->extension();
-            $request->bukti->move(public_path('uploads'), $fileName);
-            $validated['bukti'] = $fileName;
+        $path = $request->file('bukti')->store('bukti_pengaduan', 'public');
+        $validated['bukti'] = $path;
         }
 
+        // Set user_id dari user yang login
+          $validated['user_id'] = auth()->id();
+
+         // Simpan ke database
         Pengaduan::create($validated);
 
         return redirect()->route('user.pengaduan.index')

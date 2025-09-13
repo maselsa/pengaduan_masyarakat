@@ -41,7 +41,8 @@
                 <th>Bukti</th>
                 <td>
                     @if ($pengaduan->bukti)
-                        <a href="{{ asset('storage/' . $pengaduan->bukti) }}" target="_blank">Lihat Bukti</a>
+                        <img src="{{ asset('storage/' . $pengaduan->bukti) }}" alt="Bukti Pengaduan"
+                            style="max-width: 300px; height: auto;">
                     @else
                         Tidak ada
                     @endif

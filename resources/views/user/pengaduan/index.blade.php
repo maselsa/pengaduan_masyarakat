@@ -32,23 +32,21 @@
                         <td>{{ $p->lokasi }}</td>
 
                         {{-- Kategori --}}
-                        <td>{{ optional($p->category)->nama ?? '-' }}</td>
+                        <td>{{ $p->category->name ?? '-' }}</td>
 
                         {{-- Status --}}
                         <td>
-                            <span class="badge bg-{{ 
-                                $p->status == 'pending' ? 'warning' : 
-                                ($p->status == 'proses' ? 'info' : 'success') }}">
+                            <span
+                                class="badge bg-{{ $p->status == 'pending' ? 'warning' : ($p->status == 'proses' ? 'info' : 'success') }}">
                                 {{ ucfirst($p->status) }}
                             </span>
                         </td>
 
                         {{-- Bukti --}}
                         <td>
-                            @if($p->bukti)
-                                <a href="{{ asset('storage/' . $p->bukti) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $p->bukti) }}" alt="Bukti" style="width: 80px; height: auto;">
-                                </a>
+                            @if ($p->bukti)
+                                <img src="{{ asset('storage/' . $p->bukti) }}" alt="Bukti"
+                                    style="max-width: 80px; height: auto;">
                             @else
                                 <span class="text-muted">Tidak ada</span>
                             @endif
@@ -59,9 +57,12 @@
                             <a href="{{ route('user.pengaduan.show', $p->id) }}" class="btn btn-sm btn-info">Detail</a>
 
                             @if ($p->status == 'pending')
-                                <a href="{{ route('user.pengaduan.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ route('user.pengaduan.edit', $p->id) }}"
+                                    class="btn btn-sm btn-warning">Edit</a>
 
-                                <form action="{{ route('user.pengaduan.destroy', $p->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus pengaduan ini?')">
+                                <form action="{{ route('user.pengaduan.destroy', $p->id) }}" method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('Yakin ingin menghapus pengaduan ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger">Hapus</button>
