@@ -39,12 +39,16 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    protected function authenticated($request, $user)
-{
-    if ($user->role == 'admin') {
+   protected function authenticated($request, $user)
+   {
+    if ($user->role == 'admin' || $user->role == 'petugas') {
         return redirect()->route('admin.dashboard');
     }
 
-    return redirect()->route('user.dashboard');
-}
+    if ($user->role == 'user') {
+        return redirect()->route('user.dashboard');
+    }
+
+    return redirect('/'); // fallback
+   }
 }

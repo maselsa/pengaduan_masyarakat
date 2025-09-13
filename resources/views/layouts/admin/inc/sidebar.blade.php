@@ -41,7 +41,7 @@
                 <li class="nav-item {{ request()->is('data-pengaduan*') ? 'active' : '' }}">
                     <a href="{{ url('/data-pengaduan') }}">
                         <i class="fas fa-database"></i>
-                        <p>📢 Pengaduan</p>
+                        <p>📢 Data Pengaduan</p>
                     </a>
                 </li>
 

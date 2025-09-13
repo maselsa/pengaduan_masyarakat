@@ -36,7 +36,8 @@
                         <td>{{ Str::limit($p->deskripsi, 30) }}</td>
                         <td>
                             @if ($p->bukti)
-                                <img src="{{ asset('storage/bukti/' . $p->bukti) }}" alt="Bukti" width="100">
+                                <img src="{{ asset('storage/' . $p->bukti) }}" alt="Bukti"
+                                    style="max-width: 80px; height: auto;">
                             @else
                                 Tidak ada
                             @endif
