@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
 use App\Models\Category;
+use App\Models\Masyarakat;
 
 class UserPengaduanController extends Controller
 {
@@ -16,6 +17,8 @@ class UserPengaduanController extends Controller
             ->get();
 
         return view('user.pengaduan.index', compact('pengaduan'));
+        
+
     }
 
     public function create()
@@ -52,6 +55,7 @@ class UserPengaduanController extends Controller
 
          // Simpan ke database
         Pengaduan::create($validated);
+        
 
         return redirect()->route('user.pengaduan.index')
             ->with('success', 'Pengaduan berhasil dikirim!');
