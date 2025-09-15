@@ -10,13 +10,14 @@ class AdminPengaduanController extends Controller
 {
     public function index()
     {
-        $pengaduan = Pengaduan::with('category')->get();
+        $pengaduan = Pengaduan::with('category', 'masyarakat')->get();
         return view('admin.pengaduan.index', compact('pengaduan'));
+
     }
 
     public function show($id)
     {
-        $pengaduan = Pengaduan::with('category')->findOrFail($id);
+        $pengaduan = Pengaduan::with('category', 'masyarakat')->findOrFail($id);
         return view('admin.pengaduan.show', compact('pengaduan'));
     }
 

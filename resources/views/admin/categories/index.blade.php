@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3>Daftar Kategori</h3>
+        <h3>Data Kategori 🗂️</h3>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

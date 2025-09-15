@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">Data Petugas</h3>
+        <h3 class="mb-4">Data Petugas 👮</h3>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

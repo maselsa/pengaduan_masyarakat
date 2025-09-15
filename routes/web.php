@@ -12,6 +12,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserTanggapanController;
+use App\Http\Controllers\AdminMasyarakatController;
+use App\Http\Controllers\NotifikasiController;
+
 
 // HALAMAN UTAMA (Public)
 Route::get('/', function () {
@@ -75,4 +78,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-kategori', [CategoryController::class, 'index'])->name('data.kategori');
     //Data pengaduan
     Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
+     //Data masyarakat
+    Route::get('/data-masyarakat', [AdminMasyarakatController::class, 'index'])->name('data.masyarakat');
+
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('user.notifikasi');
+    Route::get('/admin/notifikasi', [NotifikasiController::class, 'admin'])->name('admin.notifikasi');
+
 });
