@@ -12,6 +12,7 @@
             <p><strong>Lokasi:</strong> {{ $pengaduan->lokasi }}</p>
             <p><strong>Kategori:</strong> {{ $pengaduan->category->name ?? '-' }}</p>
             <p><strong>Deskripsi:</strong> {{ $pengaduan->deskripsi }}</p>
+            <p><strong>Status:</strong> {{ $pengaduan->status }}</p>
             <p><strong>Bukti:</strong>
                 @if ($pengaduan->bukti)
                     <img src="{{ asset('storage/' . $pengaduan->bukti) }}" alt="Bukti Pengaduan"
@@ -21,7 +22,7 @@
                 @endif
             </p>
 
-            <a href="{{ route('admin.pengaduan.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('admin.pengaduan.index') }}" class="btn btn-secondary">back</a>
         </div>
     </div>
 @endsection

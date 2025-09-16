@@ -50,23 +50,7 @@
                         <p>💖 Logout</p>
                     </a>
                 </li>
-            </ul>
-
-            {{-- Bagian bawah sidebar --}}
-            <div class="mt-5 p-3 text-center" style="border-top: 1px dashed pink;">
-                <p class="text-white mb-1">👩🏻‍💻 {{ auth()->user()->name }}</p>
-                <small class="text-light">✨ Role: {{ auth()->user()->role }} ✨</small>
-
-                <div class="mt-3">
-                    <p class="text-pink">💕 Terima kasih sudah pakai 💕<br>
-                        <strong>Sistem Pengaduan Masyarakat</strong> 🌸
-                    </p>
-                </div>
-
-                <div class="mt-2">
-                    <span style="font-size:20px;">💞🌷🧚🏻‍♀️💖✨</span>
-                </div>
-            </div>
+            </ul>          
         </div>
     </div>
 </div>
