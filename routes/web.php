@@ -14,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserTanggapanController;
 use App\Http\Controllers\AdminMasyarakatController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\FeedbackController;
 
 
 // HALAMAN UTAMA (Public)
@@ -54,6 +55,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/petugas', [AdminPetugasController::class, 'store'])->name('petugas.store');
         // CRUD kategori
         Route::resource('categories', CategoryController::class);
+        Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
+        Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
+        Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
     });
 
 
@@ -69,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('pengaduan', UserPengaduanController::class);
         // Tanggapan
         Route::get('/tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
+        Route::get('/notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
     });
 
 
@@ -83,5 +88,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('user.notifikasi');
     Route::get('/admin/notifikasi', [NotifikasiController::class, 'admin'])->name('admin.notifikasi');
+    // Halaman feedback (GET)
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('pengaduan.feedback');
+    // Kirim tanggapan (POST)
+    Route::post('/feedback/{id}/tanggapan', [FeedbackController::class, 'tanggapan'])->name('pengaduan.feedback.tanggapan');
 
 });

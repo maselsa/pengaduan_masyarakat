@@ -3,71 +3,69 @@
 @section('title', 'Dashboard')
 
 @section('content')
-
     <div class="container">
-        <div class="text-center p-4 mb-4 rounded" style="background: linear-gradient(135deg, #ffb6c1, #ff69b4); color: white;">
-            <h1>💕 Selamat Datang di Sistem Pengaduan Masyarakat 💕</h1>
-            <p>🌸 Silakan ajukan atau kelola pengaduan sesuai hak akses Anda 🌷</p>
 
-            {{-- Link Form Pengaduan hanya untuk user --}}
+        {{-- Header Dashboard --}}
+        <div class="text-center p-4 mb-4 rounded shadow-sm">
+        <h1>🌷 Welcome to the Public Complaint System 🌷</h1>
+
+            {{-- Tombol Buat Pengaduan (khusus role user) --}}
             @if (auth()->user()->role == 'user')
-                <a href="{{ route('user.pengaduan.create') }}" class="btn btn-light mt-3">
-                    ✍️ Buat Pengaduan 💌
+                <a href="{{ route('user.pengaduan.create') }}" class="btn mt-3 px-4 py-2"
+                    style="background: linear-gradient(135deg, #ff1493, #f576c6); 
+                 color: white; 
+                 font-weight: bold; 
+                 border-radius: 25px; 
+                 font-size: 18px;">
+                    add complaint 💌
                 </a>
             @endif
         </div>
 
-        {{-- Tambahan Dashboard Pinky --}}
-        <div class="row text-center">
-            <!-- Jumlah Pengaduan -->
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0" style="background-color:#ffc0cb;">
-                    <div class="card-body">
-                        <h2>💖 {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->count() }}</h2>
-                        <p>Jumlah Pengaduan 🌷</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pengaduan Terakhir -->
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0" style="background-color:#ffb6c1;">
-                    <div class="card-body">
-                        @php
-                            $last = \App\Models\Pengaduan::where('email', auth()->user()->email)
-                                    ->latest()->first();
-                        @endphp
-                        <h2>🕒💕</h2>
-                        @if($last)
-                            <p><b>Terakhir:</b> {{ $last->tanggal }}<br>💓 {{ ucfirst($last->status) }}</p>
-                        @else
-                            <p>Belum ada pengaduan 😢💔</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3 Pengaduan Terbaru -->
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0" style="background-color:#ff69b4; color:white;">
-                    <div class="card-body">
-                        <h2>🔥 3 Pengaduan Terbaru 💕</h2>
-                        <ul class="list-unstyled">
-                            @foreach(\App\Models\Pengaduan::where('email', auth()->user()->email)->latest()->take(3)->get() as $p)
-                                <li>➡️ {{ $p->deskripsi }} ({{ ucfirst($p->status) }}) 💖</li>
-                            @endforeach
-                            @if(\App\Models\Pengaduan::where('email', auth()->user()->email)->count() == 0)
-                                <li>Belum ada pengaduan 😅💞</li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
+            {{-- Statistik Grafik Pengaduan --}}
+        <div class="card mt-5 shadow border-0 rounded-4">
+            <div class="card-body">
+                <h3 class="text-center mb-4">📊 Complaint Statistics</h3>
+                <canvas id="complaintChart" height="120"></canvas>
             </div>
         </div>
 
-        <div class="alert mt-4 text-center" style="background-color:#ffe4e1; color:#ff1493; font-weight:bold;">
-            💕 Terima kasih sudah mempercayakan pengaduan Anda 💕  
-            Kami siap mendengarkan & menanggapi dengan sepenuh hati 🌸💖
-        </div>
+        {{-- Script Chart.js --}}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('complaintChart');
+
+            new Chart(ctx, {
+                type: 'doughnut', // bisa diganti 'bar' kalau mau
+                data: {
+                    labels: ['Pending ⏳', 'In Process 🔄', 'Completed ✅'],
+                    datasets: [{
+                        data: [
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','pending')->count() }},
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','proses')->count() }},
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','selesai')->count() }}
+                        ],
+                        backgroundColor: ['#ff69b4', '#ffb6c1', '#c71585'], // nuansa pinky 🌸
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#d63384'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
     </div>
 @endsection

@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Tanggapan</h2>
 
-    @if($pengaduan->isEmpty())
+    @if($tanggapan->isEmpty())
         <p>Belum ada tanggapan.</p>
     @else
         <table border="1" cellpadding="8">

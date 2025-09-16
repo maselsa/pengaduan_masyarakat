@@ -188,3 +188,79 @@ option {
     /* biar tulisannya keliatan */
     background-color: white;
 }
+
+/* 🌸 Animasi fade-in lembut pas load */
+body {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 🌸 Efek hover di card: glow pink */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 118, 180, 0.5) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 🌸 Judul dashboard pakai text gradient */
+.page-title span,
+.panel-header .page-title span {
+    background: linear-gradient(135deg, #ff7eb3, #ff4f9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 🌸 Button gemes dengan animasi */
+.btn,
+.btn-primary {
+    border-radius: 25px !important;
+    box-shadow: 0 4px 12px rgba(255, 100, 150, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(255, 100, 150, 0.5);
+}
+
+/* 🌸 Sidebar item hover: glow */
+.sidebar .nav-item a:hover {
+    box-shadow: inset 0 0 8px rgba(255, 118, 180, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+/* 🌸 Scrollbar pink aesthetic */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ffe6f3;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff7eb3, #ff4f9a);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff4f9a;
+}
+
+/* 🌸 Footer tambahan efek glow */
+.footer {
+    background: #ffe6f3 !important;
+    border-top: 2px solid #ffb6d9 !important;
+    box-shadow: 0 -3px 10px rgba(255, 118, 180, 0.2);
+}
+

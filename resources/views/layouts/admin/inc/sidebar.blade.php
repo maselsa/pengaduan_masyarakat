@@ -51,6 +51,14 @@
                         <p>💬 Feedback</p>
                     </a>
                 </li>
+
+                {{-- Logout --}}
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>💔 Logout</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

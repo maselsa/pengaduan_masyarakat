@@ -21,6 +21,8 @@ return new class extends Migration
         $table->string('lokasi')->nullable();
         $table->text('deskripsi');
         $table->string('bukti')->nullable();
+        $table->string('status')->default('Pending');
+        $table->text('tanggapan_admin')->nullable();
         $table->timestamps();
 
 });
