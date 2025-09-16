@@ -9,7 +9,7 @@ class Category extends Model
      use HasFactory;
 
     protected $fillable = [
-        'categories_id',
+        'nama',
         'deskripsi',
     ];
     public function pengaduan()
