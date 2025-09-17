@@ -7,7 +7,7 @@
 
         {{-- Header Dashboard --}}
         <div class="text-center p-4 mb-4 rounded shadow-sm">
-        <h1>🌷 Welcome to the Public Complaint System 🌷</h1>
+            <h1>🌷 Welcome to the Public Complaint System 🌷</h1>
 
             {{-- Tombol Buat Pengaduan (khusus role user) --}}
             @if (auth()->user()->role == 'user')
@@ -22,7 +22,7 @@
             @endif
         </div>
 
-            {{-- Statistik Grafik Pengaduan --}}
+        {{-- Statistik Grafik Pengaduan --}}
         <div class="card mt-5 shadow border-0 rounded-4">
             <div class="card-body">
                 <h3 class="text-center mb-4">📊 Complaint Statistics</h3>
@@ -36,17 +36,22 @@
             const ctx = document.getElementById('complaintChart');
 
             new Chart(ctx, {
-                type: 'doughnut', // bisa diganti 'bar' kalau mau
+                type: 'bar', // pakai bar chart
                 data: {
                     labels: ['Pending ⏳', 'In Process 🔄', 'Completed ✅'],
                     datasets: [{
+                        label: 'Jumlah Pengaduan',
                         data: [
                             {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','pending')->count() }},
                             {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','proses')->count() }},
                             {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','selesai')->count() }}
                         ],
-                        backgroundColor: ['#ff69b4', '#ffb6c1', '#c71585'], // nuansa pinky 🌸
-                        borderWidth: 2,
+                        backgroundColor: [
+                            '#ff69b4', // Pending
+                            '#ffb6c1', // In Process
+                            '#c71585'  // Completed
+                        ],
+                        borderWidth: 1,
                         borderColor: '#fff'
                     }]
                 },
@@ -54,13 +59,28 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'bottom',
-                            labels: {
+                            display: false // legend disembunyikan
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                color: '#d63384',
                                 font: {
                                     size: 14,
                                     weight: 'bold'
-                                },
-                                color: '#d63384'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#d63384',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
                             }
                         }
                     }

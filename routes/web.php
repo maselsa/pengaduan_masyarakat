@@ -13,8 +13,9 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserTanggapanController;
 use App\Http\Controllers\AdminMasyarakatController;
-use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\UserNotifikasiController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\UserProfilController;
 
 
 // HALAMAN UTAMA (Public)
@@ -58,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
         Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
         Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+        Route::post('pengaduan/{id}/konfirmasi', [AdminController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+    
     });
 
 
@@ -74,6 +77,9 @@ Route::middleware(['auth'])->group(function () {
         // Tanggapan
         Route::get('/tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
         Route::get('/notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
+        Route::get('/profil', [UserProfilController::class, 'index'])->name('profil');
+        Route::post('/profil', [UserProfilController::class, 'update'])->name('profil.update');
+        
     });
 
 
@@ -90,7 +96,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/notifikasi', [NotifikasiController::class, 'admin'])->name('admin.notifikasi');
     // Halaman feedback (GET)
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('pengaduan.feedback');
-    // Kirim tanggapan (POST)
-    Route::post('/feedback/{id}/tanggapan', [FeedbackController::class, 'tanggapan'])->name('pengaduan.feedback.tanggapan');
-
+    // route POST untuk mengirim tanggapan feedback
+    Route::post('/admin/feedback/{id}/tanggapan', [FeedbackController::class, 'tanggapan'])->name('feedback.tanggapan');
 });

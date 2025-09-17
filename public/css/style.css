@@ -9,11 +9,10 @@ body,
 .sidebar-wrapper {
     background: linear-gradient(135deg, #fecfef 100%, #ff9be6 0%) !important;
     color: #b30059 !important;
-    /* teks pink gelap */
     font-weight: 600 !important;
 }
 
-/* 🌸 Logo header (Kaiadmin) jadi pink, bukan item */
+/* 🌸 Logo header */
 .logo-header,
 .navbar-header,
 .logo-header[data-background-color],
@@ -22,7 +21,6 @@ body,
 .navbar-header[style] {
     background: linear-gradient(135deg, #ff9a9e 0%, #ff7eb3 100%) !important;
     color: #b30059 !important;
-    /* teks/logo pink gelap */
     font-weight: 700 !important;
 }
 
@@ -34,7 +32,6 @@ body,
 .header {
     background: linear-gradient(135deg, #ff7eb3 0%, #ff4f9a 100%) !important;
     color: #b30059 !important;
-    /* teks pink gelap */
     font-weight: 700 !important;
 }
 
@@ -44,7 +41,6 @@ body,
     border-radius: 15px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     color: #b30059 !important;
-    /* teks pink gelap */
     font-weight: 600 !important;
 }
 
@@ -55,10 +51,15 @@ body,
     border: none !important;
     color: #fff !important;
     font-weight: 700 !important;
+    border-radius: 25px !important;
+    box-shadow: 0 4px 12px rgba(255, 100, 150, 0.3);
 }
 
 .btn:hover {
     background-color: #ff4f9a !important;
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(255, 100, 150, 0.5);
+    transition: all 0.3s ease;
 }
 
 /* 🌸 Sidebar nav teks pink gelap */
@@ -101,35 +102,19 @@ body,
     border-radius: 10px;
 }
 
-/* 🌸 Biar tulisan "Admin"  putih */
-.navbar .navbar-nav .nav-link.dropdown-toggle,
-.page-title,
-.page-title span,
-.panel-header .page-title,
-.panel-header .page-title span {
-    color: #fff !important;
-    /* putih */
-    font-weight: 700 !important;
-    /* tebel */
-}
-
 /* 🌸 Footer tulisan bawah biar rapi */
 .footer,
 .card-footer,
 .page-footer {
     text-align: center !important;
-    /* rata tengah */
     font-weight: 600 !important;
-    /* biar agak tebel */
     color: #b30059 !important;
-    /* pink gelap biar nyatu */
 }
 
 .footer ul,
 .card-footer ul,
 .page-footer ul {
     list-style: none !important;
-    /* hilangin bullet point */
     padding: 0 !important;
     margin: 0 !important;
 }
@@ -137,37 +122,38 @@ body,
 /* 🌸 Dropdown item text */
 .dropdown-menu .dropdown-item {
     color: #f2679d !important;
-    /* putih biar kontras */
     font-weight: bold;
 }
 
 /* 🌸 Sidebar item default */
 .sidebar .nav-item a {
     color: #fff !important;
-    /* teks putih */
     font-weight: bold;
     border-radius: 8px;
     padding: 10px 15px;
+    transition: none !important;
+    /* 🚀 matikan slow */
 }
 
 /* 🌸 Sidebar item hover */
 .sidebar .nav-item a:hover {
     background: #ff7eb3 !important;
-    /* pink medium */
     color: #fff !important;
+    box-shadow: inset 0 0 8px rgba(255, 118, 180, 0.6);
+    transition: none !important;
+    /* 🚀 langsung tanpa slow */
 }
 
-/* 🌸 Sidebar item aktif (yang diklik) */
+/* 🌸 Sidebar item aktif */
 .sidebar .nav-item.active>a,
 .sidebar .nav-item a.active {
     background: linear-gradient(135deg, #ff4f9a, #ff7eb3) !important;
-    /* gradasi pink */
     color: #fff !important;
     font-weight: bold;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Saat link, tombol, atau input diklik/fokus jadi pink */
+/* Saat link, tombol, atau input diklik/fokus */
 a:active,
 a:focus,
 button:active,
@@ -177,7 +163,6 @@ textarea:focus,
 select:focus {
     outline: none;
     background-color: #ff77b6 !important;
-    /* pink */
     color: #fff !important;
     border-color: #ff77b6 !important;
 }
@@ -185,26 +170,15 @@ select:focus {
 select,
 option {
     color: black;
-    /* biar tulisannya keliatan */
     background-color: white;
 }
 
-/* 🌸 Animasi fade-in lembut pas load */
+/* 🚀 HAPUS efek fade-in body biar langsung tampil */
 body {
-    animation: fadeIn 1s ease-in-out;
+    animation: none !important;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-/* 🌸 Efek hover di card: glow pink */
+/* 🌸 Efek hover di card */
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(255, 118, 180, 0.5) !important;
@@ -217,25 +191,6 @@ body {
     background: linear-gradient(135deg, #ff7eb3, #ff4f9a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-/* 🌸 Button gemes dengan animasi */
-.btn,
-.btn-primary {
-    border-radius: 25px !important;
-    box-shadow: 0 4px 12px rgba(255, 100, 150, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 18px rgba(255, 100, 150, 0.5);
-}
-
-/* 🌸 Sidebar item hover: glow */
-.sidebar .nav-item a:hover {
-    box-shadow: inset 0 0 8px rgba(255, 118, 180, 0.6);
-    transition: all 0.3s ease-in-out;
 }
 
 /* 🌸 Scrollbar pink aesthetic */
@@ -256,11 +211,3 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #ff4f9a;
 }
-
-/* 🌸 Footer tambahan efek glow */
-.footer {
-    background: #ffe6f3 !important;
-    border-top: 2px solid #ffb6d9 !important;
-    box-shadow: 0 -3px 10px rgba(255, 118, 180, 0.2);
-}
-

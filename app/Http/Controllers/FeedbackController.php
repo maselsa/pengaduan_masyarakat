@@ -35,7 +35,7 @@ class FeedbackController extends Controller
         $pengaduan->tanggapan = $request->tanggapan;
         $pengaduan->save();
 
-        return redirect()->route('pengaduan.feedback')->with('success', 'Tanggapan berhasil dikirim!');
+        return redirect()->route('feedback.index')->with('success', 'Tanggapan berhasil dikirim!');
     }
 
     public function create()
@@ -43,9 +43,24 @@ class FeedbackController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        // Validasi input
+        $request->validate([
+            'status' => 'required|in:Diproses,Selesai,Ditolak',
+            'tanggapan' => 'nullable|string'
+        ]);
+
+        // Cari pengaduan
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        // Update status & tanggapan
+        $pengaduan->update([
+            'status' => $request->status,
+            'tanggapan' => $request->tanggapan,
+        ]);
+
+        return redirect()->route('feedback.index')->with('success', 'Feedback berhasil dikirim!');
     }
 
     public function show(string $id)

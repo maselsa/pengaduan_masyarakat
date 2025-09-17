@@ -9,8 +9,8 @@ class AddStatusToPengaduanTable extends Migration
     public function up()
     {
         Schema::table('pengaduan', function (Blueprint $table) {
-            $table->string('status')->default('pending');
-        });
+        $table->enum('status', ['pending', 'diproses', 'selesai', 'ditolak'])->default('pending');
+       });
     }
 
     public function down()
@@ -19,4 +19,5 @@ class AddStatusToPengaduanTable extends Migration
             $table->dropColumn('status');
         });
     }
+    
 }

@@ -20,6 +20,10 @@ class Pengaduan extends Model
     'category_id',
     'deskripsi',
     'bukti',
+    'status',
+    'tanggapan_admin',
+    'user_id',
+    'masyarakat_id'
 ];
 
     public function category()
@@ -29,16 +33,20 @@ class Pengaduan extends Model
 
     public function tanggapan()
     {
-    return $this->hasOne(Tanggapan::class, 'pengaduan_id');
+       return $this->hasOne(Tanggapan::class, 'pengaduan_id');
     }
 
     public function user()
     {
-    return $this->belongsTo(User::class, 'user_id');
+       return $this->belongsTo(User::class, 'user_id');
     }
 
     public function masyarakat()
     {
         return $this->belongsTo(Masyarakat::class, 'masyarakat_id');
+    }
+    public function feedback()
+    {
+        return $this->hasMany(feedback::class, 'pengaduan_id');
     }
 }
