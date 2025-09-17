@@ -19,16 +19,25 @@
             @else
                 {{-- Kalau sudah login --}}
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user"></i> {{ Auth::user()->name }}
+
+                        {{-- Tambahan: foto profil kecil --}}
+                        @if(Auth::user()->foto)
+                            <img src="{{ asset('storage/' . Auth::user()->foto) }}"
+                                 class="rounded-circle me-2" width="30" height="30" style="object-fit: cover;">
+                        @else
+                            <i class="fas fa-user-circle me-2" style="font-size: 1.5rem;"></i>
+                        @endif
+
+                        {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();if(confirm('Apakah anda yakin ingin logout?'))
                                 document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i>💔 logout
                             </a>
                         </li>
                     </ul>

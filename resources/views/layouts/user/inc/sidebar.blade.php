@@ -19,7 +19,15 @@
                     </a>
                 </li>
 
-                {{-- Form Pengaduan --}}
+                {{-- Profil --}}
+                <li class="nav-item {{ request()->routeIs('user.profil.*') ? 'active' : '' }}">
+                    <a href="{{ route('user.profil') }}">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>👤 Profil</p>
+                    </a>
+                </li>
+
+                 {{-- Form Pengaduan --}}
                 <li class="nav-item {{ request()->routeIs('user.pengaduan.*') ? 'active' : '' }}">
                     <a href="{{ route('user.pengaduan.index') }}">
                         <i class="fas fa-clipboard-list"></i>
@@ -29,7 +37,7 @@
 
                 {{-- Notifikasi --}}
                 <li class="nav-item {{ request()->is('notifikasi') ? 'active' : '' }}">
-                    <a href="{{ route('user.notifikasi') }}">
+                    <a href="{{ route('user.notifikasi.index') }}">
                         <i class="fas fa-bell"></i>
                         <p>🔔 Notifikasi</p>
                     </a>
@@ -47,7 +55,7 @@
                 <li class="nav-item">
                     <a href="{{ route('logout') }}">
                         <i class="fas fa-sign-out-alt"></i>
-                        <p>💖 Logout</p>
+                        <p>💔 Logout</p>
                     </a>
                 </li>
             </ul>          

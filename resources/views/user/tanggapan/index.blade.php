@@ -1,36 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Tanggapan</h2>
+    <div class="container">
+        <h2>💬 Tanggapan Admin</h2>
 
-    @if($tanggapan->isEmpty())
-        <p>Belum ada tanggapan.</p>
-    @else
-        <table border="1" cellpadding="8">
-            <thead>
-                <tr>
-                    <th>Judul Pengaduan</th>
-                    <th>Isi Pengaduan</th>
-                    <th>Tanggapan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pengaduan as $item)
+        @if ($pengaduan->isEmpty())
+            <p class="text-muted">Belum ada pengaduan yang ditanggapi.</p>
+        @else
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <td>{{ $item->judul ?? '-' }}</td>
-                        <td>{{ $item->isi ?? '-' }}</td>
-                        <td>
-                            @if($item->tanggapan)
-                                {{ $item->tanggapan->isi }}
-                            @else
-                                <em>Belum ditanggapi</em>
-                            @endif
-                        </td>
+                        <th>Judul Pengaduan</th>
+                        <th>Isi Pengaduan</th>
+                        <th>Tanggapan Admin</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
-</div>
+                </thead>
+                <tbody>
+                    @foreach ($pengaduan as $item)
+                        <tr>
+                            <td>{{ $item->judul ?? '-' }}</td>
+                            <td>{{ $item->deskripsi ?? '-' }}</td>
+                            <td>
+                                @if ($item->tanggapan)
+                                    {{ $item->tanggapan->isi }}
+                                @else
+                                    <em class="text-muted">Belum ada tanggapan</em>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
 @endsection
