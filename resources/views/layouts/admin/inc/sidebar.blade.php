@@ -45,19 +45,24 @@
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->is('feedback*') ? 'active' : '' }}">
-                    <a href="{{ url('/feedback') }}">
-                        <i class="fas fa-database"></i>
-                        <p>💬 Feedback</p>
+                <li class="nav-item {{ request()->is('admin/tanggapan*') ? 'active' : '' }}">
+                    <a href="{{ url('/admin/tanggapan') }}">
+                        <i class="fas fa-comments"></i>
+                        <p>📩 Tanggapan</p>
                     </a>
                 </li>
 
                 {{-- Logout --}}
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}">
+                    <a href="#" class="nav-link"
+                        onclick="event.preventDefault(); if(confirm('yakin mau logout? 💔')) document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>
                         <p>💔 Logout</p>
                     </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </div>

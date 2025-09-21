@@ -62,10 +62,11 @@
             <div class="form-group mb-3">
                 <label>Kategori</label>
                 <select name="category_id" class="form-control @error('category_id') is-invalid @enderror" required>
+                    <option value="">-- Pilih Kategori --</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}"
-                            {{ old('category', $pengaduan->category) == $cat->id ? 'selected' : '' }}>
-                            {{ $cat->nama }}
+                            {{ old('category_id', $pengaduan->category_id) == $cat->id ? 'selected' : '' }}>
+                            {{ $cat->name }}
                         </option>
                     @endforeach
                 </select>

@@ -22,7 +22,7 @@
                 @endif
             </p>
 
-            <a href="{{ route('pengaduan.feedback') }}" class="btn btn-secondary">back</a>
+           <a href="{{ route('admin.pengaduan.index') }}" class="btn btn-pink w-100">back</a>
         </div>
     </div>
 @endsection

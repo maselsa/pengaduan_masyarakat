@@ -10,16 +10,13 @@ use App\Models\Masyarakat;
 class UserPengaduanController extends Controller
 {
     public function index()
-    {
-        // Tampilkan semua pengaduan milik user yang login
-        $pengaduan = Pengaduan::with('category')
-            ->where('email', auth()->user()->email)
-            ->get();
+{
+    $pengaduan = Pengaduan::with('category')
+        ->where('email', auth()->user()->email)
+        ->get();
 
-        return view('user.pengaduan.index', compact('pengaduan'));
-        
-
-    }
+    return view('user.pengaduan.index', compact('pengaduan'));
+}
 
     public function create()
     {
@@ -32,48 +29,49 @@ class UserPengaduanController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama'       => 'required|string|max:255',
-            'email'      => 'required|email|max:100',
-            'no_hp'      => 'required|string|max:20',
-            'tanggal'    => 'required|date',
-            'lokasi'     => 'nullable|string',
-            // kamu pakai column 'category' (bukan category_id), jadi validasi pake 'category'
-            'category_id'   => 'required|exists:categories,id',
-            'deskripsi'  => 'required|string',
-            'bukti'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
+{
+    $validated = $request->validate([
+        'nama'        => 'required|string|max:255',
+        'email'       => 'required|email|max:100',
+        'no_hp'       => 'required|string|max:20',
+        'tanggal'     => 'required|date',
+        'lokasi'      => 'nullable|string',
+        'category_id' => 'required|exists:categories,id',
+        'deskripsi'   => 'required|string',
+        'bukti'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-        if ($request->hasFile('bukti')) {
+    if ($request->hasFile('bukti')) {
         $path = $request->file('bukti')->store('bukti_pengaduan', 'public');
         $validated['bukti'] = $path;
-        }
-
-        // Set user_id dari user yang login
-          $validated['user_id'] = auth()->id();
-
-         // Simpan ke database
-        Pengaduan::create($validated);
-        
-
-        return redirect()->route('user.pengaduan.index')
-            ->with('success', 'Pengaduan berhasil dikirim!');
     }
+
+    // Hubungkan pengaduan ke user yang login
+    $validated['user_id'] = auth()->id();   // <-- tetap simpan user_id dari tabel users
+    $validated['status'] = 'pending';       // default status
+
+    // Simpan data
+    Pengaduan::create($validated);
+
+    return redirect()->route('user.pengaduan.index')
+        ->with('success', 'Pengaduan berhasil dikirim!');
+}
+
 
     public function show($id)
-    {
-        $pengaduan = Pengaduan::with('category')
-            ->where('email', auth()->user()->email) // pastikan user lihat miliknya sendiri
-            ->findOrFail($id);
+{
+    $pengaduan = Pengaduan::with('category')
+        ->where('email', auth()->user()->email)
+        ->where('id', $id)
+        ->firstOrFail();
 
-        return view('user.pengaduan.show', compact('pengaduan'));
-    }
+    return view('user.pengaduan.show', compact('pengaduan'));
+}
 
     public function edit($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-        if ($pengaduan->email !== auth()->user()->email) abort(403);
+        if ($pengaduan->user_id !== auth()->id()) abort(403);
 
         $categories = Category::all();
         return view('user.pengaduan.edit', compact('pengaduan', 'categories'));
@@ -82,24 +80,22 @@ class UserPengaduanController extends Controller
     public function update(Request $request, $id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-        if ($pengaduan->email !== auth()->user()->email) abort(403);
+        if ($pengaduan->user_id !== auth()->id()) abort(403);
 
         $validated = $request->validate([
-            'nama'       => 'required|string|max:255',
-            'email'      => 'required|email|max:100',
-            'no_hp'      => 'required|string|max:20',
-            'tanggal'    => 'required|date',
-            'lokasi'     => 'nullable|string',
-            'category'   => 'required|string|max:100',
-            'deskripsi'  => 'required|string',
-            'bukti'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'nama'        => 'required|string|max:255',
+            'email'       => 'required|email|max:100',
+            'no_hp'       => 'required|string|max:20',
+            'tanggal'     => 'required|date',
+            'lokasi'      => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+            'deskripsi'   => 'required|string',
+            'bukti'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         if ($request->hasFile('bukti')) {
-            // opsional: hapus file lama jika mau (tidak wajib)
-            $fileName = time() . '.' . $request->bukti->extension();
-            $request->bukti->move(public_path('uploads'), $fileName);
-            $validated['bukti'] = $fileName;
+            $path = $request->file('bukti')->store('bukti_pengaduan', 'public');
+            $validated['bukti'] = $path;
         }
 
         $pengaduan->update($validated);
@@ -111,12 +107,11 @@ class UserPengaduanController extends Controller
     public function destroy($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
-        if ($pengaduan->email !== auth()->user()->email) abort(403);
+        if ($pengaduan->user_id !== auth()->id()) abort(403);
 
         $pengaduan->delete();
 
         return redirect()->route('user.pengaduan.index')
             ->with('success', 'Pengaduan berhasil dihapus!');
     }
-    
 }

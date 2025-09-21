@@ -57,10 +57,10 @@
                 @enderror
             </div>
 
-            {{-- Kategori (pakai 'category' sesuai perubahan kamu) --}}
+            {{-- Kategori --}}
             <div class="form-group mb-3">
                 <label>Kategori</label>
-                <select name="category_id" class="form-control @error('category)id') is-invalid @enderror" required>
+                <select name="category_id" class="form-control @error('category_id') is-invalid @enderror" required>
                     <option value="">-- Pilih Kategori --</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>

@@ -11,11 +11,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserTanggapanController;
 use App\Http\Controllers\AdminMasyarakatController;
-use App\Http\Controllers\UserNotifikasiController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\AdminTanggapanController;
 use App\Http\Controllers\UserProfilController;
+use App\Http\Controllers\UserTanggapanController;
+
 
 
 // HALAMAN UTAMA (Public)
@@ -26,6 +27,7 @@ Route::get('/', function () {
 // AUTH ROUTES
 Auth::routes();
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // ROUTES WITH AUTH
 Route::middleware(['auth'])->group(function () {
@@ -59,7 +61,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
         Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
         Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
-        Route::post('pengaduan/{id}/konfirmasi', [AdminController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+        Route::post('pengaduan/{id}/konfirmasi', [AdminPengaduanController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+        Route::get('tanggapan', [AdminTanggapanController::class, 'index'])->name('tanggapan.index');
+        Route::post('tanggapan/{id}', [AdminTanggapanController::class, 'store'])->name('tanggapan.store');
+        Route::post('pengaduan/{id}/konfirmasi', [AdminPengaduanController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+
     
     });
 
@@ -75,10 +81,11 @@ Route::middleware(['auth'])->group(function () {
         // CRUD pengaduan
         Route::resource('pengaduan', UserPengaduanController::class);
         // Tanggapan
-        Route::get('/tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
-        Route::get('/notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
+        Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
         Route::get('/profil', [UserProfilController::class, 'index'])->name('profil');
         Route::post('/profil', [UserProfilController::class, 'update'])->name('profil.update');
+        Route::get('/pengaduan/{id}', [UserPengaduanController::class, 'show'])->name('pengaduan.show');
+        Route::get('tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
         
     });
 
@@ -91,11 +98,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
      //Data masyarakat
     Route::get('/data-masyarakat', [AdminMasyarakatController::class, 'index'])->name('data.masyarakat');
-
-    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('user.notifikasi');
     Route::get('/admin/notifikasi', [NotifikasiController::class, 'admin'])->name('admin.notifikasi');
-    // Halaman feedback (GET)
-    Route::get('/feedback', [FeedbackController::class, 'index'])->name('pengaduan.feedback');
-    // route POST untuk mengirim tanggapan feedback
-    Route::post('/admin/feedback/{id}/tanggapan', [FeedbackController::class, 'tanggapan'])->name('feedback.tanggapan');
 });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pengaduan;
 use App\Models\Category;
 use App\Models\Tanggapan;
+use App\Models\Notifikasi;
 use Illuminate\Support\Facades\Auth;
 
 class AdminPengaduanController extends Controller
@@ -31,11 +32,11 @@ class AdminPengaduanController extends Controller
             ->with('success', 'Pengaduan berhasil dihapus!');
     }
 
-    // 🌟 Update status + simpan tanggapan admin
+    // 🌟 Update status + simpan tanggapan admin + notifikasi
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,diproses,selesai,ditolak',
+            'status' => 'required|in:pending,proses,selesai,ditolak',
             'isi' => 'nullable|string',
         ]);
 
@@ -53,23 +54,21 @@ class AdminPengaduanController extends Controller
             ]);
         }
 
+        // 🔔 Buat pesan notifikasi sesuai status
+        $pesan = match ($request->status) {
+            'proses' => 'Pengaduan kamu sedang proses admin 🚀',
+            'selesai'  => 'Pengaduan kamu sudah selesai ✅',
+            'ditolak'  => 'Pengaduan kamu ditolak ❌',
+            default    => 'Pengaduan kamu telah dikonfirmasi admin 📌',
+        };
+
+        // simpan notifikasi
+        Notifikasi::create([
+            'masyarakat_id' => $pengaduan->masyarakat_id, // penerima notif
+            'pesan' => $pesan,
+        ]);
+
         return redirect()->route('admin.pengaduan.show', $id)
             ->with('success', 'Status & tanggapan berhasil diperbarui!');
     }
-
-    
-
-    public function konfirmasi($id)
-   {
-    $pengaduan = Pengaduan::findOrFail($id);
-
-    // Ubah status
-    $pengaduan->status = 'diproses';
-    $pengaduan->save();
-
-    // Simpan notifikasi ke session user (nanti bisa diganti database notif)
-    session()->flash('notif_user', 'Pengaduan anda telah dikonfirmasi!');
-
-    return redirect()->back()->with('success', 'Pengaduan berhasil dikonfirmasi!');
-   }
 }
