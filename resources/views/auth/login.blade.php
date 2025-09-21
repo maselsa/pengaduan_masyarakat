@@ -76,7 +76,7 @@
             </form>
 
             <p class="text-center mt-3">
-                Don't have an account? <a href="{{ route('register') }}" style="color:#d63384; font-weight:bold;">Register 🎀</a>
+                Don't have an account? <a href="{{ route('register') }}" style="color:#d63384; font-weight:bold;">Register 🍇</a>
             </p>
         </div>
     </div>

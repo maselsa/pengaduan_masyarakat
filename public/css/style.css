@@ -185,14 +185,6 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-/* 🌸 Judul dashboard pakai text gradient */
-.page-title span,
-.panel-header .page-title span {
-    background: linear-gradient(135deg, #ff7eb3, #ff4f9a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 /* 🌸 Scrollbar pink aesthetic */
 ::-webkit-scrollbar {
     width: 8px;

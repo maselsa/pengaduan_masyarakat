@@ -46,4 +46,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function notifikasi()
+{
+    return $this->hasMany(Notifikasi::class, 'user_id');
+}
+
+
 }

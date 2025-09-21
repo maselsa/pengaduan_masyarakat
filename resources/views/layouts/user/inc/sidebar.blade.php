@@ -23,11 +23,11 @@
                 <li class="nav-item {{ request()->routeIs('user.profil.*') ? 'active' : '' }}">
                     <a href="{{ route('user.profil') }}">
                         <i class="fas fa-clipboard-list"></i>
-                        <p>👤 Profil</p>
+                        <p>🍓 Profil</p>
                     </a>
                 </li>
 
-                 {{-- Form Pengaduan --}}
+                {{-- Form Pengaduan --}}
                 <li class="nav-item {{ request()->routeIs('user.pengaduan.*') ? 'active' : '' }}">
                     <a href="{{ route('user.pengaduan.index') }}">
                         <i class="fas fa-clipboard-list"></i>
@@ -47,18 +47,23 @@
                 <li class="nav-item {{ request()->routeIs('user.tanggapan.index') ? 'active' : '' }}">
                     <a href="{{ route('user.tanggapan.index') }}">
                         <i class="fas fa-comments"></i>
-                        <p>💬 Tanggapan</p>
+                        <p>📩 Tanggapan</p>
                     </a>
                 </li>
 
                 {{-- Logout --}}
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}">
+                 <li class="nav-item">
+                    <a href="#" class="nav-link"
+                        onclick="event.preventDefault(); if(confirm('yakin mau logout? 💔')) document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>
                         <p>💔 Logout</p>
                     </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
-            </ul>          
+            </ul>
         </div>
     </div>
 </div>

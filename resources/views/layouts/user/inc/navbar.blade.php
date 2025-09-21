@@ -19,25 +19,30 @@
             @else
                 {{-- Kalau sudah login --}}
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-
-                        {{-- Tambahan: foto profil kecil --}}
-                        @if(Auth::user()->foto)
-                            <img src="{{ asset('storage/' . Auth::user()->foto) }}"
-                                 class="rounded-circle me-2" width="30" height="30" style="object-fit: cover;">
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        
+                        {{-- Foto profil --}}
+                        @if (Auth::user()->foto)
+                            <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="Foto Profil"
+                                style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:8px;">
                         @else
-                            <i class="fas fa-user-circle me-2" style="font-size: 1.5rem;"></i>
+                            <img src="{{ asset('assets/img/default.jpg') }}" alt="Default Profil"
+                                style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:8px;">
                         @endif
-
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
+                            <a class="dropdown-item" href="{{ route('user.profil') }}">
+                                <i class="fas fa-user"></i> 🍓 profile
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();if(confirm('Apakah anda yakin ingin logout?'))
+                                onclick="event.preventDefault();if(confirm('Apakah anda yakin ingin logout?'))
                                 document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i>💔 logout
+                                <i class="fas fa-sign-out-alt"></i> 💔 logout
                             </a>
                         </li>
                     </ul>

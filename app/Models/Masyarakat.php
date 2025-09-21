@@ -8,14 +8,11 @@ class Masyarakat extends Model
 {
     protected $table = 'masyarakat';
 
-    protected $fillable = [
-        'nama', 
-    ];
+    protected $fillable = ['nama', 'email'];
 
     public function pengaduan()
-{
-    return $this->hasMany(Pengaduan::class, 'masyarakat_id');
+    {
+        // Hubungkan ke pengaduan via user_id
+        return $this->hasMany(Pengaduan::class, 'user_id', 'id');
+    }
 }
-
-}
-

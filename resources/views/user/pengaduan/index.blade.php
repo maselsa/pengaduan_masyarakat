@@ -32,7 +32,7 @@
                         <td>{{ $p->lokasi }}</td>
 
                         {{-- Kategori --}}
-                        <td>{{ $p->category->name ?? '-' }}</td>
+                        <td>{{ $p->category->nama ?? '-' }}</td>
 
                         {{-- Status --}}
                         <td>
