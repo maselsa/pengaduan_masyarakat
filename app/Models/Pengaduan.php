@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Tanggapan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +21,7 @@ class Pengaduan extends Model
         'deskripsi',
         'bukti',
         'status',
-        'tanggapan_admin',
+        'tanggapan',
         'user_id',
         'masyarakat_id'
     ];
@@ -33,7 +33,7 @@ class Pengaduan extends Model
 
     public function tanggapan()
     {
-        return $this->hasMany(Tanggapan::class, 'pengaduan_id');
+        return $this->hasOne(Tanggapan::class, 'pengaduan_id');
     }
 
     public function user()

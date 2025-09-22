@@ -11,8 +11,12 @@ class Tanggapan extends Model
 
     protected $table = 'tanggapan';
     
-    
-    protected $fillable = ['pengaduan_id', 'user_id', 'isi'];
+    protected $fillable = [
+        'pengaduan_id',
+        'user_id',
+        'isi',
+        'status'
+    ];
 
     public function pengaduan()
     {

@@ -32,7 +32,7 @@
                         <td>{{ $p->lokasi }}</td>
 
                         {{-- Kategori --}}
-                        <td>{{ $p->category->nama ?? '-' }}</td>
+                        <td>{{ $p->category->name ?? '-' }}</td>
 
                         {{-- Status --}}
                         <td>
@@ -62,7 +62,7 @@
 
                                 <form action="{{ route('user.pengaduan.destroy', $p->id) }}" method="POST"
                                     style="display:inline-block;"
-                                    onsubmit="return confirm('Yakin ingin menghapus pengaduan ini?')">
+                                    onsubmit="return confirm('yakin ingin menghapus pengaduan ini?💔')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger">Hapus</button>

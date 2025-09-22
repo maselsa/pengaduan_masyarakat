@@ -22,7 +22,7 @@ return new class extends Migration
         $table->text('deskripsi');
         $table->string('bukti')->nullable();
         $table->string('status')->default('Pending');
-        $table->text('tanggapan_admin')->nullable();
+        $table->text('tanggapan')->nullable();
         $table->timestamps();
 
 });
