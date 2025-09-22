@@ -20,7 +20,7 @@
                 @forelse($masyarakat as $index => $m)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $m->nama }}</td>
+                        <td>{{ $m->name }}</td>
                         <td>{{ $m->pengaduan->count() }}</td>
                         <td>
                             @if ($m->pengaduan->count() > 0)

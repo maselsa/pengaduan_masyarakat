@@ -3,29 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengaduan;
+use App\Models\Tanggapan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AdminTanggapanController extends Controller
 {
+    // tampilkan semua pengaduan beserta tanggapannya
     public function index()
     {
-        $pengaduan = Pengaduan::all();
+        $pengaduan = Pengaduan::with('tanggapan')->get();
         return view('admin.tanggapan.index', compact('pengaduan'));
     }
 
+    // tambah tanggapan baru
     public function store(Request $request, $id)
     {
         $request->validate([
-            'tanggapan_admin' => 'required|string',
+            'isi' => 'required|string',
         ]);
 
+        $tanggapan = new Tanggapan();
+        $tanggapan->pengaduan_id = $id;
+        $tanggapan->isi = $request->isi;
+        $tanggapan->user_id = auth()->id(); 
+        $tanggapan->save();
+
         $pengaduan = Pengaduan::findOrFail($id);
-        $pengaduan->tanggapan_admin = $request->tanggapan_admin;
-        $pengaduan->tanggal_tanggapan = now();
-        $pengaduan->status = 'selesai'; // otomatis selesai setelah ditanggapi
+        $pengaduan->status = 'selesai';
         $pengaduan->save();
 
-        return redirect()->back()->with('success', 'Tanggapan berhasil dikirim!');
+        return back()->with('success', 'Tanggapan berhasil dikirim!');
+    }
+
+    // edit tanggapan
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'isi' => 'required|string',
+        ]);
+
+        $tanggapan = Tanggapan::findOrFail($id);
+        $tanggapan->isi = $request->isi;
+        $tanggapan->user_id = auth()->id(); 
+        $tanggapan->save();
+
+        return back()->with('success', 'Tanggapan berhasil diperbarui!');
+    }
+
+    // hapus tanggapan
+    public function destroy($id)
+    {
+        $tanggapan = Tanggapan::findOrFail($id);
+
+        $pengaduan = $tanggapan->pengaduan;
+        $pengaduan->status = 'proses'; // setelah hapus, balik ke "proses"
+        $pengaduan->save();
+
+        $tanggapan->delete();
+
+        return back()->with('success', 'Tanggapan berhasil dihapus!');
     }
 }

@@ -8,14 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('notifikasi', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('admin_id')->nullable();
-            $table->string('pesan');
-            $table->enum('status', ['belum_dibaca', 'dibaca'])->default('belum_dibaca');
-            $table->timestamps();
-        });
+       Schema::create('notifikasi', function (Blueprint $table) {
+           $table->id();
+           $table->unsignedBigInteger('user_id');
+           $table->string('judul')->nullable(); // user yang nerima notif
+           $table->string('pesan');
+           $table->boolean('is_read')->default(false);
+           $table->timestamps();
+
+           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+});
     }
 
     public function down(): void

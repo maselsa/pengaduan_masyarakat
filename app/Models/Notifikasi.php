@@ -13,12 +13,14 @@ class Notifikasi extends Model
         'user_id', 
         'admin_id', 
         'pesan', 
-        'status'
+        'judul',
+        'status',
+        'is_read'
     ];
 
     public function user()
     {
-        return $this->belongsTo(Masyarakat::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
 
