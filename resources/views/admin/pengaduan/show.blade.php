@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">Detail Pengaduan</h3>
+        <h3 class="mb-4">🗒️ Detail Pengaduan</h3>
 
         <div class="card p-4">
             <p><strong>Nama:</strong> {{ $pengaduan->nama }}</p>
@@ -22,7 +22,7 @@
                 @endif
             </p>
 
-           <a href="{{ route('admin.pengaduan.index') }}" class="btn btn-pink w-100">back</a>
+           <a href="{{ route('admin.pengaduan.index') }}" class="btn btn-pink w-100">Back</a>
         </div>
     </div>
 @endsection

@@ -37,4 +37,11 @@ class AdminPetugasController extends Controller
 
         return redirect()->route('admin.petugas.index')->with('success', 'Petugas berhasil ditambahkan!');
     }
+
+    public function destroy(User $petuga)
+    {
+        $petuga->delete();
+
+        return redirect()->route('admin.petugas.index')->with('success', 'Petugas berhasil dihapus!');
+    }
 }

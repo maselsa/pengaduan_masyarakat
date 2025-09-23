@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h3>Tambah Kategori</h3>
+    <h3>🗂️ Add Kategori</h3>
 
     <form action="{{ route('admin.categories.store') }}" method="POST">
         @csrf
@@ -14,8 +14,8 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-success">Save📥</button>
+        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Back💔</a>
     </form>
 </div>
 @endsection

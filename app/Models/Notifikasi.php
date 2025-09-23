@@ -11,17 +11,17 @@ class Notifikasi extends Model
 
     protected $fillable = [
         'user_id', 
-        'admin_id', 
         'pesan', 
         'judul',
-        'status',
         'is_read'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+
 }
 
 

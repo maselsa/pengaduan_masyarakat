@@ -52,20 +52,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
         Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
         Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
-        //Data petugas
+       // Data petugas
         Route::get('/petugas', [AdminPetugasController::class, 'index'])->name('petugas.index');
         Route::get('/petugas/create', [AdminPetugasController::class, 'create'])->name('petugas.create');
         Route::post('/petugas', [AdminPetugasController::class, 'store'])->name('petugas.store');
-        // CRUD kategori
+        Route::delete('/petugas/{id}', [AdminPetugasController::class, 'destroy'])->name('petugas.destroy');
+        // Kategori
         Route::resource('categories', CategoryController::class);
-        Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
-        Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
-        Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+        //Konfirmasi
         Route::post('pengaduan/{id}/konfirmasi', [AdminPengaduanController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+        // Tanggapan
         Route::get('/tanggapan', [AdminTanggapanController::class, 'index'])->name('tanggapan.index');   // tampilkan semua tanggapan
         Route::post('/tanggapan/{pengaduan}', [AdminTanggapanController::class, 'store'])->name('tanggapan.store'); // simpan tanggapan baru
         Route::put('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'update'])->name('tanggapan.update'); // edit tanggapan
         Route::delete('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'destroy'])->name('tanggapan.destroy'); // hapus tanggapan
+        Route::patch('pengaduan/{id}/status', [AdminPengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
+
 
     
     });
@@ -79,15 +81,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/user/form-pengaduan', [UserPengaduanController::class, 'index'])->name('form.pengaduan');
         // Form pengaduan (langsung create)
         Route::get('/form-pengaduan', [UserPengaduanController::class, 'create'])->name('form-pengaduan');
-        // CRUD pengaduan
+        // Pengaduan
         Route::resource('pengaduan', UserPengaduanController::class);
-        // Tanggapan
+        Route::get('/pengaduan/{id}', [UserPengaduanController::class, 'show'])->name('pengaduan.show');
+        // Profil
         Route::get('/profil', [UserProfilController::class, 'index'])->name('profil');
         Route::post('/profil', [UserProfilController::class, 'update'])->name('profil.update');
-        Route::get('/pengaduan/{id}', [UserPengaduanController::class, 'show'])->name('pengaduan.show');
+        // Tanggapan
         Route::get('tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
+        // Notifikasi
         Route::get('notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
         Route::patch('notifikasi/{id}/read', [UserNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+
         
     });
 
@@ -98,7 +103,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-kategori', [CategoryController::class, 'index'])->name('data.kategori');
     //Data pengaduan
     Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
-     //Data masyarakat
+    //Data masyarakat
     Route::get('/data-masyarakat', [AdminMasyarakatController::class, 'index'])->name('data.masyarakat');
     
 });

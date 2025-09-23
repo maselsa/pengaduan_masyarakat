@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">Tambah Petugas</h3>
+        <h3 class="mb-4">👮 Add Petugas</h3>
 
         <form action="{{ route('admin.petugas.store') }}" method="POST">
             @csrf
@@ -29,8 +29,8 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="{{ route('admin.petugas.index') }}" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-success">Save📥</button>
+            <a href="{{ route('admin.petugas.index') }}" class="btn btn-secondary">Back📤</a>
         </form>
     </div>
 @endsection

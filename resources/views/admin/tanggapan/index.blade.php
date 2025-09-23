@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">📩 Daftar Tanggapan</h3>
+        <h3 class="mb-4">Data Tanggapan 📩</h3>
 
         {{-- Notifikasi sukses --}}
         @if (session('success'))
@@ -34,44 +34,54 @@
                         </td>
                         <td>{{ $p->tanggapan->isi ?? '-' }}</td>
                         <td>
-                            @if (!$p->tanggapan)
-                                {{-- Form tambah tanggapan --}}
-                                <form action="{{ route('admin.tanggapan.store', $p->id) }}" method="POST">
+                            {{-- Tombol konfirmasi (kalau masih pending) --}}
+                            @if ($p->status == 'pending')
+                                <form action="{{ route('admin.pengaduan.konfirmasi', $p->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-success btn-sm">Konfirmasi ✅</button>
+                                </form>
+                            @endif
+
+                            {{-- Edit / Hapus tanggapan --}}
+                            @if ($p->tanggapan)
+                                <div class="mb-2">
+                                    <button class="btn btn-warning btn-sm" data-bs-toggle="collapse"
+                                        data-bs-target="#editForm{{ $p->tanggapan->id }}">Edit 📝</button>
+
+                                    <form action="{{ route('admin.tanggapan.destroy', $p->tanggapan->id) }}" method="POST"
+                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus tanggapan ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete 💔</button>
+                                    </form>
+
+                                    <div id="editForm{{ $p->tanggapan->id }}" class="collapse mt-2">
+                                        <form action="{{ route('admin.tanggapan.update', $p->tanggapan->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <textarea name="isi" class="form-control" required>{{ $p->tanggapan->isi }}</textarea>
+                                            <button type="submit" class="btn btn-success mt-2">Simpan Perubahan</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+
+                            {{-- Tambah tanggapan kalau status proses --}}
+                            @if ($p->status == 'proses')
+                                <form action="{{ route('admin.tanggapan.store', $p->id) }}" method="POST" class="mt-2">
                                     @csrf
                                     <textarea name="isi" class="form-control" placeholder="Tulis tanggapan admin..." required></textarea>
                                     <button type="submit" class="btn btn-primary mt-2">Kirim Tanggapan</button>
                                 </form>
-                            @else
-                                {{-- Tombol Edit (collapse) --}}
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="collapse"
-                                    data-bs-target="#editForm{{ $p->tanggapan->id }}">
-                                    Edit
-                                </button>
-
-                                {{-- Tombol Hapus --}}
-                                <form action="{{ route('admin.tanggapan.destroy', $p->tanggapan->id) }}" method="POST"
-                                    class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus tanggapan ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-
-                                {{-- Form Edit (Collapse Bootstrap) --}}
-                                <div id="editForm{{ $p->tanggapan->id }}" class="collapse mt-2">
-                                    <form action="{{ route('admin.tanggapan.update', $p->tanggapan->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <textarea name="isi" class="form-control" required>{{ $p->tanggapan->isi }}</textarea>
-                                        <button type="submit" class="btn btn-success mt-2">Simpan Perubahan</button>
-                                    </form>
-                                </div>
                             @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">Tidak ada data pengaduan</td>
+                        <td colspan="6" class="text-center">tidak ada data pengaduan</td>
                     </tr>
                 @endforelse
             </tbody>

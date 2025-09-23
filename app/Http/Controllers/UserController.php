@@ -9,13 +9,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $userId = auth()->id();
 
-        $pending = Pengaduan::where('user_id', $userId)->where('status', 'pending')->count();
-        $proses = Pengaduan::where('user_id', $userId)->where('status', 'proses')->count();
-        $selesai = Pengaduan::where('user_id', $userId)->where('status', 'selesai')->count();
+    $userId = auth()->id();
 
-        return view('user.dashboard', compact('pending', 'proses', 'selesai'));
+    $total   = Pengaduan::where('user_id', $userId)->count();
+    $pending = Pengaduan::where('user_id', $userId)->where('status', 'pending')->count();
+    $proses  = Pengaduan::where('user_id', $userId)->where('status', 'proses')->count();
+    $selesai = Pengaduan::where('user_id', $userId)->where('status', 'selesai')->count();
+
+    return view('user.dashboard', compact('total', 'pending', 'proses', 'selesai'));
+
     }
 
     /**

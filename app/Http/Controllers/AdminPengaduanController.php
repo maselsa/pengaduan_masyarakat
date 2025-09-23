@@ -13,13 +13,13 @@ class AdminPengaduanController extends Controller
 {
     public function index()
     {
-        $pengaduan = Pengaduan::with('category', 'masyarakat')->get();
+        $pengaduan = Pengaduan::with('category', 'user')->get();
         return view('admin.pengaduan.index', compact('pengaduan'));
     }
 
     public function show($id)
     {
-        $pengaduan = Pengaduan::with('category', 'masyarakat', 'tanggapan')->findOrFail($id);
+        $pengaduan = Pengaduan::with('category', 'user', 'tanggapan')->findOrFail($id);
         return view('admin.pengaduan.show', compact('pengaduan'));
     }
 
@@ -32,7 +32,7 @@ class AdminPengaduanController extends Controller
             ->with('success', 'Pengaduan berhasil dihapus!');
     }
 
-    // 🌟 Update status (setelah proses) + tanggapan + notifikasi
+    // Update status + tanggapan + notifikasi
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
@@ -53,25 +53,26 @@ class AdminPengaduanController extends Controller
             ]);
         }
 
-        // 🔔 Notifikasi sesuai status
+        //  Notifikasi sesuai status
         $pesan = match ($pengaduan->status) {
-            'proses'  => 'Pengaduan kamu sedang diproses admin 🚀',
-            'selesai' => 'Pengaduan kamu sudah selesai ✅',
-            'ditolak' => 'Pengaduan kamu ditolak ❌',
-            default   => 'Pengaduan kamu telah diperbarui 📌',
+            'proses'  => 'Pengaduan Anda sedang diproses Admin ',
+            'selesai' => 'Pengaduan Anda sudah selesai',
+            'ditolak' => 'Pengaduan Anda ditolak ',
+            default   => 'Pengaduan Anda telah diperbarui ',
         };
 
         Notifikasi::create([
-            'user_id' => $pengaduan->user_id,
+            'user_id' => $pengaduan->user_id, // pastikan ada di DB
+            'judul'   => 'Update Pengaduan',
             'pesan'   => $pesan,
-            'is_read' => false
+            'is_read' => 0
         ]);
 
         return redirect()->route('admin.pengaduan.show', $id)
             ->with('success', 'Status & tanggapan berhasil diperbarui!');
     }
 
-    // 🌟 Konfirmasi pertama kali (pending -> proses)
+    //Konfirmasi pertama kali (pending -> proses)
     public function konfirmasi($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
@@ -89,8 +90,9 @@ class AdminPengaduanController extends Controller
 
             // notifikasi otomatis
             Notifikasi::create([
-                'user_id' => $pengaduan->user_id,
-                'pesan'   => 'Pengaduan kamu sedang diproses admin 🚀',
+                'user_id' => $pengaduan->user_id, // pake user_id 
+                'judul'   => 'Pengaduan Dikonfirmasi',
+                'pesan'   => 'Pengaduan Anda sedang diproses Admin  ',
                 'is_read' => 0
             ]);
         }
@@ -98,3 +100,4 @@ class AdminPengaduanController extends Controller
         return redirect()->back()->with('success', 'Pengaduan berhasil dikonfirmasi!');
     }
 }
+

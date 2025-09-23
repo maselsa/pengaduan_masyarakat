@@ -12,7 +12,7 @@
             {{-- Tombol Buat Pengaduan (khusus role user) --}}
             @if (auth()->user()->role == 'user')
                 <a href="{{ route('user.pengaduan.create') }}" class="btn mt-3 px-4 py-2"
-                    style="background: linear-gradient(135deg, #ff1493, #f576c6); 
+                    style="background: linear-gradient(135deg, #ff1493, #ec7ac2); 
                  color: white; 
                  font-weight: bold; 
                  border-radius: 25px; 
@@ -21,6 +21,49 @@
                 </a>
             @endif
         </div>
+
+        <div class="row mt-4">
+            <!-- TOTAL -->
+            <div class="col-md-3">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total 📋</h5>
+                        <p class="card-text fs-4">{{ $total }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PENDING -->
+            <div class="col-md-3">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Pending ⏳</h5>
+                        <p class="card-text fs-4">{{ $pending }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROSES -->
+            <div class="col-md-3">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">In Process 🔄</h5>
+                        <p class="card-text fs-4">{{ $proses }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELESAI -->
+            <div class="col-md-3">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Completed ✅</h5>
+                        <p class="card-text fs-4">{{ $selesai }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         {{-- Statistik Grafik Pengaduan --}}
         <div class="card mt-5 shadow border-0 rounded-4">
@@ -42,14 +85,14 @@
                     datasets: [{
                         label: 'Jumlah Pengaduan',
                         data: [
-                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','pending')->count() }},
-                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','proses')->count() }},
-                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','selesai')->count() }}
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status', 'pending')->count() }},
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status', 'proses')->count() }},
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status', 'selesai')->count() }}
                         ],
                         backgroundColor: [
                             '#ff69b4', // Pending
                             '#ffb6c1', // In Process
-                            '#c71585'  // Completed
+                            '#c71585' // Completed
                         ],
                         borderWidth: 1,
                         borderColor: '#fff'

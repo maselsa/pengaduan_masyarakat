@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">Buat Pengaduan Baru</h3>
+        <h3 class="mb-4">Buat Pengaduan Baru 📝</h3>
 
         <form action="{{ route('user.pengaduan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -92,7 +92,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">Kirim Pengaduan</button>
+            <button type="submit" class="btn btn-primary mt-2">Kirim Pengaduan 📤</button>
         </form>
     </div>
 @endsection

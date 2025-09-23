@@ -11,9 +11,9 @@ return new class extends Migration
        Schema::create('notifikasi', function (Blueprint $table) {
            $table->id();
            $table->unsignedBigInteger('user_id');
-           $table->string('judul')->nullable(); // user yang nerima notif
+           $table->string('judul')->nullable(); 
            $table->string('pesan');
-           $table->boolean('is_read')->default(false);
+           $table->boolean('is_read')->default(0);
            $table->timestamps();
 
            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -8,7 +8,7 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">+ Tambah Kategori</a>
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">🗂️ Add Category</a>
 
         <table class="table table-bordered">
             <thead>
@@ -25,16 +25,16 @@
                         <td>{{ $category->name }}</td>
                         <td>
                             <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
-                                style="display:inline-block" onsubmit="return confirm('Yakin mau hapus kategori ini?')">
+                                style="display:inline-block" onsubmit="return confirm('Yakin mau hapus kategori ini?💔')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete💔</button>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="text-center">Belum ada kategori</td>
+                        <td colspan="3" class="text-center">Belum Ada Kategori</td>
                     </tr>
                 @endforelse
             </tbody>

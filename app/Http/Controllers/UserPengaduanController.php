@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Notifikasi;
 use App\Models\Pengaduan;
 use App\Models\Category;
 use App\Models\Masyarakat;
@@ -52,6 +53,15 @@ class UserPengaduanController extends Controller
 
     // Simpan data
     Pengaduan::create($validated);
+
+    // Bikin notifikasi untuk user
+    Notifikasi::create([
+        'user_id' => auth()->id(),
+        'judul'   => 'Pengaduan Terkirim',
+        'pesan'   => 'Pengaduan Anda berhasil dikirim dan menunggu konfirmasi Admin',
+        'is_read' => 0,
+    ]);
+    
 
     return redirect()->route('user.pengaduan.index')
         ->with('success', 'Pengaduan berhasil dikirim!');

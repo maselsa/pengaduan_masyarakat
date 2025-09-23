@@ -37,14 +37,14 @@
                             <br>
                             <small class="text-muted">{{ $p->tanggapan->created_at->format('d-m-Y H:i') }}</small>
                         @else
-                            <span class="text-muted">Belum ada tanggapan</span>
+                            <span class="text-muted">Belum Ada Tanggapan</span>
                         @endif
                     </td>
                     <td>{{ $p->updated_at->format('d-m-Y H:i') }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">Belum ada pengaduan / tanggapan</td>
+                    <td colspan="6" class="text-center">Belum Ada Pengaduan / Tanggapan</td>
                 </tr>
             @endforelse
         </tbody>

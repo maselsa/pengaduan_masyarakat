@@ -11,9 +11,9 @@
         <div class="row mt-4">
             <!-- TOTAL KATEGORI -->
             <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Kategori</h5>
+               <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Kategori 🗂️</h5>
                         <p class="card-text fs-4">{{ $totalKategori }}</p>
                     </div>
                 </div>
@@ -21,9 +21,9 @@
 
             <!-- TOTAL PENGADUAN -->
             <div class="col-md-3">
-                <div class="card text-white bg-info mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Pengaduan</h5>
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Pengaduan 📢</h5>
                         <p class="card-text fs-4">{{ $totalPengaduan }}</p>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
             <!-- PENDING -->
             <div class="col-md-2">
                 <div class="card text-white bg-warning mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Pending</h5>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Pending⏳</h5>
                         <p class="card-text fs-4">{{ $pengaduanPending }}</p>
                     </div>
                 </div>
@@ -41,9 +41,9 @@
 
             <!-- PROSES -->
             <div class="col-md-2">
-                <div class="card text-white bg-secondary mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Proses</h5>
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Process🔄</h5>
                         <p class="card-text fs-4">{{ $pengaduanProses }}</p>
                     </div>
                 </div>
@@ -51,9 +51,9 @@
 
             <!-- SELESAI -->
             <div class="col-md-2">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Selesai</h5>
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Cmpletd✅</h5>
                         <p class="card-text fs-4">{{ $pengaduanSelesai }}</p>
                     </div>
                 </div>
