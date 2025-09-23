@@ -20,7 +20,7 @@
                 </li>
 
                 {{-- Profil --}}
-                <li class="nav-item {{ request()->routeIs('user.profil.*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('user.profil') ? 'active' : '' }}">
                     <a href="{{ route('user.profil') }}">
                         <i class="fas fa-clipboard-list"></i>
                         <p>🍓 Profil</p>
@@ -31,12 +31,12 @@
                 <li class="nav-item {{ request()->routeIs('user.pengaduan.*') ? 'active' : '' }}">
                     <a href="{{ route('user.pengaduan.index') }}">
                         <i class="fas fa-clipboard-list"></i>
-                        <p>📢 Form Pengaduan</p>
+                        <p>📢 Pengaduan</p>
                     </a>
                 </li>
 
                 {{-- Notifikasi --}}
-                <li class="nav-item {{ request()->is('notifikasi') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('user/notifikasi*') ? 'active' : '' }}">
                     <a href="{{ route('user.notifikasi.index') }}">
                         <i class="fas fa-bell"></i>
                         <p>🔔 Notifikasi</p>
@@ -52,7 +52,7 @@
                 </li>
 
                 {{-- Logout --}}
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a href="#" class="nav-link"
                         onclick="event.preventDefault(); if(confirm('yakin mau logout? 💔')) document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>

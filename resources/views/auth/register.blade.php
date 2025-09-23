@@ -25,7 +25,7 @@
         <script>
             // 🌸 Emoji Rain ringan
             document.addEventListener("DOMContentLoaded", function() {
-                const emojis = [ "🍇"];
+                const emojis = [ "🍒"];
 
                 function createEmoji() {
                     const emoji = document.createElement("div");
@@ -46,7 +46,7 @@
 
         <div class="card shadow-lg p-4" style="width: 400px; border-radius: 25px;">
             <h2 class="text-center mb-4" style="color:#d63384; font-weight:bold;">
-                🍇 Register 🍇
+                🍒 Register 🍒
             </h2>
 
             <form method="POST" action="{{ route('register') }}">

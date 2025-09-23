@@ -60,17 +60,14 @@
         .btn-register:hover {
             background: linear-gradient(135deg, #ff77b7, #ff3d94);
         }
-
-       
     </style>
 </head>
-
 <body>
     <div class="card">
         <h1> Welcome to the Public Complaints Application </h1>
         <div class="d-flex justify-content-center gap-4">
-            <a href="{{ route('login') }}" class="btn btn-login btn-lg">Login</a>
-            <a href="{{ route('register') }}" class="btn btn-register btn-lg">Register</a>
+            <a href="{{ route('login') }}" class="btn btn-login btn-lg">Login🍓</a>
+            <a href="{{ route('register') }}" class="btn btn-register btn-lg">Register🍒</a>
         </div>
     </div>
 </body>

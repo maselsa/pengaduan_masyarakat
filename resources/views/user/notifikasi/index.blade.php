@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h3 class="mb-4">🔔 Notifikasi</h3>
+    <h3 class="mb-4">Notifikasi 🔔</h3>
 
     <ul class="list-group">
         @forelse ($notifikasi as $n)
@@ -22,7 +22,7 @@
                 @endif
             </li>
         @empty
-            <li class="list-group-item text-center text-muted">Belum ada notifikasi</li>
+            <li class="list-group-item text-center text-muted">Belum Ada Notifikasi</li>
         @endforelse
     </ul>
 </div>

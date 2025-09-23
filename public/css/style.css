@@ -203,3 +203,10 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #ff4f9a;
 }
+
+.admin-info {
+    max-width: 65ch; /* maksimal panjang sekitar 70 huruf */
+    word-wrap: break-word;
+}
+
+

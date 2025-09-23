@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3>Detail Pengaduan</h3>
+        <h3>Detail Pengaduan 🗒️</h3>
 
         <table class="table table-bordered">
             <tr>

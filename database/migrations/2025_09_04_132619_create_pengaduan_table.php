@@ -23,6 +23,8 @@ return new class extends Migration
         $table->string('bukti')->nullable();
         $table->string('status')->default('Pending');
         $table->text('tanggapan')->nullable();
+        $table->text('masyarakat_id')->nullable();
+        $table->unsignedBigInteger('user_id')->nullable()->after('id');
         $table->timestamps();
 
 });

@@ -96,8 +96,8 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-success mt-2">Update</button>
-            <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary mt-2">Batal</a>
+            <button type="submit" class="btn btn-success mt-2">Save</button>
+           c
         </form>
     </div>
 @endsection

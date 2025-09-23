@@ -39,22 +39,22 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">Detail</a>
+                            <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">detail</a>
 
                             {{-- Tombol Konfirmasi (muncul hanya kalau status masih pending) --}}
                             @if ($p->status == 'pending')
                                 <form action="{{ route('admin.pengaduan.konfirmasi', $p->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Konfirmasi</button>
+                                    <button type="submit" class="btn btn-success btn-sm">konfirmasi</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.pengaduan.destroy', $p->id) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Yakin mau hapus data ini?')">
+                                onsubmit="return confirm('Yakin mau hapus data ini?💔')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">Hapus</button>
+                                <button class="btn btn-danger btn-sm">delete💔</button>
                             </form>
                         </td>
                     </tr>

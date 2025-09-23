@@ -52,17 +52,28 @@ class UserProfilController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request)
-{
+    {
     $user = auth()->user();
 
+    // Validasi
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    // Update nama
+    $user->name = $request->name;
+
+    // Update foto kalau ada
     if ($request->hasFile('foto')) {
         $path = $request->file('foto')->store('foto_profil', 'public');
         $user->foto = $path;
-        $user->save();
     }
 
-    return back()->with('success', 'Foto profil berhasil diupdate.');
-}
+    $user->save();
+
+    return back()->with('success', 'Yey profil berhasil diupdate! 💗');
+   }
 
 
     /**
