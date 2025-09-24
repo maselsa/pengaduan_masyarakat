@@ -32,7 +32,8 @@
             <div class="main-panel">
                 {{-- Sidebar --}}
                 @auth
-                    @if (Auth::user()->role == 'admin')
+                    @if (Auth::user()->role == 'admin' || 
+                    Auth::user()->role == 'petugas')
                         @include('layouts.admin.inc.sidebar')
                     @elseif(Auth::user()->role == 'user')
                         @include('layouts.user.inc.sidebar')
@@ -41,7 +42,8 @@
 
                 {{-- Navbar --}}
                 @auth
-                    @if (Auth::user()->role == 'admin')
+                    @if (Auth::user()->role == 'admin' || 
+                    Auth::user()->role == 'petugas')
                         @include('layouts.admin.inc.navbar')
                     @elseif(Auth::user()->role == 'user')
                         @include('layouts.user.inc.navbar')
@@ -72,6 +74,7 @@
     <!-- Custom JS -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/kaiadmin.min.js') }}"></script>
-</body>
 
+    @yield('scripts')
+</body>
 </html>

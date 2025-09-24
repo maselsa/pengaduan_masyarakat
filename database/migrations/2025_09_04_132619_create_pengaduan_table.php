@@ -17,11 +17,14 @@ return new class extends Migration
         $table->string('email', 100);
         $table->string('no_hp')->nullable();
         $table->string('tanggal')->nullable();
-        $table->string('categori', 100); 
+        $table->string('category_id', 100); 
         $table->string('lokasi')->nullable();
         $table->text('deskripsi');
         $table->string('bukti')->nullable();
+        $table->string('status')->default('Pending');
+        $table->text('tanggapan_admin')->nullable();
         $table->timestamps();
+
 });
 
     }

@@ -7,34 +7,50 @@
             </a>
         </div>
     </div>
+
     <div class="sidebar-wrapper scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-primary">
-                <li class="nav-item active">
-                    <a href="{{ url('/') }}">
+                {{-- Dashboard --}}
+                <li class="nav-item {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('user.dashboard') }}">
                         <i class="fas fa-home"></i>
                         <p>📊 Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('form-pengaduan') }}">
-                        <i class="fas fa-database"></i>
-                        <p>🗒️ Form Pengaduan</p>
+
+                {{-- Form Pengaduan --}}
+                <li class="nav-item {{ request()->routeIs('user.pengaduan.*') ? 'active' : '' }}">
+                    <a href="{{ route('user.pengaduan.index') }}">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>📢 Form Pengaduan</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ url('/data-pelapor') }}">
-                        <i class="fas fa-database"></i>
+
+                {{-- Notifikasi --}}
+                <li class="nav-item {{ request()->is('notifikasi') ? 'active' : '' }}">
+                    <a href="{{ route('user.notifikasi') }}">
+                        <i class="fas fa-bell"></i>
                         <p>🔔 Notifikasi</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ url('/data-pengaduan') }}">
-                        <i class="fas fa-database"></i>
-                        <p>📉 Tanggapan</p>
+
+                {{-- Tanggapan --}}
+                <li class="nav-item {{ request()->routeIs('user.tanggapan.index') ? 'active' : '' }}">
+                    <a href="{{ route('user.tanggapan.index') }}">
+                        <i class="fas fa-comments"></i>
+                        <p>💬 Tanggapan</p>
                     </a>
                 </li>
-            </ul>
+
+                {{-- Logout --}}
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>💖 Logout</p>
+                    </a>
+                </li>
+            </ul>          
         </div>
     </div>
 </div>

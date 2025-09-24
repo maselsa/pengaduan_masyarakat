@@ -22,10 +22,23 @@ class Pengaduan extends Model
     'bukti',
 ];
 
-public function category()
-{
-    return $this->belongsTo(Category::class, 'category_id');
-    $table->foreignId('category_id')->constrained()->onDelete('cascade');
+    public function category()
+    {
+    return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
 
-}
+    public function tanggapan()
+    {
+    return $this->hasOne(Tanggapan::class, 'pengaduan_id');
+    }
+
+    public function user()
+    {
+    return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function masyarakat()
+    {
+        return $this->belongsTo(Masyarakat::class, 'masyarakat_id');
+    }
 }

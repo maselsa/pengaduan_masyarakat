@@ -1,6 +1,6 @@
 <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
     <div class="container-fluid">
-        <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+        <ul class="navbar-nav topbar-nav ms-auto align-items-center">
 
             @guest
                 {{-- Kalau belum login --}}
@@ -26,7 +26,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>

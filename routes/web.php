@@ -6,65 +6,91 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserPengaduanController;
 use App\Http\Controllers\AdminPengaduanController;
+use App\Http\Controllers\AdminPetugasController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserTanggapanController;
+use App\Http\Controllers\AdminMasyarakatController;
+use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\FeedbackController;
 
 
-    // Route halaman utama
-    Route::get('/', function () {
+// HALAMAN UTAMA (Public)
+Route::get('/', function () {
     return view('home');
-    });
-
-    // Route home (bisa kamu sesuaikan)
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    // Route data pengaduan (kalau ini untuk tampil data pengaduan)
-    Route::get('/data-pengaduan', [PengaduanController::class, 'index'])->name('data.pengaduan');
-
-
-    // Auth bawaan Laravel (login, register, logout, dll.)
-    Auth::routes();
-
-    // Logout khusus (karena defaultnya GET → error)
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-    // Semua route yang butuh login
-    Route::group(['middleware' => ['auth']], function () {
-
-    // Dashboard user
-    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-
-    // CRUD pengaduan user
-    Route::prefix('user')->name('user.')->group(function () {
-    Route::resource('pengaduan', UserPengaduanController::class);
 });
 
-    // Form pengaduan (langsung create)
-    Route::get('/form-pengaduan', function () {
-    return view('user.pengaduan.index');
-    })->name('form-pengaduan');
+// AUTH ROUTES
+Auth::routes();
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    // Dashboard admin
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+// ROUTES WITH AUTH
+Route::middleware(['auth'])->group(function () {
 
-    // Data pengaduan (read & delete saja)
-    Route::resource('pengaduan', AdminPengaduanController::class)->only(['index', 'show', 'destroy']);
-
-    // CRUD kategori
-    Route::resource('categories', CategoryController::class);
-    
-    //Dashboard diarahkan sesuai role -> user dan admin
-    // (kalo login sebagai admin ya di arahkan ke admin/dashboard)
+    // DASHBOARD REDIRECT BY ROLE
     Route::get('/dashboard', function () {
     if (Auth::check()) {
-        if (Auth::user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        } else {
-            return redirect()->route('user.dashboard');
+        if (Auth::user()->role === 'admin' || Auth::user()->role === 'petugas') {
+            return redirect()->route('admin.dashboard'); // admin & petugas
+        } elseif (Auth::user()->role === 'user') {
+            return redirect()->route('user.dashboard'); // user
         }
     }
     return redirect()->route('login');
 });
+
+    // ADMIN ROUTES
+    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        // Data pengaduan
+        Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
+        Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
+        Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+        //Data petugas
+        Route::get('/petugas', [AdminPetugasController::class, 'index'])->name('petugas.index');
+        Route::get('/petugas/create', [AdminPetugasController::class, 'create'])->name('petugas.create');
+        Route::post('/petugas', [AdminPetugasController::class, 'store'])->name('petugas.store');
+        // CRUD kategori
+        Route::resource('categories', CategoryController::class);
+        Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
+        Route::get('/pengaduan/{id}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
+        Route::delete('/pengaduan/{id}', [AdminPengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+    });
+
+
+    // USER ROUTES
+    Route::prefix('user')->name('user.')->middleware(['auth'])->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+        // Form pengaduan user (tampilan)
+        Route::get('/user/form-pengaduan', [UserPengaduanController::class, 'index'])->name('form.pengaduan');
+        // Form pengaduan (langsung create)
+        Route::get('/form-pengaduan', [UserPengaduanController::class, 'create'])->name('form-pengaduan');
+        // CRUD pengaduan
+        Route::resource('pengaduan', UserPengaduanController::class);
+        // Tanggapan
+        Route::get('/tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
+        Route::get('/notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
+    });
+
+
+    //NO AUTH 
+
+    // Data kategori
+    Route::get('/data-kategori', [CategoryController::class, 'index'])->name('data.kategori');
+    //Data pengaduan
+    Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
+     //Data masyarakat
+    Route::get('/data-masyarakat', [AdminMasyarakatController::class, 'index'])->name('data.masyarakat');
+
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('user.notifikasi');
+    Route::get('/admin/notifikasi', [NotifikasiController::class, 'admin'])->name('admin.notifikasi');
+    // Halaman feedback (GET)
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('pengaduan.feedback');
+    // Kirim tanggapan (POST)
+    Route::post('/feedback/{id}/tanggapan', [FeedbackController::class, 'tanggapan'])->name('pengaduan.feedback.tanggapan');
+
 });

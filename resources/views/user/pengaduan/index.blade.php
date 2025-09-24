@@ -14,10 +14,12 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Nama</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
                     <th>Kategori</th>
                     <th>Status</th>
+                    <th>Bukti</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -25,25 +27,52 @@
                 @forelse($pengaduan as $key => $p)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $p->tanggal }}</td>
+                        <td>{{ $p->nama }}</td>
+                        <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $p->lokasi }}</td>
-                        <td>{{ $p->category->nama ?? '-' }}</td>
+
+                        {{-- Kategori --}}
+                        <td>{{ $p->category->name ?? '-' }}</td>
+
+                        {{-- Status --}}
                         <td>
                             <span
                                 class="badge bg-{{ $p->status == 'pending' ? 'warning' : ($p->status == 'proses' ? 'info' : 'success') }}">
                                 {{ ucfirst($p->status) }}
                             </span>
                         </td>
+
+                        {{-- Bukti --}}
+                        <td>
+                            @if ($p->bukti)
+                                <img src="{{ asset('storage/' . $p->bukti) }}" alt="Bukti"
+                                    style="max-width: 80px; height: auto;">
+                            @else
+                                <span class="text-muted">Tidak ada</span>
+                            @endif
+                        </td>
+
+                        {{-- Aksi --}}
                         <td>
                             <a href="{{ route('user.pengaduan.show', $p->id) }}" class="btn btn-sm btn-info">Detail</a>
+
                             @if ($p->status == 'pending')
-                                <a href="{{ route('user.pengaduan.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ route('user.pengaduan.edit', $p->id) }}"
+                                    class="btn btn-sm btn-warning">Edit</a>
+
+                                <form action="{{ route('user.pengaduan.destroy', $p->id) }}" method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('Yakin ingin menghapus pengaduan ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">Hapus</button>
+                                </form>
                             @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">Belum ada pengaduan</td>
+                        <td colspan="8" class="text-center">Belum ada pengaduan</td>
                     </tr>
                 @endforelse
             </tbody>

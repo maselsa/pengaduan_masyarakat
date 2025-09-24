@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">Data Pengaduan</h3>
+        <h3 class="mb-4">Data Pengaduan 📢</h3>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -13,13 +13,12 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Email</th>
-                    <th>No HP</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
                     <th>Kategori</th>
-                    <th>Deskripsi</th>
                     <th>Bukti</th>
+                    <th>Status</th>
+                    <th>Tanggapan Admin</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -28,18 +27,29 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $p->nama }}</td>
-                        <td>{{ $p->email }}</td>
-                        <td>{{ $p->no_hp }}</td>
                         <td>{{ $p->tanggal }}</td>
                         <td>{{ $p->lokasi }}</td>
-                        <td>{{ $p->category->nama ?? '-' }}</td>
-                        <td>{{ Str::limit($p->deskripsi, 30) }}</td>
+                        <td>{{ $p->category?->name ?? '-' }}</td>
                         <td>
                             @if ($p->bukti)
-                                <a href="{{ asset('storage/' . $p->bukti) }}" target="_blank">Lihat</a>
+                                <img src="{{ asset('storage/' . $p->bukti) }}" alt="Bukti"
+                                    style="max-width: 80px; height: auto;">
                             @else
                                 Tidak ada
                             @endif
+                        </td>
+                        <td>
+                            <span
+                                class="badge 
+                                @if ($p->status == 'pending') bg-warning 
+                                @elseif($p->status == 'diproses') bg-info 
+                                @elseif($p->status == 'selesai') bg-success 
+                                @elseif($p->status == 'ditolak') bg-danger @endif">
+                                {{ ucfirst($p->status) }}
+                            </span>
+                        </td>
+                        <td>
+                            {{ $p->tanggapan_admin ? Str::limit($p->tanggapan_admin, 20) : '-' }}
                         </td>
                         <td>
                             <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">Detail</a>
