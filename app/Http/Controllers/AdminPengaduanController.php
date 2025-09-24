@@ -11,10 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminPengaduanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pengaduan = Pengaduan::with('category', 'user')->get();
-        return view('admin.pengaduan.index', compact('pengaduan'));
+       $pengaduan = Pengaduan::with('category', 'user');
+
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $pengaduan->where('nama', 'LIKE', "%{$search}%");
+    }
+
+    $pengaduan = $pengaduan->get();
+
+    return view('admin.pengaduan.index', compact('pengaduan'));
     }
 
     public function show($id)
@@ -56,7 +64,7 @@ class AdminPengaduanController extends Controller
         //  Notifikasi sesuai status
         $pesan = match ($pengaduan->status) {
             'proses'  => 'Pengaduan Anda sedang diproses Admin ',
-            'selesai' => 'Pengaduan Anda sudah selesai',
+            'selesai' => 'Pengaduan Anda sudah selesai ',
             'ditolak' => 'Pengaduan Anda ditolak ',
             default   => 'Pengaduan Anda telah diperbarui ',
         };
@@ -85,7 +93,7 @@ class AdminPengaduanController extends Controller
             Tanggapan::create([
                 'pengaduan_id' => $pengaduan->id,
                 'user_id'      => Auth::id(),
-                'isi'          => 'Pengaduan anda telah dikonfirmasi admin.'
+                'isi'          => 'Pengaduan Anda sedang diproses Admin.'
             ]);
 
             // notifikasi otomatis

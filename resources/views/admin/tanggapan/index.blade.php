@@ -39,8 +39,7 @@
                                 <form action="{{ route('admin.pengaduan.konfirmasi', $p->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-success btn-sm">Konfirmasi ✅</button>
+                                    <button type="submit" class="btn btn-success btn-sm">konfirmasi</button>
                                 </form>
                             @endif
 
@@ -48,13 +47,13 @@
                             @if ($p->tanggapan)
                                 <div class="mb-2">
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="collapse"
-                                        data-bs-target="#editForm{{ $p->tanggapan->id }}">Edit 📝</button>
+                                        data-bs-target="#editForm{{ $p->tanggapan->id }}">edit 📝</button>
 
                                     <form action="{{ route('admin.tanggapan.destroy', $p->tanggapan->id) }}" method="POST"
                                         class="d-inline" onsubmit="return confirm('Yakin ingin menghapus tanggapan ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete 💔</button>
+                                        <button type="submit" class="btn btn-danger btn-sm">delete 💔</button>
                                     </form>
 
                                     <div id="editForm{{ $p->tanggapan->id }}" class="collapse mt-2">
