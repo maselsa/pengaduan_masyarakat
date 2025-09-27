@@ -50,15 +50,6 @@
                         <td>
                             <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">detail</a>
 
-                            {{-- Tombol Konfirmasi (muncul hanya kalau status masih pending) --}}
-                            @if ($p->status == 'pending')
-                                <form action="{{ route('admin.pengaduan.konfirmasi', $p->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">konfirmasi</button>
-                                </form>
-                            @endif
-
                             <form action="{{ route('admin.pengaduan.destroy', $p->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Yakin mau hapus data ini?💔')">
                                 @csrf

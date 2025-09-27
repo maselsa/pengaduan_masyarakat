@@ -34,12 +34,19 @@
                         </td>
                         <td>{{ $p->tanggapan->isi ?? '-' }}</td>
                         <td>
-                            {{-- Tombol konfirmasi (kalau masih pending) --}}
+                            
+                            {{-- Tombol konfirmasi / tolak (kalau masih pending) --}}
                             @if ($p->status == 'pending')
                                 <form action="{{ route('admin.pengaduan.konfirmasi', $p->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">konfirmasi</button>
+                                    <button type="submit" class="btn btn-success btn-sm">konfirmasi ✅</button>
+                                </form>
+
+                                <form action="{{ route('admin.pengaduan.tolak', $p->id) }}" method="POST" class="d-inline"
+                                    onsubmit="return confirm('Yakin ingin menolak pengaduan ini?')">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">tolak ❌</button>
                                 </form>
                             @endif
 

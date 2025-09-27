@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminMasyarakatController;
 use App\Http\Controllers\UserNotifikasiController;
 use App\Http\Controllers\AdminTanggapanController;
 use App\Http\Controllers\UserProfilController;
+use App\Http\Controllers\AdminProfilController;
 use App\Http\Controllers\UserTanggapanController;
 
 
@@ -59,14 +60,20 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/petugas/{id}', [AdminPetugasController::class, 'destroy'])->name('petugas.destroy');
         // Kategori
         Route::resource('categories', CategoryController::class);
-        //Konfirmasi
+        // Konfirmasi
         Route::post('pengaduan/{id}/konfirmasi', [AdminPengaduanController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+        // Tolak
+        Route::post('/pengaduan/{id}/tolak', [AdminPengaduanController::class, 'tolak'])->name('pengaduan.tolak');
         // Tanggapan
         Route::get('/tanggapan', [AdminTanggapanController::class, 'index'])->name('tanggapan.index');   // tampilkan semua tanggapan
         Route::post('/tanggapan/{pengaduan}', [AdminTanggapanController::class, 'store'])->name('tanggapan.store'); // simpan tanggapan baru
         Route::put('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'update'])->name('tanggapan.update'); // edit tanggapan
         Route::delete('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'destroy'])->name('tanggapan.destroy'); // hapus tanggapan
         Route::patch('pengaduan/{id}/status', [AdminPengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
+        // Profil Admin
+        Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil.index');
+        Route::post('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
+
 
 
     
@@ -92,6 +99,8 @@ Route::middleware(['auth'])->group(function () {
         // Notifikasi
         Route::get('notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
         Route::patch('notifikasi/{id}/read', [UserNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+        Route::delete('/notifikasi/{id}', [UserNotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
+
 
         
     });

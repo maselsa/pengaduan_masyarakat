@@ -16,8 +16,9 @@ class UserController extends Controller
     $pending = Pengaduan::where('user_id', $userId)->where('status', 'pending')->count();
     $proses  = Pengaduan::where('user_id', $userId)->where('status', 'proses')->count();
     $selesai = Pengaduan::where('user_id', $userId)->where('status', 'selesai')->count();
+    $tolak   = Pengaduan::where('user_id', $userId)->where('status', 'tolak')->count();
 
-    return view('user.dashboard', compact('total', 'pending', 'proses', 'selesai'));
+    return view('user.dashboard', compact('total', 'pending', 'proses', 'selesai', 'tolak'));
 
     }
 

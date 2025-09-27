@@ -50,9 +50,9 @@
             </tr>
         </table>
 
-        <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">back</a>
         @if ($pengaduan->status == 'pending')
-            <a href="{{ route('user.pengaduan.edit', $pengaduan->id) }}" class="btn btn-warning">Edit</a>
+            <a href="{{ route('user.pengaduan.edit', $pengaduan->id) }}" class="btn btn-warning">edit</a>
         @endif
     </div>
 @endsection

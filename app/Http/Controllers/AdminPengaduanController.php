@@ -44,7 +44,7 @@ class AdminPengaduanController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:proses,selesai,ditolak',
+            'status' => 'required|in:proses,selesai,tolak',
             'isi'    => 'nullable|string',
         ]);
 
@@ -64,8 +64,8 @@ class AdminPengaduanController extends Controller
         //  Notifikasi sesuai status
         $pesan = match ($pengaduan->status) {
             'proses'  => 'Pengaduan Anda sedang diproses Admin ',
-            'selesai' => 'Pengaduan Anda sudah selesai ',
-            'ditolak' => 'Pengaduan Anda ditolak ',
+            'selesai' => 'Pengaduan Anda selesai ',
+            'tolak' => 'Pengaduan Anda di tolak Admin ',
             default   => 'Pengaduan Anda telah diperbarui ',
         };
 
@@ -107,5 +107,33 @@ class AdminPengaduanController extends Controller
 
         return redirect()->back()->with('success', 'Pengaduan berhasil dikonfirmasi!');
     }
+
+    public function tolak($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        if ($pengaduan->status === 'pending') {
+            $pengaduan->status = 'tolak';
+            $pengaduan->save();
+
+        // tanggapan otomatis
+            Tanggapan::create([
+              'pengaduan_id' => $pengaduan->id,
+              'user_id'      => Auth::id(),
+              'isi'          => 'Pengaduan ditolak Admin.'
+            ]);
+
+        // notifikasi otomatis
+            Notifikasi::create([
+              'user_id' => $pengaduan->user_id,
+              'judul'   => 'Pengaduan Ditolak',
+              'pesan'   => 'Pengaduan Anda ditolak Admin.',
+              'is_read' => 0
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Pengaduan berhasil ditolak!');
+    }
+
 }
 

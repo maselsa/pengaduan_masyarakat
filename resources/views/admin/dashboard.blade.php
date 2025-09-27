@@ -11,7 +11,7 @@
         <div class="row mt-4">
             <!-- TOTAL KATEGORI -->
             <div class="col-md-3">
-               <div class="card text-white bg-warning mb-3">
+                <div class="card text-white bg-warning mb-3">
                     <div class="card-body text-center">
                         <h5 class="card-title">Total Kategori 🗂️</h5>
                         <p class="card-text fs-4">{{ $totalKategori }}</p>
@@ -60,13 +60,23 @@
             </div>
         </div>
 
-        {{-- Grafik Pengaduan --}}
-        <div class="card mt-5">
-            <div class="card-body">
-                <h5 class="card-title">📈 Grafik Pengaduan per Kategori</h5>
-                <canvas id="pengaduanChart" height="120"></canvas>
+        <!-- TOLAK -->
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tolak ❌</h5>
+                    <p class="card-text fs-4">{{ $pengaduanTolak }}</p>
+                </div>
             </div>
         </div>
+
+    {{-- Grafik Pengaduan --}}
+    <div class="card mt-5">
+        <div class="card-body">
+            <h5 class="card-title">📈 Grafik Pengaduan per Kategori</h5>
+            <canvas id="pengaduanChart" height="120"></canvas>
+        </div>
+    </div>
     </div>
 @endsection
 

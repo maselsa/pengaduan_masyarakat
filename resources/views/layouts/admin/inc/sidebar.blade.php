@@ -17,6 +17,14 @@
                     </a>
                 </li>
 
+                {{-- Profil --}}
+                <li class="nav-item {{ request()->routeIs('admin.profil') ? 'active' : '' }}">
+                    <a href="{{ route('admin.profil.index') }}">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>🍓 Profil</p>
+                    </a>
+                </li>
+
                 <li class="nav-item {{ request()->is('data-masyarakat*') ? 'active' : '' }}">
                     <a href="{{ url('/data-masyarakat') }}">
                         <i class="fas fa-database"></i>

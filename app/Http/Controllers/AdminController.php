@@ -15,6 +15,8 @@ class AdminController extends Controller
     $pengaduanPending = Pengaduan::where('status', 'pending')->count();
     $pengaduanProses = Pengaduan::where('status', 'proses')->count();
     $pengaduanSelesai = Pengaduan::where('status', 'selesai')->count();
+    $pengaduanTolak = Pengaduan::where('status', 'tolak')->count();
+
 
     $categories = Category::withCount('pengaduan')->get();
     $categoryNames = $categories->pluck('name');
@@ -26,6 +28,7 @@ class AdminController extends Controller
         'pengaduanPending',
         'pengaduanProses',
         'pengaduanSelesai',
+        'pengaduanTolak',
         'categoryNames',
         'pengaduanCounts'
     ));

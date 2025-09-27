@@ -92,7 +92,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">Kirim Pengaduan 📤</button>
+            <button type="submit" class="btn btn-primary mt-2">kirim 📤</button>
         </form>
     </div>
 @endsection
