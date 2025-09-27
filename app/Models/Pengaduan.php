@@ -33,7 +33,7 @@ class Pengaduan extends Model
 
     public function tanggapan()
     {
-        return $this->hasOne(Tanggapan::class, 'pengaduan_id');
+        return $this->hasMany(Tanggapan::class, 'pengaduan_id');
     }
 
     public function user()
