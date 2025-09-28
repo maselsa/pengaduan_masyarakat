@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 
 class AdminTanggapanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pengaduan = Pengaduan::with('tanggapan')->get();
+       $search = $request->input('search');
+
+       $pengaduan = Pengaduan::with('tanggapan','user')
+            ->when($search, function ($query, $search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        })
+        ->get();
+
         return view('admin.tanggapan.index', compact('pengaduan'));
     }
 

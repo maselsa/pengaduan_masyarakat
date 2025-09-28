@@ -8,7 +8,7 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">🗂️ Add Category</a>
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">+ Add Category</a>
 
         <table class="table table-bordered">
             <thead>
@@ -28,7 +28,7 @@
                                 style="display:inline-block" onsubmit="return confirm('Yakin mau hapus kategori ini?💔')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete💔</button>
+                                <button type="submit" class="btn btn-danger btn-sm">delete💔</button>
                             </form>
                         </td>
                     </tr>

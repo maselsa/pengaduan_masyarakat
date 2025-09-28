@@ -4,6 +4,15 @@
     <div class="container">
         <h3 class="mb-4">Data Tanggapan 📩</h3>
 
+        {{-- Form Search --}}
+        <form method="GET" action="{{ route('admin.tanggapan.index') }}" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="search"
+                    value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary">search</button>
+            </div>
+        </form>
+
         {{-- Notifikasi sukses --}}
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
