@@ -7,8 +7,7 @@
         {{-- Form Search --}}
         <form method="GET" action="{{ route('admin.tanggapan.index') }}" class="mb-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="search"
-                    value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="search" value="{{ request('search') }}">
                 <button type="submit" class="btn btn-primary">search</button>
             </div>
         </form>
@@ -33,10 +32,10 @@
                 @forelse($pengaduan as $i => $p)
                     <tr>
                         <td>{{ $i + 1 }}</td>
-                        <td>{{ \Illuminate\Support\Str::limit($p->deskripsi, 30) }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($p->deskripsi, 40) }}</td>
                         <td>{{ $p->nama }}</td>
 
-                       {{-- Status --}}
+                        {{-- Status --}}
                         <td>
                             <span class="badge 
                                {{ $p->status == 'selesai' ? 'bg-success' : 
@@ -56,55 +55,61 @@
                             @endif
                         </td>
 
+                        {{-- Aksi --}}
                         <td>
-                            {{-- Tombol konfirmasi / tolak (kalau masih pending) --}}
+                            {{-- Pending: konfirmasi / tolak --}}
                             @if ($p->status == 'pending')
                                 <form action="{{ route('admin.pengaduan.konfirmasi', $p->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-success btn-sm">konfirmasi ✅</button>
                                 </form>
-
                                 <form action="{{ route('admin.pengaduan.tolak', $p->id) }}" method="POST" class="d-inline"
                                     onsubmit="return confirm('Yakin ingin menolak pengaduan ini?')">
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm">tolak ❌</button>
                                 </form>
+                                <a href="{{ route('admin.tanggapan.show', $p->id) }}" class="btn btn-info btn-sm">detail
+                                    🔍</a>
                             @endif
 
-                            {{-- Edit / Hapus tanggapan (hanya tanggapan terakhir) --}}
-                            @if ($p->tanggapan && $p->tanggapan->count() > 0)
-                                @php $t = $p->tanggapan->last(); @endphp
-                                <div class="mb-2">
-                                    <button class="btn btn-warning btn-sm" data-bs-toggle="collapse"
-                                        data-bs-target="#editForm{{ $t->id }}">edit 📝</button>
-
-                                    <form action="{{ route('admin.tanggapan.destroy', $t->id) }}" method="POST"
-                                        class="d-inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus tanggapan ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">delete 💔</button>
-                                    </form>
-
-                                    <div id="editForm{{ $t->id }}" class="collapse mt-2">
-                                        <form action="{{ route('admin.tanggapan.update', $t->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <textarea name="isi" class="form-control" required>{{ $t->isi }}</textarea>
-                                            <button type="submit" class="btn btn-success mt-2">save</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endif
-
-                            {{-- Tambah tanggapan kalau status proses --}}
+                            {{-- Proses --}}
                             @if ($p->status == 'proses')
-                                <form action="{{ route('admin.tanggapan.store', $p->id) }}" method="POST" class="mt-2">
-                                    @csrf
-                                    <textarea name="isi" class="form-control" placeholder="silahkan ketik tanggapan anda ..." required></textarea>
-                                    <button type="submit" class="btn btn-primary mt-2">kirim tanggapan</button>
-                                </form>
+                                @php
+                                    $lastTanggapan = $p->tanggapan->last();
+                                @endphp
+
+                                {{-- Kalau belum ada tanggapan manual --}}
+                                @if (!$lastTanggapan || $lastTanggapan->isi == 'Pengaduan Anda sedang diproses Admin.')
+                                    <form action="{{ route('admin.tanggapan.store', $p->id) }}" method="POST"
+                                        class="mb-2">
+                                        @csrf
+                                        <textarea name="isi" class="form-control mb-2" placeholder="silahkan ketik tanggapan anda ..." required></textarea>
+                                        <button type="submit" class="btn btn-primary btn-sm">kirim tanggapan</button>
+                                    </form>
+                                    <a href="{{ route('admin.tanggapan.show', $p->id) }}"
+                                        class="btn btn-info btn-sm">detail 🔍</a>
+                                @else
+                                    {{-- Kalau sudah ada tanggapan manual --}}
+                                    <a href="{{ route('admin.tanggapan.show', $p->id) }}"
+                                        class="btn btn-info btn-sm">detail 🔍</a>
+                                    <form action="{{ route('admin.pengaduan.selesai', $p->id) }}" method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Yakin ingin menyelesaikan pengaduan ini?')">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm">Selesaikan ✅</button>
+                                    </form>
+                                @endif
+                            @endif
+
+                            {{-- Kalau selesai --}}
+                            @if ($p->status == 'selesai')
+                                <span class="badge bg-success">Pengaduan telah selesai ✅</span>
+                            @endif
+
+                            {{-- Kalau ditolak --}}
+                            @if ($p->status == 'tolak')
+                                <span class="badge bg-danger">Pengaduan Ditolak ❌</span>
                             @endif
                         </td>
                     </tr>

@@ -124,4 +124,6 @@ class UserPengaduanController extends Controller
         return redirect()->route('user.pengaduan.index')
             ->with('success', 'Pengaduan berhasil dihapus!');
     }
+
+    
 }

@@ -24,27 +24,44 @@
                 @forelse($pengaduan as $i => $p)
                     <tr>
                         <td>{{ $i + 1 }}</td>
-                        <td>{{ \Illuminate\Support\Str::limit($p->deskripsi, 30) }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($p->deskripsi, 60) }}</td>
                         <td>{{ $p->category->name ?? '-' }}</td>
+
+                        {{-- Status --}}
                         <td>
-                            <span
-                                class="badge bg-{{ $p->status == 'selesai' ? 'success' : ($p->status == 'proses' ? 'warning' : 'secondary') }}">
-                                {{ ucfirst($p->status) }}
+                            <span class="badge 
+                               {{ $p->status == 'selesai' ? 'bg-success' : 
+                                 ($p->status == 'tolak' ? 'bg-danger' : 
+                                 ($p->status == 'pending' ? 'bg-warning' : 
+                                 ($p->status == 'proses' ? 'bg-primary' : 'bg-secondary'))) }}">
+                               {{ ucfirst($p->status) }}
                             </span>
                         </td>
-                        {{-- Tanggapan --}}
+
+                        {{-- Tanggapan (hanya manual) --}}
                         <td>
-                            @if ($p->tanggapan->count() > 0)
-                                {{-- menampilkan hanya 1 tanggapan terakhir --}}
-                                {{ $p->tanggapan->last()->isi }}
+                            @php
+                                $manualTanggapan = $p->tanggapan->filter(function ($t) {
+                                    return !in_array(strtolower($t->isi), [
+                                        'pengaduan selesai',
+                                        'pengaduan diproses',
+                                        'pengaduan ditolak',
+                                        'pengaduan pending',
+                                    ]);
+                                });
+                            @endphp
+
+                            @if ($manualTanggapan->count() > 0)
+                                {{ $manualTanggapan->last()->isi }}
                                 <br>
                                 <small class="text-muted">
-                                    {{ $p->tanggapan->last()->created_at->format('d-m-Y H:i') }}
+                                    {{ $manualTanggapan->last()->created_at->format('d-m-Y H:i') }}
                                 </small>
                             @else
                                 <span class="text-muted">Belum Ada Tanggapan</span>
                             @endif
                         </td>
+
                         <td>{{ $p->updated_at->format('d-m-Y H:i') }}</td>
                     </tr>
                 @empty

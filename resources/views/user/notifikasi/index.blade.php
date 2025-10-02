@@ -9,22 +9,18 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center
                    {{ $n->is_read ? '' : 'fw-bold' }}"
                     style="background-color: {{ $n->is_read ? '#ff9acb' : '#ff5fa2' }};">
-                    
                     <div>
                         {{ $n->pesan }}
                         <br>
                         <small class="text-muted">{{ $n->created_at->diffForHumans() }}</small>
                     </div>
-
-                    <div class="d-flex gap-2">
-                        @if (!$n->is_read)
-                            <form action="{{ route('user.notifikasi.read', $n->id) }}" method="POST">
-                                @csrf
-                                @method('PATCH')
-                                <button class="btn btn-sm btn-outline-primary">Tandai Dibaca</button>
-                            </form>
-                        @endif
-                    </div>
+                    @if (!$n->is_read)
+                        <form action="{{ route('user.notifikasi.read', $n->id) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-sm btn-outline-primary">Tandai Dibaca</button>
+                        </form>
+                    @endif
                 </li>
             @empty
                 <li class="list-group-item text-center text-muted">Belum Ada Notifikasi</li>

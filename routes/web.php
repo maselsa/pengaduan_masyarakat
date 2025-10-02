@@ -69,6 +69,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/tanggapan/{pengaduan}', [AdminTanggapanController::class, 'store'])->name('tanggapan.store'); // simpan tanggapan baru
         Route::put('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'update'])->name('tanggapan.update'); // edit tanggapan
         Route::delete('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'destroy'])->name('tanggapan.destroy'); // hapus tanggapan
+        Route::post('/pengaduan/{id}/selesai', [AdminPengaduanController::class, 'selesai'])->name('pengaduan.selesai');
+        Route::get('/tanggapan/{id}', [AdminTanggapanController::class, 'show'])->name('tanggapan.show');
         Route::patch('pengaduan/{id}/status', [AdminPengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
         // Profil Admin
         Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil.index');

@@ -63,9 +63,9 @@ class AdminPengaduanController extends Controller
 
         //  Notifikasi sesuai status
         $pesan = match ($pengaduan->status) {
-            'proses'  => 'Pengaduan Anda sedang diproses Admin ',
-            'selesai' => 'Pengaduan Anda selesai ',
-            'tolak' => 'Pengaduan Anda di tolak Admin ',
+            'proses'  => 'Pengaduan Anda sedang diproses Admin. Mohon bersabar, ya. ',
+            'selesai' => 'Pengaduan Anda telah di tanggapi dan sudah selesai. Terima Kasih.',
+            'tolak' => 'Pengaduan Anda di tolak Admin. Silahkan buat pengaduan baru yang benar.',
             default   => 'Pengaduan Anda telah diperbarui ',
         };
 
@@ -100,7 +100,7 @@ class AdminPengaduanController extends Controller
             Notifikasi::create([
                 'user_id' => $pengaduan->user_id, // pake user_id 
                 'judul'   => 'Pengaduan Dikonfirmasi',
-                'pesan'   => 'Pengaduan Anda sedang diproses Admin  ',
+                'pesan'   => 'Pengaduan Anda sedang diproses Admin. Mohon bersabar, ya.  ',
                 'is_read' => 0
             ]);
         }
@@ -127,7 +127,7 @@ class AdminPengaduanController extends Controller
             Notifikasi::create([
               'user_id' => $pengaduan->user_id,
               'judul'   => 'Pengaduan Ditolak',
-              'pesan'   => 'Pengaduan Anda ditolak Admin.',
+              'pesan'   => 'Pengaduan Anda di tolak Admin. Silahkan buat pengaduan baru yang benar.',
               'is_read' => 0
             ]);
         }
@@ -135,5 +135,31 @@ class AdminPengaduanController extends Controller
         return redirect()->back()->with('success', 'Pengaduan berhasil ditolak!');
     }
 
-}
+     public function selesai($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
 
+        if ($pengaduan->status === 'proses') {
+            $pengaduan->status = 'selesai';
+            $pengaduan->save();
+
+        // tanggapan otomatis
+            Tanggapan::create([
+              'pengaduan_id' => $pengaduan->id,
+              'user_id'      => Auth::id(),
+              'isi'          => 'Pengaduan Selesai'
+            ]);
+
+        // notifikasi otomatis
+            Notifikasi::create([
+              'user_id' => $pengaduan->user_id,
+              'judul'   => 'Pengaduan Selesai',
+              'pesan'   => 'Pengaduan Anda telah di tanggapi dan sudah selesai. Terima Kasih.',
+              'is_read' => 0
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Pengaduan berhasil diselesaikan!');
+    }
+
+}

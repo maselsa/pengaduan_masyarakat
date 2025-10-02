@@ -48,7 +48,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">detail</a>
+                            <a href="{{ route('admin.pengaduan.show', $p->id) }}" class="btn btn-info btn-sm">detail🔍</a>
 
                             <form action="{{ route('admin.pengaduan.destroy', $p->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Yakin mau hapus data ini?💔')">

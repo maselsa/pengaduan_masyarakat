@@ -10,17 +10,23 @@ class AdminTanggapanController extends Controller
 {
     public function index(Request $request)
     {
-       $search = $request->input('search');
+        $search = $request->input('search');
 
-       $pengaduan = Pengaduan::with('tanggapan','user')
+        $pengaduan = Pengaduan::with('tanggapan','user')
             ->when($search, function ($query, $search) {
                 $query->whereHas('user', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            });
-        })
-        ->get();
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->get();
 
         return view('admin.tanggapan.index', compact('pengaduan'));
+    }
+
+    public function show($id)
+    {
+        $pengaduan = Pengaduan::with('tanggapan')->findOrFail($id);
+        return view('admin.tanggapan.show', compact('pengaduan'));
     }
 
     public function store(Request $request, $id)
@@ -37,11 +43,13 @@ class AdminTanggapanController extends Controller
             'user_id'      => auth()->id(),
         ]);
 
-        // setelah admin kasih tanggapan, status selesai
-        $pengaduan->status = 'selesai';
+        // setelah admin kasih tanggapan, status jangan selesai dulu
+        if ($pengaduan->status == 'pending') {
+            $pengaduan->status = 'proses';
+        }
         $pengaduan->save();
 
-        return back()->with('success', 'Tanggapan berhasil dikirim!');
+        return back()->with('success', 'Tanggapan berhasil dikirim (status masih PROSES)!');
     }
 
     public function update(Request $request, $id)
@@ -66,9 +74,20 @@ class AdminTanggapanController extends Controller
         $tanggapan->delete();
 
         // kalau tanggapan dihapus, status balik ke proses
-        $pengaduan->status = 'proses';
-        $pengaduan->save();
+        if ($pengaduan->status != 'selesai') {
+            $pengaduan->status = 'proses';
+            $pengaduan->save();
+        }
 
         return back()->with('success', 'Tanggapan berhasil dihapus!');
+    }
+
+    public function selesai($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+        $pengaduan->status = 'selesai';
+        $pengaduan->save();
+
+        return back()->with('success', 'Pengaduan berhasil diselesaikan!');
     }
 }
