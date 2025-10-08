@@ -12,20 +12,29 @@
             @else
                 {{-- Kalau sudah login --}}
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        
+
+                        {{-- Foto Profil --}}
+                        <img src="{{ asset('assets/img/default.jpg') }}" alt="Profile" class="rounded-circle me-2"
+                            style="width:35px; height:35px; object-fit:cover;">
+
+                        {{-- Nama User --}}
+                        <span>{{ Auth::user()->name }}</span>
                     </a>
+
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();if(confirm('Apakah anda yakin ingin logout?'))
                                  document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i>💔 logout 
                             </a>
                         </li>
                     </ul>
                 </li>
+
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>

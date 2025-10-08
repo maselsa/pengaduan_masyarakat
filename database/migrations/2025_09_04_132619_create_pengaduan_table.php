@@ -12,20 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengaduan', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama', 255);
-        $table->string('email', 100);
-        $table->string('no_hp')->nullable();
-        $table->string('tanggal')->nullable();
-        $table->string('category_id', 100); 
-        $table->string('lokasi')->nullable();
-        $table->text('deskripsi');
-        $table->string('bukti')->nullable();
-        $table->string('status')->default('Pending');
-        $table->text('tanggapan_admin')->nullable();
-        $table->timestamps();
-
-});
+            $table->id();
+            $table->string('nama', 255);
+            $table->string('email', 100);
+            $table->string('no_hp')->nullable();
+            $table->string('tanggal')->nullable();
+            $table->string('category_id', 100); 
+            $table->string('lokasi')->nullable();
+            $table->text('deskripsi');
+            $table->string('bukti')->nullable();
+            $table->enum('status', ['pending', 'proses', 'selesai', 'ditolak'])->default('pending');
+            $table->text('tanggapan')->nullable();
+            $table->text('masyarakat_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->timestamps();
+ });
 
     }
 

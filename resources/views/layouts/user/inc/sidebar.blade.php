@@ -19,17 +19,25 @@
                     </a>
                 </li>
 
+                {{-- Profil --}}
+                <li class="nav-item {{ request()->routeIs('user.profil') ? 'active' : '' }}">
+                    <a href="{{ route('user.profil') }}">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>🍓 Profil</p>
+                    </a>
+                </li>
+
                 {{-- Form Pengaduan --}}
                 <li class="nav-item {{ request()->routeIs('user.pengaduan.*') ? 'active' : '' }}">
                     <a href="{{ route('user.pengaduan.index') }}">
                         <i class="fas fa-clipboard-list"></i>
-                        <p>📢 Form Pengaduan</p>
+                        <p>📢 Pengaduan</p>
                     </a>
                 </li>
 
                 {{-- Notifikasi --}}
-                <li class="nav-item {{ request()->is('notifikasi') ? 'active' : '' }}">
-                    <a href="{{ route('user.notifikasi') }}">
+                <li class="nav-item {{ request()->is('user/notifikasi*') ? 'active' : '' }}">
+                    <a href="{{ route('user.notifikasi.index') }}">
                         <i class="fas fa-bell"></i>
                         <p>🔔 Notifikasi</p>
                     </a>
@@ -39,18 +47,23 @@
                 <li class="nav-item {{ request()->routeIs('user.tanggapan.index') ? 'active' : '' }}">
                     <a href="{{ route('user.tanggapan.index') }}">
                         <i class="fas fa-comments"></i>
-                        <p>💬 Tanggapan</p>
+                        <p>📩 Tanggapan</p>
                     </a>
                 </li>
 
                 {{-- Logout --}}
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}">
+                    <a href="#" class="nav-link"
+                        onclick="event.preventDefault(); if(confirm('yakin mau logout? 💔')) document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>
-                        <p>💖 Logout</p>
+                        <p>💔 Logout</p>
                     </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
-            </ul>          
+            </ul>
         </div>
     </div>
 </div>

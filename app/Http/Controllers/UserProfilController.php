@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class NotifikasiController extends Controller
+class UserProfilController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Ambil notifikasi (contoh: semua tanggapan untuk user yang login)
-        $notifikasi = Tanggapan::where('user_id', auth()->id())->get();
-
-        // Kirim ke view
-        return view('user.notifikasi.index', compact('notifikasi'));
+        $user = Auth::user(); // Ambil user yang sedang login
+        return view('user.profil.index', compact('user'));
     }
 
     /**
@@ -53,10 +51,30 @@ class NotifikasiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+    $user = auth()->user();
+
+    // Validasi
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    // Update nama
+    $user->name = $request->name;
+
+    // Update foto kalau ada
+    if ($request->hasFile('foto')) {
+        $path = $request->file('foto')->store('foto_profil', 'public');
+        $user->foto = $path;
     }
+
+    $user->save();
+
+    return back()->with('success', 'Yey profil berhasil diupdate! 💗');
+   }
+
 
     /**
      * Remove the specified resource from storage.

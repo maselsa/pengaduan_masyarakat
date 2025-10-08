@@ -5,6 +5,7 @@
 @section('content')
     <div class="container">
         <h2 class="mb-4">Data Masyarakat 🧑‍🤝‍🧑</h2>
+
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -20,7 +21,7 @@
                 @forelse($masyarakat as $index => $m)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $m->nama }}</td>
+                        <td>{{ $m->name }}</td>
                         <td>{{ $m->pengaduan->count() }}</td>
                         <td>
                             @if ($m->pengaduan->count() > 0)
@@ -32,7 +33,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center">Belum ada data masyarakat</td>
+                        <td colspan="4" class="text-center">Belum Ada Data Masyarakat</td>
                     </tr>
                 @endforelse
             </tbody>

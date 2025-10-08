@@ -7,12 +7,12 @@
 
         {{-- Header Dashboard --}}
         <div class="text-center p-4 mb-4 rounded shadow-sm">
-        <h1>🌷 Welcome to the Public Complaint System 🌷</h1>
+            <h1>🌷 Welcome to the Public Complaint System 🌷</h1>
 
             {{-- Tombol Buat Pengaduan (khusus role user) --}}
             @if (auth()->user()->role == 'user')
                 <a href="{{ route('user.pengaduan.create') }}" class="btn mt-3 px-4 py-2"
-                    style="background: linear-gradient(135deg, #ff1493, #f576c6); 
+                    style="background: linear-gradient(135deg, #ff1493, #ec7ac2); 
                  color: white; 
                  font-weight: bold; 
                  border-radius: 25px; 
@@ -22,7 +22,50 @@
             @endif
         </div>
 
-            {{-- Statistik Grafik Pengaduan --}}
+        <div class="row mt-4">
+            <!-- TOTAL -->
+            <div class="col-md-3">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total 📋</h5>
+                        <p class="card-text fs-4">{{ $total }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PENDING -->
+            <div class="col-md-3">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Pending ⏳</h5>
+                        <p class="card-text fs-4">{{ $pending }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROSES -->
+            <div class="col-md-3">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">In Process 🔄</h5>
+                        <p class="card-text fs-4">{{ $proses }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELESAI -->
+            <div class="col-md-3">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Completed ✅</h5>
+                        <p class="card-text fs-4">{{ $selesai }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{-- Statistik Grafik Pengaduan --}}
         <div class="card mt-5 shadow border-0 rounded-4">
             <div class="card-body">
                 <h3 class="text-center mb-4">📊 Complaint Statistics</h3>
@@ -36,17 +79,22 @@
             const ctx = document.getElementById('complaintChart');
 
             new Chart(ctx, {
-                type: 'doughnut', // bisa diganti 'bar' kalau mau
+                type: 'bar', // pakai bar chart
                 data: {
                     labels: ['Pending ⏳', 'In Process 🔄', 'Completed ✅'],
                     datasets: [{
+                        label: 'Jumlah Pengaduan',
                         data: [
-                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','pending')->count() }},
-                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','proses')->count() }},
-                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status','selesai')->count() }}
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status', 'pending')->count() }},
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status', 'proses')->count() }},
+                            {{ \App\Models\Pengaduan::where('email', auth()->user()->email)->where('status', 'selesai')->count() }}
                         ],
-                        backgroundColor: ['#ff69b4', '#ffb6c1', '#c71585'], // nuansa pinky 🌸
-                        borderWidth: 2,
+                        backgroundColor: [
+                            '#ff69b4', // Pending
+                            '#ffb6c1', // In Process
+                            '#c71585' // Completed
+                        ],
+                        borderWidth: 1,
                         borderColor: '#fff'
                     }]
                 },
@@ -54,13 +102,28 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'bottom',
-                            labels: {
+                            display: false // legend disembunyikan
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                color: '#d63384',
                                 font: {
                                     size: 14,
                                     weight: 'bold'
-                                },
-                                color: '#d63384'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#d63384',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
                             }
                         }
                     }

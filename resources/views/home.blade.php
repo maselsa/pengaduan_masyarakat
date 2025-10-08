@@ -10,8 +10,8 @@
     <style>
         body {
             /* Background gambar + gradient overlay */
-            background: linear-gradient(135deg, rgba(255, 74, 177, 0.6), rgba(254, 207, 239, 0.6)),
-                url("{{ asset('assets/img/welcome.jpg') }}") no-repeat center center fixed;
+            background: linear-gradient(135deg, rgba(255, 96, 186, 0.6), rgba(254, 207, 239, 0.6)),
+                url("{{ asset('assets/img/well.jpeg') }}") no-repeat center center fixed;
             background-size: cover;
             height: 100vh;
             display: flex;
@@ -60,52 +60,14 @@
         .btn-register:hover {
             background: linear-gradient(135deg, #ff77b7, #ff3d94);
         }
-
-        /* 🌸 Emoji Rain */
-        .emoji {
-            position: fixed;
-            top: -50px;
-            font-size: 30px;
-            pointer-events: none;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
     </style>
-
-    <script>
-        // 🌸 Emoji Rain
-        document.addEventListener("DOMContentLoaded", function() {
-            const emojis = ["🌸", "💖", "🌷", "💞", "🍓", "🍭", "💗", "🩷", "🍓", "🎀"];
-
-            function createEmoji() {
-                const emoji = document.createElement("div");
-                emoji.className = "emoji";
-                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                emoji.style.left = Math.random() * 100 + "vw";
-                emoji.style.animationDuration = (3 + Math.random() * 3) + "s";
-                document.body.appendChild(emoji);
-                setTimeout(() => emoji.remove(), 5000);
-            }
-            setInterval(() => {
-                createEmoji();
-                createEmoji();
-            }, 400);
-        });
-    </script>
 </head>
-
 <body>
     <div class="card">
-        <h1>🌸 Welcome to the Public Complaints Application 🌸</h1>
+        <h1> Welcome to the Public Complaints Application </h1>
         <div class="d-flex justify-content-center gap-4">
-            <a href="{{ route('login') }}" class="btn btn-login btn-lg">Login</a>
-            <a href="{{ route('register') }}" class="btn btn-register btn-lg">Register</a>
+            <a href="{{ route('login') }}" class="btn btn-login btn-lg">Login🍓</a>
+            <a href="{{ route('register') }}" class="btn btn-register btn-lg">Register🍒</a>
         </div>
     </div>
 </body>

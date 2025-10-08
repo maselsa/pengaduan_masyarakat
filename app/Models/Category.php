@@ -14,7 +14,7 @@ class Category extends Model
 
     // Kolom yang bisa diisi
     protected $fillable = [
-        'name',
+        'name_kategori',
         'deskripsi',
     ];
 

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3 class="mb-4">Buat Pengaduan Baru</h3>
+        <h3 class="mb-4">Buat Pengaduan Baru 📝</h3>
 
         <form action="{{ route('user.pengaduan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -57,10 +57,10 @@
                 @enderror
             </div>
 
-            {{-- Kategori (pakai 'category' sesuai perubahan kamu) --}}
+            {{-- Kategori --}}
             <div class="form-group mb-3">
                 <label>Kategori</label>
-                <select name="category_id" class="form-control @error('category)id') is-invalid @enderror" required>
+                <select name="category_id" class="form-control @error('category_id') is-invalid @enderror" required>
                     <option value="">-- Pilih Kategori --</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
@@ -92,7 +92,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">Kirim Pengaduan</button>
+            <button type="submit" class="btn btn-primary mt-2">Kirim Pengaduan 📤</button>
         </form>
     </div>
 @endsection

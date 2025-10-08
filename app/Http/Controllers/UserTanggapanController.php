@@ -2,41 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Pengaduan;
 use App\Models\Tanggapan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserTanggapanController extends Controller
 {
-    // 📨 Melihat semua tanggapan dari admin untuk pengaduan milik user yang login
     public function index()
     {
-        $tanggapan = Tanggapan::whereHas('pengaduan', function ($q) {
-            $q->where('user_id', Auth::id());
-        })->latest()->get();
+        $pengaduan = Pengaduan::with(['category', 'tanggapan'])
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
 
-        return view('user.tanggapan.index', compact('tanggapan'));
+        return view('user.tanggapan.index', compact('pengaduan'));
     }
 
-    // 💬 Admin mengirim tanggapan ke pengaduan tertentu
-    public function store(Request $request, $pengaduan_id)
+    public function store(Request $request, $id)
     {
         $request->validate([
-            'isi' => 'required|string',
+            'isi' => 'required|string'
         ]);
-
-        $pengaduan = Pengaduan::findOrFail($pengaduan_id);
 
         Tanggapan::create([
-            'pengaduan_id' => $pengaduan->id,
-            'user_id' => Auth::id(), // admin yang login
-            'isi' => $request->isi,
+            'pengaduan_id' => $id,
+            'user_id' => Auth::id(), // user yang login
+            'isi' => $request->isi
         ]);
 
-        // ubah status pengaduan jadi proses/selesai
-        $pengaduan->update(['status' => 'proses']);
-
-        return redirect()->back()->with('success', 'Tanggapan berhasil dikirim.');
+        return redirect()->back()->with('success', 'Tanggapan berhasil dikirim!');
     }
 }

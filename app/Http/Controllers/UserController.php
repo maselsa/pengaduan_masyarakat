@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-         return view('user.dashboard');
+
+    $userId = auth()->id();
+
+    $total   = Pengaduan::where('user_id', $userId)->count();
+    $pending = Pengaduan::where('user_id', $userId)->where('status', 'pending')->count();
+    $proses  = Pengaduan::where('user_id', $userId)->where('status', 'proses')->count();
+    $selesai = Pengaduan::where('user_id', $userId)->where('status', 'selesai')->count();
+
+    return view('user.dashboard', compact('total', 'pending', 'proses', 'selesai'));
+
     }
 
     /**
@@ -61,4 +68,6 @@ class UserController extends Controller
     {
         //
     }
+
+    
 }

@@ -1,23 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Masyarakat;
+use App\Models\Pengaduan;
+
 
 class AdminMasyarakatController extends Controller
 {
-   public function index()
+    public function index()
 {
-    // Ambil semua masyarakat yang punya minimal 1 pengaduan
-    $masyarakat = Masyarakat::withCount('pengaduan') // hitung jumlah pengaduan
-        ->with(['pengaduan' => function ($q) {
-            $q->latest(); // ambil pengaduan terbaru
-        }])
-        ->has('pengaduan') // filter hanya yang punya pengaduan
+    $masyarakat = User::where('role', 'user')
+        ->with('pengaduan')
         ->get();
 
     return view('admin.masyarakat.index', compact('masyarakat'));
 }
-
 }

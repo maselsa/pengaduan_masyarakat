@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3>Detail Pengaduan</h3>
+        <h3>Detail Pengaduan 🗒️</h3>
 
         <table class="table table-bordered">
             <tr>
@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <th>Kategori</th>
-                <td>{{ $pengaduan->category->nama ?? '-' }}</td>
+                <td>{{ $pengaduan->category->name ?? '-' }}</td>
             </tr>
             <tr>
                 <th>Deskripsi</th>
@@ -50,7 +50,7 @@
             </tr>
         </table>
 
-        <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">Back</a>
         @if ($pengaduan->status == 'pending')
             <a href="{{ route('user.pengaduan.edit', $pengaduan->id) }}" class="btn btn-warning">Edit</a>
         @endif
