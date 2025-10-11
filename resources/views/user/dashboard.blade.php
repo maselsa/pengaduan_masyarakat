@@ -23,14 +23,19 @@
             @endif
         </div>
 
-        {{-- Banner Full Gede Tanpa Kepotong --}}
+        {{-- Banner Foto --}}
+        <div class="mb-4">
+            <img src="{{ asset('assets/img/wc.jpeg') }}" class="img-fluid w-100 shadow-lg"
+                style="max-height: 500px; object-fit: border-radius: 50px;">
+        </div>
+
         <div class="mb-4">
             <img src="{{ asset('assets/img/well.jpeg') }}" class="img-fluid w-100 shadow-lg"
                 style="max-height: 500px; object-fit: border-radius: 50px;">
         </div>
 
 
-        {{-- 🌸 Syarat & Ketentuan --}}
+        {{-- Syarat & Ketentuan --}}
         <div class="card mt-4 shadow-lg border-0 rounded-4" style="background: linear-gradient(135deg, #ffe0f0, #ffc7de);">
             <div class="card-body">
                 <h3 class="mb-4  fw-bold" style="color:#d63384;">
@@ -41,7 +46,7 @@
                     {{-- Identitas Pelapor --}}
                     <div class="col-md-6">
                         <div class="p-4 rounded-4 shadow-sm h-100"
-                            style="background:white; border-left:6px solid #d63384; transition: all .3s;">
+                            style="background:rgb(255, 210, 235); border-left:6px solid #d63384; transition: all .3s;">
                             <h5 class="fw-bold mb-3" style="color:#d63384;">👤 Identitas Pelapor</h5>
                             <ul class="list-unstyled mb-0">
                                 <li>📢 Akun harus terdaftar di sistem pengaduan.</li>
@@ -54,7 +59,7 @@
                     {{-- Isi Laporan --}}
                     <div class="col-md-6">
                         <div class="p-4 rounded-4 shadow-sm h-100"
-                            style="background:white; border-left:6px solid #d63384; transition: all .3s;">
+                            style="background:rgb(255, 210, 235); border-left:6px solid #d63384; transition: all .3s;">
                             <h5 class="fw-bold mb-3" style="color:#d63384;">📝 Isi Laporan</h5>
                             <ul class="list-unstyled mb-0">
                                 <li>✍️ Pengaduan harus jelas dan sopan.</li>
@@ -67,7 +72,7 @@
                     {{-- Proses & Tindak Lanjut --}}
                     <div class="col-md-6">
                         <div class="p-4 rounded-4 shadow-sm h-100"
-                            style="background:white; border-left:6px solid #d63384; transition: all .3s;">
+                            style="background:rgb(255, 210, 235); border-left:6px solid #d63384; transition: all .3s;">
                             <h5 class="fw-bold mb-3" style="color:#d63384;">⚖️ Proses & Tindak Lanjut</h5>
                             <ul class="list-unstyled mb-0">
                                 <li>⏳ Verifikasi pengaduan max 3 hari kerja.</b></li>
@@ -80,7 +85,7 @@
                     {{-- Larangan & Ketentuan --}}
                     <div class="col-md-6">
                         <div class="p-4 rounded-4 shadow-sm h-100"
-                            style="background:white; border-left:6px solid #d63384; transition: all .3s;">
+                            style="background:rgb(255, 210, 235); border-left:6px solid #d63384; transition: all .3s;">
                             <h5 class="fw-bold mb-3" style="color:#d63384;">🚫 Larangan & Ketentuan</h5>
                             <ul class="list-unstyled mb-0">
                                 <li>❌ Dilarang mengirimkan pengaduan yang hoax.</li>
@@ -151,7 +156,7 @@
                 </h3>
                 <div class="row g-4">
                     <ul class="list-group">
-                        @foreach (\App\Models\Notifikasi::where('user_id', auth()->id())->latest()->take(3)->get() as $notif)
+                        @foreach (\App\Models\Notifikasi::where('user_id', auth()->id())->latest()->take(6)->get() as $notif)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 {{ $notif->pesan }}
                                 <span class="badge"
@@ -167,7 +172,7 @@
         <div class="card mt-4 shadow-lg border-0 rounded-4" style="background: linear-gradient(135deg, #ffe0f0, #ffc7de);">
             <div class="card-body">
                 <h3 class="mb-3  fw-bold" style="color:#d63384;">
-                    🕒 Riwayat Pengaduan
+                    🕒 Riwayat Pengaduan Terbaru
                 </h3>
                 <table class="table table-hover">
                     <thead>
@@ -209,6 +214,17 @@
                 </h3>
                 <canvas id="complaintChart" height="120"></canvas>
             </div>
+        </div>
+
+         {{-- foto thank you and goodbye --}}
+        <div class="mb-4">
+            <img src="{{ asset('assets/img/ty.jpeg') }}" class="img-fluid w-100 shadow-lg"
+                style="max-height: 500px; object-fit: border-radius: 50px;">
+        </div>
+
+        <div class="mb-4">
+            <img src="{{ asset('assets/img/gb.jpeg') }}" class="img-fluid w-100 shadow-lg"
+                style="max-height: 500px; object-fit: border-radius: 50px;">
         </div>
 
         {{-- Script Chart.js --}}

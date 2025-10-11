@@ -13,12 +13,14 @@
 
             <div class="mb-3">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control"
+                autocomplete="off" required>
             </div>
 
             <div class="mb-3">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" 
+                autocomplete="new-password" required>
             </div>
 
             <div class="mb-3">
@@ -29,8 +31,8 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success">Save📥</button>
-            <a href="{{ route('admin.petugas.index') }}" class="btn btn-secondary">Back📤</a>
+            <button type="submit" class="btn btn-success">📥 save</button>
+            <a href="{{ route('admin.petugas.index') }}" class="btn btn-secondary">⬅️ back</a>
         </form>
     </div>
 @endsection

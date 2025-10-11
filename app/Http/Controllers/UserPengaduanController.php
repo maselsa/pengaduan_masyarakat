@@ -48,7 +48,7 @@ class UserPengaduanController extends Controller
     }
 
     // Hubungkan pengaduan ke user yang login
-    $validated['user_id'] = auth()->id();   // <-- tetap simpan user_id dari tabel users
+    $validated['user_id'] = auth()->id();  
     $validated['status'] = 'pending';       // default status
 
     // Simpan data
@@ -58,7 +58,7 @@ class UserPengaduanController extends Controller
     Notifikasi::create([
         'user_id' => auth()->id(),
         'judul'   => 'Pengaduan Terkirim',
-        'pesan'   => 'Pengaduan Anda berhasil dikirim dan menunggu konfirmasi Admin',
+        'pesan'   => 'Pengaduan Anda berhasil dikirim dan menunggu konfirmasi Admin.',
         'is_read' => 0,
     ]);
     

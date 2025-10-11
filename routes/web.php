@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         }
     }
     return redirect()->route('login');
+
 });
 
     // ADMIN ROUTES
@@ -71,7 +72,10 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'destroy'])->name('tanggapan.destroy'); // hapus tanggapan
         Route::post('/pengaduan/{id}/selesai', [AdminPengaduanController::class, 'selesai'])->name('pengaduan.selesai');
         Route::get('/tanggapan/{id}', [AdminTanggapanController::class, 'show'])->name('tanggapan.show');
+        Route::get('/tanggapan/{id}/edit', [AdminTanggapanController::class, 'edit'])->name('tanggapan.edit');
+        Route::put('/tanggapan/{id}', [AdminTanggapanController::class, 'update'])->name('tanggapan.update');
         Route::patch('pengaduan/{id}/status', [AdminPengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
+        Route::post('/tanggapan/manual', [AdminTanggapanController::class, 'storeManual'])->name('tanggapan.storeManual');
         // Profil Admin
         Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil.index');
         Route::post('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
@@ -98,6 +102,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profil', [UserProfilController::class, 'update'])->name('profil.update');
         // Tanggapan
         Route::get('tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
+        Route::get('/tanggapan/{id}', [UserTanggapanController::class, 'show'])->name('tanggapan.show');
         // Notifikasi
         Route::get('notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
         Route::patch('notifikasi/{id}/read', [UserNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
@@ -116,5 +121,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
     //Data masyarakat
     Route::get('/data-masyarakat', [AdminMasyarakatController::class, 'index'])->name('data.masyarakat');
+    
     
 });

@@ -25,12 +25,12 @@ class AdminController extends Controller
         $pengaduanCounts = $categories->pluck('pengaduan_count');
 
         // Ambil 5 pengaduan terbaru
-        $pengaduanTerbaru = Pengaduan::with('user')->latest()->take(10)->get();
+        $pengaduanTerbaru = Pengaduan::with('user')->latest()->take(20)->get();
 
         // Ambil 5 user terbaru dengan role masyarakat
         $masyarakatTerbaru = User::where('role', 'user')
             ->orderBy('created_at', 'desc')
-            ->take(10)
+            ->take(8)
             ->get();
 
 

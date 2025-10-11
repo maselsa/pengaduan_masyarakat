@@ -96,7 +96,12 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-success mt-2">save</button> 
-        </form>
-    </div>
+    <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-primary">
+                    💾 update
+                </button>
+                 <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">
+                    ⬅️ back
+                </a>
+            </div>
 @endsection

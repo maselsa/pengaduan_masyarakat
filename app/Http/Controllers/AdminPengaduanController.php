@@ -2,32 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Pengaduan;
-use App\Models\Category;
-use App\Models\Tanggapan;
 use App\Models\Notifikasi;
+use App\Models\Pengaduan;
+use App\Models\Tanggapan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminPengaduanController extends Controller
 {
     public function index(Request $request)
-    {
-       $pengaduan = Pengaduan::with('category', 'user');
+{
+    $search = $request->input('search');
 
-    if ($request->has('search') && $request->search != '') {
-        $search = $request->search;
-        $pengaduan->where('nama', 'LIKE', "%{$search}%");
-    }
-
-    $pengaduan = $pengaduan->get();
+    // pengaduan relasi user & category
+    $pengaduan = Pengaduan::with('user', 'category')
+        ->when($search, function ($query, $search) {
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        })
+        ->latest() 
+        ->get();
 
     return view('admin.pengaduan.index', compact('pengaduan'));
-    }
+}
+
 
     public function show($id)
     {
         $pengaduan = Pengaduan::with('category', 'user', 'tanggapan')->findOrFail($id);
+
         return view('admin.pengaduan.show', compact('pengaduan'));
     }
 
@@ -45,7 +49,7 @@ class AdminPengaduanController extends Controller
     {
         $request->validate([
             'status' => 'required|in:proses,selesai,tolak',
-            'isi'    => 'nullable|string',
+            'isi' => 'nullable|string',
         ]);
 
         $pengaduan = Pengaduan::findOrFail($id);
@@ -56,31 +60,31 @@ class AdminPengaduanController extends Controller
         if ($request->filled('isi')) {
             Tanggapan::create([
                 'pengaduan_id' => $pengaduan->id,
-                'user_id'      => Auth::id(),
-                'isi'          => $request->isi,
+                'user_id' => Auth::id(),
+                'isi' => $request->isi,
             ]);
         }
 
         //  Notifikasi sesuai status
         $pesan = match ($pengaduan->status) {
-            'proses'  => 'Pengaduan Anda sedang diproses Admin. Mohon bersabar, ya. ',
+            'proses' => 'Pengaduan Anda sedang diproses Admin. Mohon bersabar, ya. ',
             'selesai' => 'Pengaduan Anda telah di tanggapi dan sudah selesai. Terima Kasih.',
             'tolak' => 'Pengaduan Anda di tolak Admin. Silahkan buat pengaduan baru yang benar.',
-            default   => 'Pengaduan Anda telah diperbarui ',
+            default => 'Pengaduan Anda telah diperbarui ',
         };
 
         Notifikasi::create([
             'user_id' => $pengaduan->user_id, // pastikan ada di DB
-            'judul'   => 'Update Pengaduan',
-            'pesan'   => $pesan,
-            'is_read' => 0
+            'judul' => 'Update Pengaduan',
+            'pesan' => $pesan,
+            'is_read' => 0,
         ]);
 
         return redirect()->route('admin.pengaduan.show', $id)
             ->with('success', 'Status & tanggapan berhasil diperbarui!');
     }
 
-    //Konfirmasi pertama kali (pending -> proses)
+    // konfirmasi pertama kali (pending -> proses)
     public function konfirmasi($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
@@ -92,16 +96,16 @@ class AdminPengaduanController extends Controller
             // tanggapan otomatis
             Tanggapan::create([
                 'pengaduan_id' => $pengaduan->id,
-                'user_id'      => Auth::id(),
-                'isi'          => 'Pengaduan Anda sedang diproses Admin.'
+                'user_id' => Auth::id(),
+                'isi' => 'Pengaduan Anda sedang diproses Admin.',
             ]);
 
             // notifikasi otomatis
             Notifikasi::create([
-                'user_id' => $pengaduan->user_id, // pake user_id 
-                'judul'   => 'Pengaduan Dikonfirmasi',
-                'pesan'   => 'Pengaduan Anda sedang diproses Admin. Mohon bersabar, ya.  ',
-                'is_read' => 0
+                'user_id' => $pengaduan->user_id, // pake user_id
+                'judul' => 'Pengaduan Dikonfirmasi',
+                'pesan' => 'Pengaduan Anda sedang diproses Admin. Mohon bersabar, ya.  ',
+                'is_read' => 0,
             ]);
         }
 
@@ -116,26 +120,26 @@ class AdminPengaduanController extends Controller
             $pengaduan->status = 'tolak';
             $pengaduan->save();
 
-        // tanggapan otomatis
+            // tanggapan otomatis
             Tanggapan::create([
-              'pengaduan_id' => $pengaduan->id,
-              'user_id'      => Auth::id(),
-              'isi'          => 'Pengaduan ditolak Admin.'
+                'pengaduan_id' => $pengaduan->id,
+                'user_id' => Auth::id(),
+                'isi' => 'Pengaduan ditolak Admin.',
             ]);
 
-        // notifikasi otomatis
+            // notifikasi otomatis
             Notifikasi::create([
-              'user_id' => $pengaduan->user_id,
-              'judul'   => 'Pengaduan Ditolak',
-              'pesan'   => 'Pengaduan Anda di tolak Admin. Silahkan buat pengaduan baru yang benar.',
-              'is_read' => 0
+                'user_id' => $pengaduan->user_id,
+                'judul' => 'Pengaduan Ditolak',
+                'pesan' => 'Pengaduan Anda di tolak Admin. Silahkan buat pengaduan baru yang benar.',
+                'is_read' => 0,
             ]);
         }
 
-        return redirect()->back()->with('success', 'Pengaduan berhasil ditolak!');
+        return redirect()->back()->with('success', 'pengaduan berhasil ditolak!❌');
     }
 
-     public function selesai($id)
+    public function selesai($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
 
@@ -143,23 +147,22 @@ class AdminPengaduanController extends Controller
             $pengaduan->status = 'selesai';
             $pengaduan->save();
 
-        // tanggapan otomatis
+            // tanggapan otomatis
             Tanggapan::create([
-              'pengaduan_id' => $pengaduan->id,
-              'user_id'      => Auth::id(),
-              'isi'          => 'Pengaduan Selesai'
+                'pengaduan_id' => $pengaduan->id,
+                'user_id' => Auth::id(),
+                'isi' => 'Pengaduan Selesai',
             ]);
 
-        // notifikasi otomatis
+            // notifikasi otomatis
             Notifikasi::create([
-              'user_id' => $pengaduan->user_id,
-              'judul'   => 'Pengaduan Selesai',
-              'pesan'   => 'Pengaduan Anda telah di tanggapi dan sudah selesai. Terima Kasih.',
-              'is_read' => 0
+                'user_id' => $pengaduan->user_id,
+                'judul' => 'Pengaduan Selesai',
+                'pesan' => 'Pengaduan Anda telah di tanggapi dan sudah selesai. Terima Kasih.',
+                'is_read' => 0,
             ]);
         }
 
-        return redirect()->back()->with('success', 'Pengaduan berhasil diselesaikan!');
+        return redirect()->back()->with('success', 'pengaduan berhasil diselesaikan!✅');
     }
-
 }

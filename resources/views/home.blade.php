@@ -9,7 +9,6 @@
 
     <style>
         body {
-            /* Background gambar + gradient overlay */
             background: linear-gradient(135deg, rgba(255, 96, 186, 0.6), rgba(254, 207, 239, 0.6)),
                 url("{{ asset('assets/img/well.jpeg') }}") no-repeat center center fixed;
             background-size: cover;
@@ -21,13 +20,13 @@
             overflow: hidden;
         }
 
+        /* kotak putih transparan */
         .card {
             border-radius: 25px;
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
             padding: 50px;
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            /* transparan biar background keliatan */
+            background: rgba(255, 255, 255, 0.7);
             max-width: 600px;
         }
 
@@ -60,16 +59,36 @@
         .btn-register:hover {
             background: linear-gradient(135deg, #ff77b7, #ff3d94);
         }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-weight: 500;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        footer span {
+            color: #ffd6f6;
+            font-weight: 600;
+        }
     </style>
 </head>
+
 <body>
     <div class="card">
-        <h1> Welcome to the Public Complaints Application </h1>
+        <h1>Welcome to the Public Complaints Application</h1>
         <div class="d-flex justify-content-center gap-4">
-            <a href="{{ route('login') }}" class="btn btn-login btn-lg">Login🍓</a>
-            <a href="{{ route('register') }}" class="btn btn-register btn-lg">Register🍒</a>
+            <a href="{{ route('login') }}" class="btn btn-login btn-lg">Login🩷</a>
+            <a href="{{ route('register') }}" class="btn btn-register btn-lg">Register🤍</a>
         </div>
     </div>
+
+    <footer>
+        © 2025 Public Complaints App | Developed by <span>Maselsa Gayatri</span>
+    </footer>
 </body>
 
 </html>

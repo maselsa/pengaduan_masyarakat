@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Masyarakat')
+@section('title', 'Data Masyarakat 🧑‍🤝‍🧑')
 
 @section('content')
     <div class="container">
@@ -9,10 +9,14 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-       <table class="table table-bordered">
+
+        <table class="table table-bordered">
+            <thead class="table-light">
                 <tr>
                     <th>No</th>
+                    <th>Foto</th>
                     <th>Nama</th>
+                    <th>Email</th>
                     <th>Jumlah Pengaduan</th>
                     <th>Tanggal Terakhir Pengaduan</th>
                 </tr>
@@ -21,11 +25,21 @@
                 @forelse($masyarakat as $index => $m)
                     <tr>
                         <td>{{ $index + 1 }}</td>
+                         <td>
+                            @if ($m->foto)
+                                <img src="{{ asset('storage/' . $m->foto) }}" 
+                                    alt="Foto Profil" width="40" height="40" class="rounded-circle">
+                            @else
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($m->nama) }}&background=ff9be6&color=fff"
+                                    alt="Foto Profil" width="40" height="40" class="rounded-circle">
+                            @endif
+                        </td>
                         <td>{{ $m->name }}</td>
+                        <td>{{ $m->email ?? '-' }}</td>
                         <td>{{ $m->pengaduan->count() }}</td>
                         <td>
                             @if ($m->pengaduan->count() > 0)
-                                {{ $m->pengaduan->sortByDesc('created_at')->first()->created_at->format('d-m-Y') }}
+                               {{ \Carbon\Carbon::parse($m->pengaduan->sortByDesc('tanggal')->first()->tanggal)->format('d-m-Y') }}
                             @else
                                 -
                             @endif
@@ -33,7 +47,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center">Belum Ada Data Masyarakat</td>
+                        <td colspan="6" class="text-center">Belum Ada Data Masyarakat</td>
                     </tr>
                 @endforelse
             </tbody>

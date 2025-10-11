@@ -40,7 +40,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm">
-                    Save 📥
+                    save 📥
                 </button>
             </form>
         </div>

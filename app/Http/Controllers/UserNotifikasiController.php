@@ -24,17 +24,4 @@ class UserNotifikasiController extends Controller
         return back();
     }
 
-    public function destroy($id)
-    {
-        $notifikasi = Notifikasi::findOrFail($id);
-
-    // pastikan user hanya bisa hapus notifikasi miliknya
-        if ($notifikasi->user_id !== auth()->id()) {
-            abort(403, 'Tidak punya akses');
-        }
-
-        $notifikasi->delete();
-
-        return back()->with('success', 'Notifikasi berhasil dihapus!');
-   }
 }

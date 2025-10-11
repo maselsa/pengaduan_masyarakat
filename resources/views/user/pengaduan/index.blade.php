@@ -4,7 +4,7 @@
     <div class="container">
         <h3>Data Pengaduan 📢</h3>
 
-        <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary mb-3">📝 Add Pengaduan</a>
+        <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary mb-3">+ Add Pengaduan</a>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -27,7 +27,7 @@
                 @forelse($pengaduan as $key => $p)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $p->nama }}</td>
+                        <td>{{ $p->user->name }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $p->lokasi }}</td>
 

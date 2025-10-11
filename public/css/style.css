@@ -128,3 +128,9 @@ body,
     max-width: 65ch;
     word-wrap: break-word
 }
+.table thead th {
+    background: linear-gradient(135deg, #ff7eb3, #ff4f9a) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
