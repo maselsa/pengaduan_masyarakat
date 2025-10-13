@@ -1,0 +1,136 @@
+/* 🌸 Background body & sidebar */
+body,
+.wrapper,
+.main-panel,
+.content,
+.page-inner,
+.navbar,
+.sidebar,
+.sidebar-wrapper {
+    background: linear-gradient(135deg, #fecfef 100%, #ff9be6 0%) !important;
+    color: #b30059 !important;
+    font-weight: 600 !important;
+    animation: none !important
+}
+
+/* 🌸 Logo & header */
+.logo-header,
+.navbar-header,
+.logo-header[data-background-color],
+.navbar-header[data-background-color],
+.logo-header[style],
+.navbar-header[style] {
+    background: linear-gradient(135deg, #ff9a9e 0%, #ff7eb3 100%) !important;
+    color: #b30059 !important;
+    font-weight: 700 !important
+}
+
+.panel-header,
+.panel-header.bg-primary,
+.panel-header[data-background-color="blue"],
+.page-header,
+.header {
+    background: linear-gradient(135deg, #ff7eb3 0%, #ff4f9a 100%) !important;
+    color: #b30059 !important;
+    font-weight: 700 !important
+}
+
+/* 🌸 Card */
+.card {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15) !important;
+    color: #b30059 !important;
+    font-weight: 600 !important
+}
+
+/* 🌸 Button */
+.btn,
+.btn-primary {
+    background: #ff7eb3 !important;
+    border: none !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border-radius: 25px !important;
+    box-shadow: 0 4px 12px rgba(255, 100, 150, .3)
+}
+
+.btn:hover {
+    background: #ff4f9a !important
+}
+
+/* 🌸 Sidebar */
+.sidebar .nav>li>a,
+.sidebar .nav>li>a p {
+    color: #b30059 !important;
+    font-weight: 600 !important
+}
+
+.sidebar .nav-item a {
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px 15px
+}
+
+.sidebar .nav-item a:hover {
+    background: #ff7eb3 !important;
+    color: #fff !important;
+    box-shadow: inset 0 0 8px rgba(255, 118, 180, .6)
+}
+
+.sidebar .nav-item.active>a,
+.sidebar .nav-item a.active {
+    background: linear-gradient(135deg, #ff4f9a, #ff7eb3) !important;
+    color: #fff !important;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .15)
+}
+
+/* 🌸 Footer */
+.footer,
+.card-footer,
+.page-footer {
+    text-align: center !important;
+    font-weight: 600 !important;
+    color: #b30059 !important
+}
+
+.footer ul,
+.card-footer ul,
+.page-footer ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important
+}
+
+/* 🌸 Scrollbar */
+::-webkit-scrollbar {
+    width: 8px
+}
+
+::-webkit-scrollbar-track {
+    background: #ffe6f3;
+    border-radius: 10px
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff7eb3, #ff4f9a);
+    border-radius: 10px
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff4f9a
+}
+
+/* 🌸 Admin info */
+.admin-info {
+    max-width: 65ch;
+    word-wrap: break-word
+}
+.table thead th {
+    background: linear-gradient(135deg, #ff7eb3, #ff4f9a) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: none !important;
+}
