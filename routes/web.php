@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminMasyarakatController;
 use App\Http\Controllers\UserNotifikasiController;
 use App\Http\Controllers\AdminTanggapanController;
 use App\Http\Controllers\UserProfilController;
+use App\Http\Controllers\AdminProfilController;
 use App\Http\Controllers\UserTanggapanController;
 
 
@@ -42,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         }
     }
     return redirect()->route('login');
+
 });
 
     // ADMIN ROUTES
@@ -59,14 +61,25 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/petugas/{id}', [AdminPetugasController::class, 'destroy'])->name('petugas.destroy');
         // Kategori
         Route::resource('categories', CategoryController::class);
-        //Konfirmasi
+        // Konfirmasi
         Route::post('pengaduan/{id}/konfirmasi', [AdminPengaduanController::class, 'konfirmasi'])->name('pengaduan.konfirmasi');
+        // Tolak
+        Route::post('/pengaduan/{id}/tolak', [AdminPengaduanController::class, 'tolak'])->name('pengaduan.tolak');
         // Tanggapan
         Route::get('/tanggapan', [AdminTanggapanController::class, 'index'])->name('tanggapan.index');   // tampilkan semua tanggapan
-        Route::post('/tanggapan/{pengaduan}', [AdminTanggapanController::class, 'store'])->name('tanggapan.store'); // simpan tanggapan baru
-        Route::put('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'update'])->name('tanggapan.update'); // edit tanggapan
+        Route::post('/tanggapan/{pengaduan}', [AdminTanggapanController::class, 'store'])->name('tanggapan.store'); // simpan tanggapan baru // edit tanggapan
         Route::delete('/tanggapan/{tanggapan}', [AdminTanggapanController::class, 'destroy'])->name('tanggapan.destroy'); // hapus tanggapan
+        Route::post('/pengaduan/{id}/selesai', [AdminPengaduanController::class, 'selesai'])->name('pengaduan.selesai');
+        Route::get('/tanggapan/{id}', [AdminTanggapanController::class, 'show'])->name('tanggapan.show');
+        Route::get('/tanggapan/{id}/edit', [AdminTanggapanController::class, 'edit'])->name('tanggapan.edit');
+        Route::put('/tanggapan/{id}', [AdminTanggapanController::class, 'update'])->name('tanggapan.update');
         Route::patch('pengaduan/{id}/status', [AdminPengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
+        Route::post('/tanggapan/manual', [AdminTanggapanController::class, 'storeManual'])->name('tanggapan.storeManual');
+        Route::get('/masyarakat', [AdminMasyarakatController::class, 'index'])->name('masyarakat.index');
+        // Profil Admin
+        Route::get('/profil', [AdminProfilController::class, 'index'])->name('profil.index');
+        Route::post('/profil', [AdminProfilController::class, 'update'])->name('profil.update');
+
 
 
     
@@ -89,9 +102,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profil', [UserProfilController::class, 'update'])->name('profil.update');
         // Tanggapan
         Route::get('tanggapan', [UserTanggapanController::class, 'index'])->name('tanggapan.index');
+        Route::get('/tanggapan/{id}', [UserTanggapanController::class, 'show'])->name('tanggapan.show');
         // Notifikasi
         Route::get('notifikasi', [UserNotifikasiController::class, 'index'])->name('notifikasi.index');
         Route::patch('notifikasi/{id}/read', [UserNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+        Route::delete('/notifikasi/{id}', [UserNotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
+
 
         
     });
@@ -105,5 +121,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-pengaduan', [AdminPengaduanController::class, 'index'])->name('data.pengaduan');
     //Data masyarakat
     Route::get('/data-masyarakat', [AdminMasyarakatController::class, 'index'])->name('data.masyarakat');
+    
     
 });

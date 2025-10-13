@@ -13,7 +13,7 @@ class UserPengaduanController extends Controller
     public function index()
 {
     $pengaduan = Pengaduan::with('category')
-        ->where('email', auth()->user()->email)
+        ->where('user_id', auth()->id())
         ->get();
 
     return view('user.pengaduan.index', compact('pengaduan'));
@@ -48,7 +48,7 @@ class UserPengaduanController extends Controller
     }
 
     // Hubungkan pengaduan ke user yang login
-    $validated['user_id'] = auth()->id();   // <-- tetap simpan user_id dari tabel users
+    $validated['user_id'] = auth()->id();  
     $validated['status'] = 'pending';       // default status
 
     // Simpan data
@@ -58,7 +58,7 @@ class UserPengaduanController extends Controller
     Notifikasi::create([
         'user_id' => auth()->id(),
         'judul'   => 'Pengaduan Terkirim',
-        'pesan'   => 'Pengaduan Anda berhasil dikirim dan menunggu konfirmasi Admin',
+        'pesan'   => 'Pengaduan Anda berhasil dikirim dan menunggu konfirmasi Admin.',
         'is_read' => 0,
     ]);
     
@@ -71,7 +71,7 @@ class UserPengaduanController extends Controller
     public function show($id)
 {
     $pengaduan = Pengaduan::with('category')
-        ->where('email', auth()->user()->email)
+        ->where('user_id', auth()->id())
         ->where('id', $id)
         ->firstOrFail();
 
@@ -124,4 +124,6 @@ class UserPengaduanController extends Controller
         return redirect()->route('user.pengaduan.index')
             ->with('success', 'Pengaduan berhasil dihapus!');
     }
+
+    
 }

@@ -9,16 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
-    // Nama tabel di database
+    // nama tabel di database
     protected $table = 'categories';
 
-    // Kolom yang bisa diisi
+    // kolom yang bisa diisi
     protected $fillable = [
-        'name_kategori',
+        'name',
         'deskripsi',
     ];
 
-    public function pengaduan()
+    public function pengaduan() //satu kategori banyak pengaduan
     {
         return $this->hasMany(Pengaduan::class, 'category_id');
     }

@@ -18,8 +18,7 @@ class Masyarakat extends Model
         'telp',
     ];
 
-    // Relasi ke pengaduan
-    public function pengaduan()
+    public function pengaduan() //setiap masyarakat bisa punya banyak pengaduan
     {
         return $this->hasMany(Pengaduan::class, 'masyarakat_id');
     }

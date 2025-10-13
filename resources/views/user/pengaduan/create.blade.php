@@ -92,7 +92,14 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary mt-2">Kirim Pengaduan 📤</button>
-        </form>
-    </div>
-@endsection
+
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">
+                    ⬅️ back
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    📤 kirim 
+                </button>
+            </div>
+        @endsection

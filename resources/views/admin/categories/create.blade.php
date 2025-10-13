@@ -14,8 +14,8 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-success">Save📥</button>
-        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Back💔</a>
+        <button type="submit" class="btn btn-success">📥 save</button>
+        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">⬅️ back</a>
     </form>
 </div>
 @endsection

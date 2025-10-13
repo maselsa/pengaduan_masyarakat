@@ -11,6 +11,7 @@ class AdminPetugasController extends Controller
     public function index()
     {
         $petugas = User::whereIn('role', ['admin', 'petugas'])->get();
+
         return view('admin.petugas.index', compact('petugas'));
     }
 
@@ -38,10 +39,12 @@ class AdminPetugasController extends Controller
         return redirect()->route('admin.petugas.index')->with('success', 'Petugas berhasil ditambahkan!');
     }
 
-    public function destroy(User $petuga)
+    public function destroy($id)
     {
-        $petuga->delete();
+        $petugas = User::findOrFail($id);
+        $petugas->delete();
 
-        return redirect()->route('admin.petugas.index')->with('success', 'Petugas berhasil dihapus!');
+        return redirect()->route('admin.petugas.index')
+            ->with('success', 'Petugas berhasil dihapus!');
     }
 }

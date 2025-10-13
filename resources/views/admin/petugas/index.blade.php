@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Data Petugas ')
+
 @section('content')
     <div class="container">
         <h3 class="mb-4">Data Petugas 👮</h3>
@@ -8,9 +10,9 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ route('admin.petugas.create') }}" class="btn btn-primary mb-3">👮 Add Petugas</a>
+        <a href="{{ route('admin.petugas.create') }}" class="btn btn-primary mb-3">+ Add Petugas</a>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>No</th>

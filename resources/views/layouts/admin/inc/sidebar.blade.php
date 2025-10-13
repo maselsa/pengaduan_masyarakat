@@ -7,6 +7,7 @@
             </a>
         </div>
     </div>
+    
     <div class="sidebar-wrapper scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-primary">
@@ -17,14 +18,22 @@
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->is('data-masyarakat*') ? 'active' : '' }}">
-                    <a href="{{ url('/data-masyarakat') }}">
-                        <i class="fas fa-database"></i>
-                        <p>🧑‍🤝‍🧑 Data Masyarakat</p>
+                {{-- Profil --}}
+                <li class="nav-item {{ request()->routeIs('admin.profil*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.profil.index') }}">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>🍓 Profil</p>
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->is('data-petugas*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('data-masyarakat*') ? 'active' : '' }}">
+                    <a href="{{ url('/data-masyarakat') }}">
+                        <i class="fas fa-database"></i>
+                        <p>👥 Data Masyarakat</p>
+                    </a>
+                </li>
+
+                <li class="nav-item {{ request()->routeIs('admin.petugas*') ? 'active' : '' }}">
                     <a href="{{ route('admin.petugas.index') }}">
                         <i class="fas fa-database"></i>
                         <p>👮 Data Petugas</p>

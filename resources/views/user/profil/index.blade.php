@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Profil Masyarakat')
+
 @section('content')
     <div class="container">
         <h3 class="mb-4 text-pink fw-bold">Profil Saya 🍓 </h3>
@@ -34,6 +36,12 @@
                     <input type="text" name="name" class="form-control rounded-3" value="{{ $user->name }}">
                 </div>
 
+                <!-- Tambahan: Ubah Email -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" name="email" class="form-control rounded-3" value="{{ $user->email }}">
+                </div>
+
                 <div class="mb-3">
                     <label class="form-label fw-bold">Ubah Foto Profil</label>
                     <input type="file" name="foto" class="form-control rounded-3">
@@ -41,9 +49,10 @@
 
                 <button type="submit" class="btn btn-pink rounded-pill px-4 py-2 shadow-sm"
                     style="background:#ff66a3; color:white;">
-                    Save 📥
+                    save 📥
                 </button>
             </form>
         </div>
     </div>
 @endsection
+

@@ -18,12 +18,12 @@ class Tanggapan extends Model
         'status'
     ];
 
-    public function pengaduan()
+    public function pengaduan() //setiap tanggapan dimiliki oleh 1 pengaduan
     {
         return $this->belongsTo(Pengaduan::class, 'pengaduan_id', 'id');
     }
 
-    public function user()
+    public function user() //setiap tanggapan dimiliki oleh 1 user
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

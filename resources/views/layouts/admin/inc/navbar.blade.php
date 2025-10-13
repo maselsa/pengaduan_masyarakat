@@ -14,27 +14,39 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="userDropdown"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        
 
-                        {{-- Foto Profil --}}
-                        <img src="{{ asset('assets/img/default.jpg') }}" alt="Profile" class="rounded-circle me-2"
-                            style="width:35px; height:35px; object-fit:cover;">
+                        {{-- Foto profil --}}
+                        @if (Auth::user()->foto)
+                            <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="Foto Profil"
+                                style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:8px;">
+                        @else
+                            <img src="{{ asset('assets/img/default.jpg') }}" alt="Default Profil"
+                                style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:8px;">
+                        @endif
 
-                        {{-- Nama User --}}
-                        <span>{{ Auth::user()->name }}</span>
+                        {{ Auth::user()->name }}
                     </a>
 
+                    {{-- Dropdown menu --}}
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
+                            <a class="dropdown-item" href="{{ route('admin.profil.index') }}">
+                                <i class="fas fa-user"></i> 🍓 profile
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();if(confirm('Apakah anda yakin ingin logout?'))
-                                 document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i>💔 logout 
+                                onclick="event.preventDefault(); 
+                                         if(confirm('Apakah anda yakin ingin logout?')) {
+                                             document.getElementById('logout-form').submit();
+                                         }">
+                                <i class="fas fa-sign-out-alt"></i> 💔 logout
                             </a>
                         </li>
                     </ul>
                 </li>
 
+                {{-- Form logout --}}
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>

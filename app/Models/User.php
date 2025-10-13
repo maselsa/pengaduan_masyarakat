@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable; //agar user bisa menerima notifikasi
 
     /**
      * The attributes that are mass assignable.
@@ -47,17 +47,15 @@ class User extends Authenticatable
         ];
     }
 
-    public function notifikasi()
-{
-    return $this->hasMany(Notifikasi::class, 'user_id');
-}
+    public function notifikasi() //satu user bisa punya banyak notifikasi
+    {
+        return $this->hasMany(Notifikasi::class, 'user_id');
+    }
 
 
-public function pengaduan()
-{
-    return $this->hasMany(Pengaduan::class, 'user_id', 'id');
-}
-
-
+    public function pengaduan() //satu user bisa punya banyak pengaduan
+    {
+        return $this->hasMany(Pengaduan::class, 'user_id', 'id');
+    }
 
 }

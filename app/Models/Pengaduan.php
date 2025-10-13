@@ -26,22 +26,22 @@ class Pengaduan extends Model
         'masyarakat_id'
     ];
 
-    public function category()
+    public function category() //setiap pengaduan punya 1 kategori
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function tanggapan()
+    public function tanggapan() //satu pengaduan bisa punya banyak tanggapan
     {
-        return $this->hasOne(Tanggapan::class, 'pengaduan_id');
+        return $this->hasMany(Tanggapan::class, 'pengaduan_id');
     }
 
-    public function user()
+    public function user() //setiap pengaduan dimiliki oleh 1 user
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function masyarakat()
+    public function masyarakat() //satu pengaduan dimiliki oleh 1 masyarakat
     {
         return $this->belongsTo(Masyarakat::class, 'masyarakat_id', 'id');
     }

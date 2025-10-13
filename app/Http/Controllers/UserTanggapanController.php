@@ -33,4 +33,25 @@ class UserTanggapanController extends Controller
 
         return redirect()->back()->with('success', 'Tanggapan berhasil dikirim!');
     }
+
+    public function show($id)
+    {
+        $pengaduan = Pengaduan::with('tanggapan')
+        ->findOrFail($id);
+        return view('user.tanggapan.show', compact('pengaduan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'isi' => 'required|string',
+        ]);
+
+        $tanggapan = Tanggapan::findOrFail($id);
+        $tanggapan->isi = $request->isi;
+        $tanggapan->user_id = auth()->id();
+        $tanggapan->save();
+
+        return back()->with('success', 'Tanggapan berhasil diperbarui!');
+    }
 }

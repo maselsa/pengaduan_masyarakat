@@ -1,16 +1,18 @@
 @extends('layouts.app')
 
+@section('title', 'Pengaduan Masyarakat')
+
 @section('content')
     <div class="container">
         <h3>Data Pengaduan 📢</h3>
 
-        <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary mb-3">📝 Add Pengaduan</a>
+        <a href="{{ route('user.pengaduan.create') }}" class="btn btn-primary mb-3">+ Add Pengaduan</a>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>No</th>
@@ -27,7 +29,7 @@
                 @forelse($pengaduan as $key => $p)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $p->nama }}</td>
+                        <td>{{ $p->user->name }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $p->lokasi }}</td>
 
@@ -36,9 +38,12 @@
 
                         {{-- Status --}}
                         <td>
-                            <span
-                                class="badge bg-{{ $p->status == 'pending' ? 'warning' : ($p->status == 'proses' ? 'info' : 'success') }}">
-                                {{ ucfirst($p->status) }}
+                            <span class="badge 
+                               {{ $p->status == 'selesai' ? 'bg-success' : 
+                                 ($p->status == 'tolak' ? 'bg-danger' : 
+                                 ($p->status == 'pending' ? 'bg-warning' : 
+                                 ($p->status == 'proses' ? 'bg-primary' : 'bg-secondary'))) }}">
+                               {{ ucfirst($p->status) }}
                             </span>
                         </td>
 
@@ -54,18 +59,18 @@
 
                         {{-- Aksi --}}
                         <td>
-                            <a href="{{ route('user.pengaduan.show', $p->id) }}" class="btn btn-sm btn-info">Detail🗒️</a>
+                            <a href="{{ route('user.pengaduan.show', $p->id) }}" class="btn btn-sm btn-info">detail🗒️</a>
 
                             @if ($p->status == 'pending')
                                 <a href="{{ route('user.pengaduan.edit', $p->id) }}"
-                                    class="btn btn-sm btn-warning">Edit📝</a>
+                                    class="btn btn-sm btn-warning">edit📝</a>
 
                                 <form action="{{ route('user.pengaduan.destroy', $p->id) }}" method="POST"
                                     style="display:inline-block;"
                                     onsubmit="return confirm('yakin ingin menghapus pengaduan ini?💔')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">Delete💔</button>
+                                    <button class="btn btn-sm btn-danger">delete💔</button>
                                 </form>
                             @endif
                         </td>

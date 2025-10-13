@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-
 </head>
 
 <body class="{{ Request::is('login') || Request::is('register') ? 'auth' : '' }}">
@@ -76,5 +75,6 @@
     <script src="{{ asset('js/kaiadmin.min.js') }}"></script>
 
     @yield('scripts')
+    
 </body>
 </html>

@@ -20,7 +20,7 @@
                 </li>
 
                 {{-- Profil --}}
-                <li class="nav-item {{ request()->routeIs('user.profil') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('user.profil*') ? 'active' : '' }}">
                     <a href="{{ route('user.profil') }}">
                         <i class="fas fa-clipboard-list"></i>
                         <p>🍓 Profil</p>

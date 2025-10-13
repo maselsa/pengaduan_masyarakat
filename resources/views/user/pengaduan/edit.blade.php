@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3>Edit Pengaduan</h3>
+        <h3>Edit Pengaduan </h3>
 
         <form action="{{ route('user.pengaduan.update', $pengaduan->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -96,8 +96,12 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-success mt-2">Save</button>
-           c
-        </form>
-    </div>
+    <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-primary">
+                    💾 update
+                </button>
+                 <a href="{{ route('user.pengaduan.index') }}" class="btn btn-secondary">
+                    ⬅️ back
+                </a>
+            </div>
 @endsection

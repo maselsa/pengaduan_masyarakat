@@ -16,7 +16,7 @@ class Notifikasi extends Model
         'is_read'
     ];
 
-    public function user()
+    public function user() //setiap notifikasi dimiliki oleh 1 user
     {
         return $this->belongsTo(User::class, 'user_id');
     }
